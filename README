@@ -1,0 +1,4 @@
+USUAL ERROR:
+>The superclass "javax.servlet.http.HttpServlet" was not found on the Java Build Path
+<< Preferences > Project Facets > Runtimes > Select server [OR]
+<< Preferences > Target Runtimes > Select server
