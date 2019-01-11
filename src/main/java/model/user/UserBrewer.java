@@ -9,31 +9,35 @@ public class UserBrewer implements User {
 		private String nome;	
 		private String cognome;
 		private Date dataDiNascita;
-		private String mail;
+		private String email;
 		private String password;
 		private String tipo;
 		
 
 
 
-		public UserBrewer(int id, String nome, String cognome, Date dataDiNascita, String mail, String password, String tipo) {
+		public UserBrewer(int id, String nome, String cognome, Date dataDiNascita, String email, String password, String tipo) {
 			super();
 			this.id = id;
 			this.nome = nome;
 			this.cognome = cognome;
 			this.dataDiNascita = dataDiNascita;
-			this.mail = mail;
+			this.email = email;
 			this.password = password;
 			this.tipo = tipo;
 		}
-		
+		/*
+		private int createId() {
+			return 0;
+		}
+		*/
 		public UserBrewer(String nome, String cognome) {
 			super();
 			this.id = -1;
 			this.nome = nome;
 			this.cognome = cognome;
 			this.dataDiNascita = new Date();
-			this.mail = "ciao";
+			this.email = "ciao";
 			this.password = "miao";
 			this.tipo = "Birraio";
 		}
@@ -73,12 +77,12 @@ public class UserBrewer implements User {
 			this.dataDiNascita = dataDiNascita;
 		}
 
-		public String getMail() {
-			return mail;
+		public String getEmail() {
+			return email;
 		}
 
-		public void setMail(String mail) {
-			this.mail = mail;
+		public void setEmail(String email) {
+			this.email = email;
 		}
 
 		public String getPassword() {
@@ -99,8 +103,11 @@ public class UserBrewer implements User {
 
 		@Override
 		public String toString() {
-			return "Utente [id=" + id + ", nome=" + nome + ", cognome=" + cognome + "]";
+			return "UserBrewer [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataDiNascita="
+					+ dataDiNascita + ", email=" + email + ", password=" + password + ", tipo=" + tipo + "]";
 		}
+
+
 
 		
 		

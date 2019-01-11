@@ -8,19 +8,19 @@ public class UserAdmin implements User {
 	private String nome;
 	private String cognome;
 	private Date dataDiNascita;
-	private String mail;
+	private String email;
 	private String password;
 	private String tipo;
 
 
-	public UserAdmin(int id, String nome, String cognome, Date dataDiNascita, String mail, String password,
+	public UserAdmin(int id, String nome, String cognome, Date dataDiNascita, String email, String password,
 			String tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataDiNascita = dataDiNascita;
-		this.mail = mail;
+		this.email = email;
 		this.password = password;
 		this.tipo = tipo;
 	}
@@ -31,7 +31,7 @@ public class UserAdmin implements User {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataDiNascita = new Date();
-		this.mail = "ciao";
+		this.email = "ciao";
 		this.password = "miao";
 		this.tipo = "Birraio";
 	}
@@ -68,12 +68,12 @@ public class UserAdmin implements User {
 		this.dataDiNascita = dataDiNascita;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

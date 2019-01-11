@@ -12,7 +12,7 @@ public class MySQLAccess {
 
 
 
-	public ResultSet getQuery(String query) throws Exception {
+	public ResultSet getQuery(String query) {
 		try {
 			connector = new MySQLConnection();
 			connect = DriverManager.getConnection(connector.getUrl(), connector.getUser(), connector.getPassword());
@@ -22,16 +22,16 @@ public class MySQLAccess {
 			return resultSet;
 
 		} catch (Exception e) {
-			throw e;
-		} finally {
-			close();
+			System.out.println("errore qui");
+			e.printStackTrace();
 		}
+		return null;
 
 
 	}
 	
 	// You need to close the resultSet
-	private void close() throws Exception {
+	public void close() throws Exception {
 		try {
 			if (resultSet != null) {
 				resultSet.close();

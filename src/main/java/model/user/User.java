@@ -20,9 +20,9 @@ public interface User {
 		
 		public void setDataDiNascita(Date dataDiNascita);
 
-		public String getMail();
+		public String getEmail();
 
-		public void setMail(String mail);
+		public void setEmail(String email);
 
 		public String getPassword();
 

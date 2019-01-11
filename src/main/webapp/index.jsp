@@ -5,6 +5,6 @@
 </head>
 <body>
 <h1>Lista utenti</h1>
-<a href="UtenteController">Lista Utenti</a>
+<a href="./users">Lista Utenti</a>
 </body>
 </html>
