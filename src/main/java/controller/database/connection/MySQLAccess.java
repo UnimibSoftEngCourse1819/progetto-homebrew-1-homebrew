@@ -15,6 +15,7 @@ public class MySQLAccess {
 	public ResultSet getQuery(String query) {
 		try {
 			connector = new MySQLConnection();
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			connect = DriverManager.getConnection(connector.getUrl(), connector.getUser(), connector.getPassword());
 
 			statement = connect.createStatement();
