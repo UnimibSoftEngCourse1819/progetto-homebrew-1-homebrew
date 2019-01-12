@@ -46,12 +46,10 @@ public class UserDao {
 				brewers.add(brewer);
 			}
 			
-		} catch (Exception e) {
-			System.out.println(MySQLConnection.getUrl());
-			System.out.println(MySQLConnection.getUser());
-			System.out.println(MySQLConnection.getPassword());
-			System.out.println(connect);
-			 e.printStackTrace();
+		} catch (SQLException  e) {
+			System.out.println("SQL Error");
+		}catch  (ClassNotFoundException e) {
+			System.out.println("Connection Error");
 		} finally {
 			close();
 		}
@@ -64,7 +62,7 @@ public class UserDao {
 			if (statement != null) statement.close();
 			if (connect != null) connect.close();			
 		} catch (Exception e) {
-			 e.printStackTrace();
+			System.out.println("Connection Error");
 		}
 	}
 }

@@ -22,6 +22,7 @@ public class UserController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
 		UserDao userDao = UserDao.getInstance();
 		ArrayList<Brewer> brewers = userDao.findAllUsers();
 		request.setAttribute("brewers", brewers);
@@ -29,10 +30,17 @@ public class UserController extends HttpServlet {
 		String nextJSP = "/usersList.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 		dispatcher.forward(request, response);
+	}catch(ServletException | IOException e){
+		System.out.println("doGet Servlet error");
+	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		try {
+			doGet(request, response);
+		}catch(ServletException | IOException e){
+			System.out.println("doPost Servlet error");
+		}
 	}
 
 }
