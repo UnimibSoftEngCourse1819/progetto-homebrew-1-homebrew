@@ -5,6 +5,6 @@
 </head>
 <body>
 <h1>Lista utenti</h1>
-<a href="./homebrew/users">Lista Utenti</a>
+<a href= "<%=request.getContextPath()%>/UtenteController">Lista Utenti</a>
 </body>
 </html>

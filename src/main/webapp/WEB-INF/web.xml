@@ -4,4 +4,19 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>UtenteController</servlet-name>
+  	<display-name>UtenteController</display-name>
+  	<description></description>
+  	<servlet-class>controller.user.UtenteController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UtenteController</servlet-name>
+  	<url-pattern>/UtenteController</url-pattern>
+  </servlet-mapping> 
+  
+  <welcome-file-list>  
+   	<welcome-file>index.jsp</welcome-file>   
+  </welcome-file-list>
+   
 </web-app>

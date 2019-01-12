@@ -2,7 +2,7 @@ package model.user;
 
 import java.util.Date;
 
-public class UserAdmin implements User {
+public class Amministratore implements Utente {
 
 	private int id;
 	private String nome;
@@ -13,7 +13,7 @@ public class UserAdmin implements User {
 	private String tipo;
 
 
-	public UserAdmin(int id, String nome, String cognome, Date dataDiNascita, String email, String password,
+	public Amministratore(int id, String nome, String cognome, Date dataDiNascita, String email, String password,
 			String tipo) {
 		super();
 		this.id = id;
@@ -25,7 +25,7 @@ public class UserAdmin implements User {
 		this.tipo = tipo;
 	}
 
-	public UserAdmin(String nome, String cognome) {
+	public Amministratore(String nome, String cognome) {
 		super();
 		this.id = -1;
 		this.nome = nome;

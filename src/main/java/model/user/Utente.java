@@ -2,7 +2,7 @@ package model.user;
 
 import java.util.Date;
 
-public interface User {
+public interface Utente {
 
 		public int getId();
 

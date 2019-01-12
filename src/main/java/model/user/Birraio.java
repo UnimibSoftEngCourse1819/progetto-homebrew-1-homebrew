@@ -3,7 +3,7 @@ package model.user;
 import java.util.Date;
 
 
-public class UserBrewer implements User {
+public class Birraio implements Utente {
 
 		private int id;
 		private String nome;	
@@ -16,7 +16,7 @@ public class UserBrewer implements User {
 
 
 
-		public UserBrewer(int id, String nome, String cognome, Date dataDiNascita, String email, String password, String tipo) {
+		public Birraio(int id, String nome, String cognome, Date dataDiNascita, String email, String password, String tipo) {
 			super();
 			this.id = id;
 			this.nome = nome;
@@ -31,7 +31,7 @@ public class UserBrewer implements User {
 			return 0;
 		}
 		*/
-		public UserBrewer(String nome, String cognome) {
+		public Birraio(String nome, String cognome) {
 			super();
 			this.id = -1;
 			this.nome = nome;
