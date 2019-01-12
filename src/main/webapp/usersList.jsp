@@ -3,6 +3,7 @@
 <%@ page import ="dao.*"%>
 <%@ page import ="model.user.*" %> 
 <%@ page import ="java.util.ArrayList" %>
+<%! @SuppressWarnings("unchecked") %>
      
 <!DOCTYPE html>
 <html>
@@ -13,8 +14,6 @@
 <body>
 	<ul>	
 	<%	
-		//UtenteDao utenteDao = UtenteDao.getInstance();
-		//ArrayList<Birraio> birrai = utenteDao.findAllUsers();
 		ArrayList<Birraio> birrai = (ArrayList<Birraio>)request.getAttribute("birrai");
 		for(int i=0; i<birrai.size(); i++){
 			Birraio birraio= birrai.get(i);

@@ -66,10 +66,4 @@ public class UtenteDao {
 			 e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		UtenteDao utenteDao = UtenteDao.getInstance();
-		ArrayList<Birraio> birrai = utenteDao.findAllUsers();
-		System.out.println(birrai);
-	}
 }
