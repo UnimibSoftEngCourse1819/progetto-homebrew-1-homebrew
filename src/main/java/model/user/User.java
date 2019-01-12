@@ -2,23 +2,23 @@ package model.user;
 
 import java.util.Date;
 
-public interface Utente {
+public interface User {
 
 		public int getId();
 
 		public void setId(int id);
 		
-		public String getNome();
+		public String getName();
 		
-		public void setNome(String nome);
+		public void setName(String name);
 
-		public String getCognome();
+		public String getSurname();
 
-		public void setCognome(String cognome);
+		public void setSurname(String surname);
 
-		public Date getDataDiNascita();
+		public Date getDateOfBirth();
 		
-		public void setDataDiNascita(Date dataDiNascita);
+		public void setDateOfBirth(Date dateOfBirth);
 
 		public String getEmail();
 
@@ -28,9 +28,9 @@ public interface Utente {
 
 		public void setPassword(String password);
 
-		public String getTipo();
+		public String getKind();
 
-		public void setTipo(String tipo);
+		public void setKind(String kind);
 
 		@Override
 		public String toString();

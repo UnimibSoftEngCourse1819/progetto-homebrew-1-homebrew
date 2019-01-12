@@ -1,20 +1,21 @@
 package dao;
 
 import java.sql.*;
+
 import java.util.ArrayList;
 
 import controller.database.connection.MySQLConnection;
-import model.user.Birraio;
+import model.user.Brewer;
 
-public class UtenteDao {
+public class UserDao {
 	
-	private static UtenteDao instance = null;
+	private static UserDao instance = null;
 	
-	private UtenteDao() {}
+	private UserDao() {}
 	
-	public static UtenteDao getInstance() {
+	public static UserDao getInstance() {
 		if(instance == null) {
-			instance = new UtenteDao();
+			instance = new UserDao();
 		}
 		return instance;
 	}
@@ -25,8 +26,8 @@ public class UtenteDao {
 	
 	private static String findAllUsers = "SELECT * From Utente";
 	
-	public ArrayList<Birraio> findAllUsers() {
-		ArrayList<Birraio> birrai = new ArrayList<Birraio>();
+	public ArrayList<Brewer> findAllUsers() {
+		ArrayList<Brewer> brewers = new ArrayList<Brewer>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
@@ -34,15 +35,15 @@ public class UtenteDao {
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
-				int id = resultSet.getInt("idUtente");
-				String nome = resultSet.getString("nome");
-				String cognome = resultSet.getString("cognome");
-				Date dataDiNascita = resultSet.getDate("dataDiNascita");
+				int id = resultSet.getInt("idUser");
+				String name = resultSet.getString("name");
+				String surname = resultSet.getString("surname");
+				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String mail = resultSet.getString("mail");
 				String password = resultSet.getString("password");
-				String tipo = resultSet.getString("tipo");
-				Birraio birraio = new Birraio(id, nome, cognome,dataDiNascita,mail,password,tipo);
-				birrai.add(birraio);
+				String kind = resultSet.getString("kind");
+				Brewer brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,kind);
+				brewers.add(brewer);
 			}
 			
 		} catch (Exception e) {
@@ -54,7 +55,7 @@ public class UtenteDao {
 		} finally {
 			close();
 		}
-		return birrai;
+		return brewers;
 	}
 	
 	private void close() {

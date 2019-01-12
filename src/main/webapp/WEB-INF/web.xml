@@ -5,14 +5,14 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
-  	<servlet-name>UtenteController</servlet-name>
-  	<display-name>UtenteController</display-name>
+  	<servlet-name>UserController</servlet-name>
+  	<display-name>UserController</display-name>
   	<description></description>
-  	<servlet-class>controller.user.UtenteController</servlet-class>
+  	<servlet-class>controller.user.UserController</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>UtenteController</servlet-name>
-  	<url-pattern>/UtenteController</url-pattern>
+  	<servlet-name>UserController</servlet-name>
+  	<url-pattern>/UserController</url-pattern>
   </servlet-mapping> 
   
   <welcome-file-list>  

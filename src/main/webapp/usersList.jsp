@@ -14,11 +14,11 @@
 <body>
 	<ul>	
 	<%	
-		ArrayList<Birraio> birrai = (ArrayList<Birraio>)request.getAttribute("birrai");
-		for(int i=0; i<birrai.size(); i++){
-			Birraio birraio= birrai.get(i);
+		ArrayList<Brewer> brewers = (ArrayList<Brewer>)request.getAttribute("brewers");
+		for(int i=0; i<brewers.size(); i++){
+			Brewer brewer= brewers.get(i);
 			%>
-			<li><%= birraio.getNome() %>
+			<li><%= brewer.getName() %>
 			<% 
 		}
 	%>

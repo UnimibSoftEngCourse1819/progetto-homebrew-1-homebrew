@@ -9,23 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.UtenteDao;
-import model.user.Birraio;
+import dao.UserDao;
+import model.user.Brewer;
 
-
-public class UtenteController extends HttpServlet {
+public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public UtenteController() {
+    public UserController() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		UtenteDao utenteDao = UtenteDao.getInstance();
-		ArrayList<Birraio> birrai = utenteDao.findAllUsers();
-		request.setAttribute("birrai", birrai);
+		UserDao userDao = UserDao.getInstance();
+		ArrayList<Brewer> brewers = userDao.findAllUsers();
+		request.setAttribute("brewers", brewers);
 		
 		String nextJSP = "/usersList.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
@@ -33,7 +32,6 @@ public class UtenteController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
