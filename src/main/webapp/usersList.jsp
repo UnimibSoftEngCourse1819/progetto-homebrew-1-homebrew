@@ -18,7 +18,7 @@
 		for(int i=0; i<brewers.size(); i++){
 			Brewer brewer= brewers.get(i);
 			%>
-			<li><%= brewer.getName() %>
+			<li><%= brewer.getName() %> <%= brewer.getDateOfBirth() %>
 			<% 
 		}
 	%>

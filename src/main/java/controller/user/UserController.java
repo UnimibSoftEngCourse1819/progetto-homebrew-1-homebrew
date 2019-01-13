@@ -1,7 +1,12 @@
 package controller.user;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,9 +42,22 @@ public class UserController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String name = request.getParameter("name");
+			String surname = request.getParameter("surname");
+			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+			Date dateOfBirth = dateformat.parse(request.getParameter("dateOfBirth"));
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			
+			UserDao userDao = UserDao.getInstance();
+			Brewer brewer = new Brewer(-1, name, surname, dateOfBirth ,email, password, "Brewer");
+			userDao.createUser(brewer);
+			
 			doGet(request, response);
 		}catch(ServletException | IOException e){
 			System.out.println("doPost Servlet error");
+		} catch (ParseException e) {
+			System.out.println("Parsing error Date");
 		}
 	}
 
