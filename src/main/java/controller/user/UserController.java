@@ -27,17 +27,34 @@ public class UserController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
 		UserDao userDao = UserDao.getInstance();
-		ArrayList<Brewer> brewers = userDao.findAllUsers();
-		request.setAttribute("brewers", brewers);
 		
-		String nextJSP = "/usersList.jsp";
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-		dispatcher.forward(request, response);
-	}catch(ServletException | IOException e){
-		System.out.println("doGet Servlet error");
-	}
+		String action = request.getParameter("action");
+		String idStr = request.getParameter("id");
+		
+		
+		
+		if("delete".equals(action)) {
+			System.out.println(action);
+			System.out.println(idStr);
+			if(idStr != null) {
+				int id = Integer.parseInt(idStr);
+				userDao.deleteUser(id);
+			}
+		}
+			
+		try {
+		
+			ArrayList<Brewer> brewers = userDao.findAllUsers();
+			request.setAttribute("brewers", brewers);
+		
+			String nextJSP = "/usersList.jsp";
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			dispatcher.forward(request, response);
+		}catch(ServletException | IOException e){
+			System.out.println("doGet Servlet error");
+		}
+			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

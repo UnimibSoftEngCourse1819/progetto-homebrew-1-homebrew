@@ -29,6 +29,8 @@ public class UserDao {
 	//private static String findAllUsers = "SELECT * From User";
 	private static String createUser = "INSERT INTO Utente (nome, cognome, dataDiNascita, mail, password, tipo) VALUES(?,?,?,?,?,?)";
 	//private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, mail, password, kind) VALUES(?,?,?,?,?,?)";
+	private static String deleteUser = "DELETE FROM Utente WHERE idUtente=?";
+	//private static String deleteUser = "DELETE FROM User WHERE idUser=?";
 	
 	public ArrayList<Brewer> findAllUsers() {
 		ArrayList<Brewer> brewers = new ArrayList<Brewer>();
@@ -89,6 +91,26 @@ public class UserDao {
 			close();
 		}
 		
+		return result;
+	}
+	
+	public int deleteUser(int id) {
+		int result = -1;
+		try {
+			Class.forName(MySQLConnection.getDriver());  
+			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
+			statement = connect.prepareStatement(deleteUser);				
+			statement.setInt(1, id);
+			System.out.println(statement);
+			result = statement.executeUpdate();
+			
+		} catch (SQLException  e) {
+			System.out.println("SQL Error");		
+		}catch  (ClassNotFoundException e) {
+			System.out.println("Connection Error");
+		} finally {
+			close();
+		}
 		return result;
 	}
 	
