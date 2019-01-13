@@ -15,7 +15,7 @@
 		String name = null;
 		String surname = null;
 		Date dateOfBirth = null;
-		String email = null;
+		String mail = null;
 		String password = null;
 		String kind = null;
 		
@@ -24,7 +24,7 @@
 			name = brewer.getName();
 			surname = brewer.getSurname();
 			dateOfBirth = brewer.getDateOfBirth();
-			email = brewer.getEmail();
+			mail = brewer.getMail();
 			password = brewer.getPassword();
 			kind = brewer.getKind();
 		}
@@ -35,7 +35,7 @@
 		Name: <input name="name" value="<%= name %>"/><br/>
 		Surname: <input name="surname" value="<%= surname %>"/><br/>
 		Date of birth: <input name="dateOfBirth" value="<%= dateOfBirth %>"/><br/>
-		Email: <input name="email" value="<%= email %>"/><br/>
+		Email: <input name="mail" value="<%= mail %>"/><br/>
 		Password: <input name="password" value="<%= password %>"/><br/>
 		Kind: <input name="kind" value="<%= kind %>"/><br/>
 		<button type="submit" name="action" value="update">Update</button>

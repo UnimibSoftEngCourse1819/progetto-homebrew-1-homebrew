@@ -30,11 +30,11 @@ public class UserDao {
 	private static String createUser = "INSERT INTO Utente (nome, cognome, dataDiNascita, mail, password, tipo) VALUES(?,?,?,?,?,?)";
 	//private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, mail, password, kind) VALUES(?,?,?,?,?,?)";
 	private static String deleteUser = "DELETE FROM Utente WHERE idUtente =?";
-	//private static String deleteUser = "DELETE FROM User WHERE idUser =?";
+	//private static String deleteUser = "DELETE FROM User WHERE userID =?";
 	private static String seletUserById = "SELECT * From Utente WHERE idUtente =?";
-	//private static String seletUserById = "SELECT * From User WHERE idUser =?";
+	//private static String seletUserById = "SELECT * From User WHERE userId =?";
 	private static String updateUser = "UPDATE Utente SET nome =?, cognome =?, dataDiNascita =?, mail =?, password =?, tipo =? WHERE idUtente =?";
-	//private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, kind =? WHERE idUser =?";
+	//private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, kind =? WHERE userID =?";
 	
 	public ArrayList<Brewer> findAllUsers() {
 		ArrayList<Brewer> brewers = new ArrayList<Brewer>();
@@ -46,7 +46,7 @@ public class UserDao {
 			
 			while(resultSet.next()) {
 				int id = resultSet.getInt("idUtente");
-				//int id = resultSet.getInt("idUser");
+				//int id = resultSet.getInt("userId");
 				String name = resultSet.getString("nome");
 				//String name = resultSet.getString("name");
 				String surname = resultSet.getString("cognome");
@@ -82,7 +82,7 @@ public class UserDao {
 			
 			while(resultSet.next()) {
 				int id = resultSet.getInt("idUtente");
-				//int id = resultSet.getInt("idUser");
+				//int id = resultSet.getInt("userId");
 				String name = resultSet.getString("nome");
 				//String name = resultSet.getString("name");
 				String surname = resultSet.getString("cognome");
@@ -119,7 +119,7 @@ public class UserDao {
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
-			statement.setString(4, brewer.getEmail());
+			statement.setString(4, brewer.getMail());
 			statement.setString(5, brewer.getPassword());
 			statement.setString(6, brewer.getKind());
 			result = statement.executeUpdate();
@@ -146,7 +146,7 @@ public class UserDao {
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
-			statement.setString(4, brewer.getEmail());
+			statement.setString(4, brewer.getMail());
 			statement.setString(5, brewer.getPassword());
 			statement.setString(6, brewer.getKind());
 			statement.setInt(7, id);

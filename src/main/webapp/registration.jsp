@@ -11,7 +11,7 @@
 		Name: <input name="name" placeholder="insert name"/><br/>
 		Surname: <input name="surname" placeholder="insert surname"/><br/>
 		Date of birth: <input name="dateOfBirth" placeholder="AAAA-MM-GG"/><br/>
-		Email: <input name="email" placeholder="***@***.**"/><br/>
+		Email: <input name="mail" placeholder="***@***.**"/><br/>
 		Password: <input name="password" placeholder="********"/><br/>
 		<button type="submit" name="action" value="create">Enter</button>
 	</form>

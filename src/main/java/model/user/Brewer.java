@@ -8,18 +8,18 @@ public class Brewer implements User {
 	private String name;	
 	private String surname;
 	private Date dateOfBirth;
-	private String email;
+	private String mail;
 	private String password;
 	private String kind;
 	
 	
-	public Brewer(int id, String name, String surname, Date dateOfBirth, String email, String password, String kind) {
+	public Brewer(int id, String name, String surname, Date dateOfBirth, String mail, String password, String kind) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.dateOfBirth = dateOfBirth;
-		this.email = email;
+		this.mail = mail;
 		this.password = password;
 		this.kind = kind;
 	}
@@ -48,11 +48,11 @@ public class Brewer implements User {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public String getEmail() {
-		return email;
+	public String getMail() {
+		return mail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 	public String getPassword() {
 		return password;

@@ -15,18 +15,18 @@ public class UserControllerUpdate extends HttpServlet {
 
     public UserControllerUpdate() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
+    
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDao userDao = UserDao.getInstance();
 		
-		String action = request.getParameter("action");
-		String idStr = request.getParameter("id");
-		Brewer brewer = null;
 		try {
-			if("update".equals(action)) {
-				if(idStr != null) {
+			UserDao userDao = UserDao.getInstance();
+		
+			String action = request.getParameter("action");
+			String idStr = request.getParameter("id");
+			Brewer brewer = null;
+			if("update".equals(action) && idStr != null) {
 					int id = Integer.parseInt(idStr);
 					brewer = userDao.selectUserById(id);
 					request.setAttribute("brewer", brewer);
@@ -34,16 +34,19 @@ public class UserControllerUpdate extends HttpServlet {
 					String nextJSP = "/userUpdate.jsp";
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 					dispatcher.include(request, response);
-				}
 			}
 		}catch(ServletException | IOException e){
 			System.out.println("doGet Servlet error");
 		}
 	}		
-
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			doGet(request, response);
+		}catch(ServletException | IOException e){
+			System.out.println("doGet Servlet error");
+		}
 	}
 
 }

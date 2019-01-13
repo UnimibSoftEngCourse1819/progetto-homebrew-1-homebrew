@@ -22,7 +22,6 @@ public class UserController extends HttpServlet {
        
     public UserController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
@@ -62,19 +61,17 @@ public class UserController extends HttpServlet {
 			String surname = request.getParameter("surname");
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			Date dateOfBirth = dateformat.parse(request.getParameter("dateOfBirth"));
-			String email = request.getParameter("email");
+			String mail = request.getParameter("mail");
 			String password = request.getParameter("password");
 			String kind = request.getParameter("kind");
 			Brewer brewer = null;
 			
-			if("update".equals(action)) {
-				if(idStr != null) {
-					int id = Integer.parseInt(idStr);
-					brewer = new Brewer(id, name, surname, dateOfBirth ,email, password, kind);
-					userDao.updateUser(id, brewer);				
-				}
+			if("update".equals(action) && idStr != null) {
+				int id = Integer.parseInt(idStr);
+				brewer = new Brewer(id, name, surname, dateOfBirth ,mail, password, kind);
+				userDao.updateUser(id, brewer);				
 			} else if("create".equals(action)){
-				brewer = new Brewer(-1, name, surname, dateOfBirth ,email, password, "Brewer");
+				brewer = new Brewer(-1, name, surname, dateOfBirth ,mail, password, "Brewer");
 				userDao.createUser(brewer);
 			}
 			doGet(request, response);

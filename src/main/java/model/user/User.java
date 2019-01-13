@@ -20,9 +20,9 @@ public interface User {
 		
 		public void setDateOfBirth(Date dateOfBirth);
 
-		public String getEmail();
+		public String getMail();
 
-		public void setEmail(String email);
+		public void setMail(String email);
 
 		public String getPassword();
 
