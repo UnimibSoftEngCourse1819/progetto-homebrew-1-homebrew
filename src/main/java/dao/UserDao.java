@@ -28,7 +28,7 @@ public class UserDao {
 	private static String findAllUsers = "SELECT * From Utente";
 	//private static String findAllUsers = "SELECT * From User";
 	private static String createUser = "INSERT INTO Utente (nome, cognome, dataDiNascita, mail, password, tipo) VALUES(?,?,?,?,?,?)";
-	//private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password, kind) VALUES(?,?,?,?,?,?)";
+	//private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, mail, password, kind) VALUES(?,?,?,?,?,?)";
 	
 	public ArrayList<Brewer> findAllUsers() {
 		ArrayList<Brewer> brewers = new ArrayList<Brewer>();
