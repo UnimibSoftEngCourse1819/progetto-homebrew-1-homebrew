@@ -4,12 +4,18 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import controller.database.connection.MySQLConnection;
 import model.user.Brewer;
 
 public class UserDao {
 	
+	final Logger logger = Logger.getLogger("MyLog");
+	private static String sqlError = "SQL error";
+	private static String connectionError ="Connection Error";
 	private static UserDao instance = null;
 	
 	private UserDao() {}
@@ -36,8 +42,8 @@ public class UserDao {
 	private static String updateUser = "UPDATE Utente SET nome =?, cognome =?, dataDiNascita =?, mail =?, password =?, tipo =? WHERE idUtente =?";
 	//private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, kind =? WHERE userID =?";
 	
-	public ArrayList<Brewer> findAllUsers() {
-		ArrayList<Brewer> brewers = new ArrayList<Brewer>();
+	public List<Brewer> findAllUsers() {
+		List<Brewer> brewers = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
@@ -62,9 +68,9 @@ public class UserDao {
 			}
 			
 		} catch (SQLException  e) {
-			System.out.println("SQL Error");
+			logger.log(Level.SEVERE,sqlError , e);
 		}catch  (ClassNotFoundException e) {
-			System.out.println("Connection Error");
+			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -93,14 +99,14 @@ public class UserDao {
 				String password = resultSet.getString("password");
 				String kind = resultSet.getString("tipo");
 				//String kind = resultSet.getString("kind");
-				return brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,kind);
-				
+				brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,kind);
+				return brewer;
 			}
 			
 		} catch (SQLException  e) {
-			System.out.println("SQL Error");
+			logger.log(Level.SEVERE,sqlError , e);
 		}catch  (ClassNotFoundException e) {
-			System.out.println("Connection Error");
+			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -124,9 +130,9 @@ public class UserDao {
 			statement.setString(6, brewer.getKind());
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
-			System.out.println("SQL Error");		
+			logger.log(Level.SEVERE,sqlError , e);		
 		}catch  (ClassNotFoundException e) {
-			System.out.println("Connection Error");
+			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -152,9 +158,9 @@ public class UserDao {
 			statement.setInt(7, id);
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
-			System.out.println("SQL Error");		
+			logger.log(Level.SEVERE,sqlError , e);		
 		}catch  (ClassNotFoundException e) {
-			System.out.println("Connection Error");
+			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -172,9 +178,9 @@ public class UserDao {
 			result = statement.executeUpdate();
 			
 		} catch (SQLException  e) {
-			System.out.println("SQL Error");		
+			logger.log(Level.SEVERE,sqlError , e);		
 		}catch  (ClassNotFoundException e) {
-			System.out.println("Connection Error");
+			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -187,7 +193,7 @@ public class UserDao {
 			if (statement != null) statement.close();
 			if (connect != null) connect.close();			
 		} catch (Exception e) {
-			System.out.println("Connection Error");
+			logger.log(Level.SEVERE, connectionError, e);
 		}
 	}
 }

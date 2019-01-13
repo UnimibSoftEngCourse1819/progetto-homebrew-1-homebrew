@@ -21,6 +21,8 @@ public class MySQLConnection {
 		return password;
 	}
 	
-	
+	private MySQLConnection() {
+	    throw new IllegalStateException("Utility class");
+	  }
 	
 }

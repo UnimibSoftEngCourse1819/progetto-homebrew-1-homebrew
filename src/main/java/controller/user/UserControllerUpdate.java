@@ -1,6 +1,9 @@
 package controller.user;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +15,8 @@ import model.user.Brewer;
 
 public class UserControllerUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	final Logger logger = Logger.getLogger("MyLog"); 
+	
     public UserControllerUpdate() {
         super();
     }
@@ -36,7 +40,7 @@ public class UserControllerUpdate extends HttpServlet {
 					dispatcher.include(request, response);
 			}
 		}catch(ServletException | IOException e){
-			System.out.println("doGet Servlet error");
+			logger.log(Level.SEVERE, "doGet Servlet error", e);
 		}
 	}		
 	
@@ -45,7 +49,7 @@ public class UserControllerUpdate extends HttpServlet {
 		try {
 			doGet(request, response);
 		}catch(ServletException | IOException e){
-			System.out.println("doGet Servlet error");
+			logger.log(Level.SEVERE, "doPost Servlet error", e);
 		}
 	}
 

@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,12 +20,13 @@ import model.user.Brewer;
 
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	final Logger logger = Logger.getLogger("MyLog"); 
+	
     public UserController() {
         super();
     }
 
-
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
@@ -32,24 +34,23 @@ public class UserController extends HttpServlet {
 		
 			String action = request.getParameter("action");
 			String idStr = request.getParameter("id");
-			 if("delete".equals(action)) {
-				if(idStr != null) {
-					int id = Integer.parseInt(idStr);
-					userDao.deleteUser(id);				
-				}
+			 if("delete".equals(action) && idStr != null) {
+				int id = Integer.parseInt(idStr);
+				userDao.deleteUser(id);				
 			} 
-			 ArrayList<Brewer> brewers = userDao.findAllUsers();
+			 List<Brewer> brewers = userDao.findAllUsers();
 			 request.setAttribute("brewers", brewers);
 			 
 			 String nextJSP = "/usersList.jsp";
 			 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			 dispatcher.forward(request, response);
 		}catch(ServletException | IOException e){
-			System.out.println("doGet Servlet error");
+			logger.log(Level.SEVERE, "doGet Servlet error", e);
 		}
 			
 	}
-
+    
+    @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
@@ -76,9 +77,9 @@ public class UserController extends HttpServlet {
 			}
 			doGet(request, response);
 		}catch(ServletException | IOException e){
-			System.out.println("doPost Servlet error");
+			logger.log(Level.SEVERE, "doPost Servlet error", e);
 		} catch (ParseException e) {
-			System.out.println("Parsing error Date");
+			logger.log(Level.SEVERE, "Parsing error Date", e);
 		}
 	}
 
