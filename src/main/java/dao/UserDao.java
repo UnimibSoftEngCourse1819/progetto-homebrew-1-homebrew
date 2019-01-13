@@ -101,7 +101,6 @@ public class UserDao {
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(deleteUser);				
 			statement.setInt(1, id);
-			System.out.println(statement);
 			result = statement.executeUpdate();
 			
 		} catch (SQLException  e) {
