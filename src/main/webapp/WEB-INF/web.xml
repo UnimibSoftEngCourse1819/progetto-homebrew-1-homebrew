@@ -10,9 +10,19 @@
   	<description></description>
   	<servlet-class>controller.user.UserController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UserControllerUpdate</servlet-name>
+  	<display-name>UserControllerUpdate</display-name>
+  	<description></description>
+  	<servlet-class>controller.user.UserControllerUpdate</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserController</servlet-name>
   	<url-pattern>/UserController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UserControllerUpdate</servlet-name>
+  	<url-pattern>/UserControllerUpdate</url-pattern>
   </servlet-mapping> 
   
   <welcome-file-list>  

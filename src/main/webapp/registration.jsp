@@ -13,8 +13,7 @@
 		Date of birth: <input name="dateOfBirth" placeholder="AAAA-MM-GG"/><br/>
 		Email: <input name="email" placeholder="***@***.**"/><br/>
 		Password: <input name="password" placeholder="********"/><br/>
-		<button type="submit">Enter</button>
+		<button type="submit" name="action" value="create">Enter</button>
 	</form>
-
 </body>
 </html>

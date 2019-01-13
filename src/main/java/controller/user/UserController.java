@@ -27,30 +27,24 @@ public class UserController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDao userDao = UserDao.getInstance();
 		
-		String action = request.getParameter("action");
-		String idStr = request.getParameter("id");
-		
-		
-		
-		if("delete".equals(action)) {
-			System.out.println(action);
-			System.out.println(idStr);
-			if(idStr != null) {
-				int id = Integer.parseInt(idStr);
-				userDao.deleteUser(id);
-			}
-		}
-			
 		try {
+			UserDao userDao = UserDao.getInstance();
 		
-			ArrayList<Brewer> brewers = userDao.findAllUsers();
-			request.setAttribute("brewers", brewers);
-		
-			String nextJSP = "/usersList.jsp";
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-			dispatcher.forward(request, response);
+			String action = request.getParameter("action");
+			String idStr = request.getParameter("id");
+			 if("delete".equals(action)) {
+				if(idStr != null) {
+					int id = Integer.parseInt(idStr);
+					userDao.deleteUser(id);				
+				}
+			} 
+			 ArrayList<Brewer> brewers = userDao.findAllUsers();
+			 request.setAttribute("brewers", brewers);
+			 
+			 String nextJSP = "/usersList.jsp";
+			 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			 dispatcher.forward(request, response);
 		}catch(ServletException | IOException e){
 			System.out.println("doGet Servlet error");
 		}
@@ -58,18 +52,31 @@ public class UserController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		try {
+			UserDao userDao = UserDao.getInstance();
+			
+			String action = request.getParameter("action");
+			String idStr = request.getParameter("id");
 			String name = request.getParameter("name");
 			String surname = request.getParameter("surname");
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			Date dateOfBirth = dateformat.parse(request.getParameter("dateOfBirth"));
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
+			String kind = request.getParameter("kind");
+			Brewer brewer = null;
 			
-			UserDao userDao = UserDao.getInstance();
-			Brewer brewer = new Brewer(-1, name, surname, dateOfBirth ,email, password, "Brewer");
-			userDao.createUser(brewer);
-			
+			if("update".equals(action)) {
+				if(idStr != null) {
+					int id = Integer.parseInt(idStr);
+					brewer = new Brewer(id, name, surname, dateOfBirth ,email, password, kind);
+					userDao.updateUser(id, brewer);				
+				}
+			} else if("create".equals(action)){
+				brewer = new Brewer(-1, name, surname, dateOfBirth ,email, password, "Brewer");
+				userDao.createUser(brewer);
+			}
 			doGet(request, response);
 		}catch(ServletException | IOException e){
 			System.out.println("doPost Servlet error");

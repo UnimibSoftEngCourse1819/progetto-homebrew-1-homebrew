@@ -20,6 +20,7 @@
 			%>
 			<li><%= brewer.getName() %> <%= brewer.getDateOfBirth() %>
 			<a href= "<%=request.getContextPath()%>/UserController?action=delete&id=<%=brewer.getId()%>">Delete</a>
+			<a href= "<%=request.getContextPath()%>/UserControllerUpdate?action=update&id=<%=brewer.getId()%>">Update</a>
 			<% 
 		}
 	%>
