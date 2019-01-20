@@ -6,6 +6,9 @@
 <body>
 <h1>Lista utenti</h1>
 <a href= "<%=request.getContextPath()%>/UserController?action=selectAllUser">Lista Utenti</a>
-<a href= "<%=request.getContextPath()%>/registration.jsp">Sign-in</a>
+<a href= "<%=request.getContextPath()%>/registration.jsp">Register</a>
+<a href= "<%=request.getContextPath()%>/login.jsp">Register</a>
+
+
 </body>
 </html>
