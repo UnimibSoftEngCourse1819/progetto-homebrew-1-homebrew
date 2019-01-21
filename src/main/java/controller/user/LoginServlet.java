@@ -18,7 +18,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
-    private final String username = "admin";
+
+	private static final long serialVersionUID = 1L;
+	
+	private final String username = "admin";
     private final String password = "password";
 
     protected void doPost(HttpServletRequest request,

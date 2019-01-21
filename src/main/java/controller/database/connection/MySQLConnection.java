@@ -23,6 +23,5 @@ public class MySQLConnection {
 	
 	private MySQLConnection() {
 	    throw new IllegalStateException("Utility class");
-	  }
-	
+	}
 }
