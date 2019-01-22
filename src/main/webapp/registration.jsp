@@ -45,33 +45,35 @@
 		<div id="featured">
 			<ul class="style1">
 				<li class="first">
+					<form action = "<%=request.getContextPath()%>/UserController" method ="POST">
 					<table border="0">
 					<tr>
 					<td><h3>Nome:</h3></td>
-					<td><h3><form action = "<%=request.getContextPath()%>/UserController" method="POST"> &nbsp &nbsp <input name="nome" type="text" id="testoform" placeholder="Inserisci nome"></form></h3>
+					<td><h3>&nbsp &nbsp <input name="nome" type="text" id="testoform" placeholder="Inserisci nome"></h3>
 					</tr>
 					<tr>
 					<td><h3>Cognome:</h3></td>
-					<td><h3><form action = "<%=request.getContextPath()%>/UserController" method="POST"> &nbsp &nbsp <input name ="cognome" type="text" id="testoform" placeholder ="Inserisci cognome"></form></h3>
+					<td><h3>&nbsp &nbsp <input name ="cognome" type="text" id="testoform" placeholder ="Inserisci cognome"></h3>
 					</tr>
 					<tr>
 					<td><h3>Password:</h3></td>
-					<td><h3><form action = "<%=request.getContextPath()%>/UserController" method="POST"> &nbsp &nbsp <input name="password" type="password" id="testoform" placeholder ="*********"></form></h3>
+					<td><h3>&nbsp &nbsp <input name="password" type="password" id="testoform" placeholder ="*********"></h3>
 					<td><h3>&nbsp &nbsp &nbsp Conferma password:</h3></td>
-					<td><h3><form action = "<%=request.getContextPath()%>/UserController" method="POST"> &nbsp &nbsp <input name ="confermapassword" type="password" id="testoform" placeholder ="*********"></form></h3>
+					<td><h3>&nbsp &nbsp <input name ="confermapassword" type="password" id="testoform" placeholder ="*********"></h3>
 					</tr>
 					<tr>
 					<td><h3>nascita:</h3></td>
-					<td><h3><form action = "<%=request.getContextPath()%>/UserController" method="POST"> &nbsp &nbsp <input name ="datanascita" type="text" id="testoform" placeholder="AAAA-MM-GG"></form></h3>
+					<td><h3>&nbsp &nbsp <input name ="datanascita" type="text" id="testoform" placeholder="AAAA-MM-GG"></h3>
 					</tr>
 					<tr>
 					<td><h3>mail:</h3></td>
-					<td><h3><form action = "<%=request.getContextPath()%>/UserController" method="POST"> &nbsp &nbsp <input name ="mail" type="text" id="testoform" placeholder="***@***.**"></form></h3>
+					<td><h3></h3> &nbsp &nbsp <input name ="mail" type="text" id="testoform" placeholder="***@***.**"></h3>
 					</tr>
 					</table>
 					<br>
 					<br>
 				    <center><font face="Source Sans Pro"> <input name ="action" type ="submit" value="ISCRIVITI" id="submitdue"></center></font>
+				</form>
 				</li>
 		<div id="copyright">
 			<span>&copy; Untitled. All rights reserved.</span>
