@@ -49,21 +49,21 @@
 					<table border="0">
 					<tr>
 					<td><h3>Nome:</h3></td>
-					<td><h3>&nbsp &nbsp <input name="nome" type="text" id="testoform" placeholder="Inserisci nome"></h3>
+					<td><h3>&nbsp &nbsp <input name="name" type="text" id="testoform" placeholder="Inserisci nome"></h3>
 					</tr>
 					<tr>
 					<td><h3>Cognome:</h3></td>
-					<td><h3>&nbsp &nbsp <input name ="cognome" type="text" id="testoform" placeholder ="Inserisci cognome"></h3>
+					<td><h3>&nbsp &nbsp <input name ="surname" type="text" id="testoform" placeholder ="Inserisci cognome"></h3>
 					</tr>
 					<tr>
 					<td><h3>Password:</h3></td>
 					<td><h3>&nbsp &nbsp <input name="password" type="password" id="testoform" placeholder ="*********"></h3>
 					<td><h3>&nbsp &nbsp &nbsp Conferma password:</h3></td>
-					<td><h3>&nbsp &nbsp <input name ="confermapassword" type="password" id="testoform" placeholder ="*********"></h3>
+					<td><h3>&nbsp &nbsp <input name ="password2" type="password" id="testoform" placeholder ="*********"></h3>
 					</tr>
 					<tr>
 					<td><h3>nascita:</h3></td>
-					<td><h3>&nbsp &nbsp <input name ="datanascita" type="text" id="testoform" placeholder="AAAA-MM-GG"></h3>
+					<td><h3>&nbsp &nbsp <input name ="dateOfBirth" type="text" id="testoform" placeholder="AAAA-MM-GG"></h3>
 					</tr>
 					<tr>
 					<td><h3>mail:</h3></td>
