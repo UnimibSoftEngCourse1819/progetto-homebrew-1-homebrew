@@ -15,9 +15,19 @@
 		<div id="logo">
 			<span>
 			<form method="post" action="./LoginServlet">
-				User: <input type="text" name="user"/><br/>
-				Password: <input type="password" name="pass"><br/>
-					<input type="submit" value = "Accedi" id="submit"">
+				<table>
+					<tr>
+						<td>User:</td>
+						<td><input type="text" name="user"/></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input type="password" name="pass"></td>
+					</tr>
+					<tr>
+						<td><input type="submit" value = "Accedi" id="submit""></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 		<div id="menu">
