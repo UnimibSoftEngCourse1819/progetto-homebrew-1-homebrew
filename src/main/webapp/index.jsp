@@ -30,7 +30,7 @@
 	</div>
 	<div id="main">
 		<div id="banner">
-			<img src="images/birra1.jpg" alt="" class="image-full" />
+			<img src="homepageBrew.jpg" alt="" class="image-full" />
 		</div>
 		<div id="welcome">
 			<div class="title">

@@ -25,7 +25,7 @@
 		</div>
 		<div id="menu">
 			<ul>
-				<li><a href="index.html" accesskey="1" title="">Homepage</a></li>
+				<li><a href="index.jsp" accesskey="1" title="">Homepage</a></li>
 				<li class="current_page_item"><a href="#" accesskey="2" title=""> Registrati </a></li>
 				<li><a href="#" accesskey="3" title=""> Ricette </a></li>
 				<li><a href="#" accesskey="4" title=""></a></li>
