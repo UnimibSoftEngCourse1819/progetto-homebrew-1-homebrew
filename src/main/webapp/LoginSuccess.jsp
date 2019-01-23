@@ -15,6 +15,7 @@ if(cookies != null){
 for(Cookie cookie : cookies){
 	if(cookie.getName().equals("message")) message = cookie.getValue();
 	if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+
 }
 }
 %>
@@ -24,6 +25,9 @@ for(Cookie cookie : cookies){
 <br><br>
 <form action="./LogoutServlet" method="post">
 <input type="submit" value="Logout" >
+</form>
+<form action="./GetUsers" method="get">
+<input type="submit" value="Get Recipe" >
 </form>
 </body>
 </html>

@@ -21,17 +21,21 @@ public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final String username = "admin";
-    private final String password = "password";
+	//private final String username = "admin";
+    //private final String password = "password";
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+    	
+    	Login login = new Login();
 
         // get request parameters for username and password
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
+        
+        String rights = login.getRights(username, password);
 
-        if (this.username.equals(username) && this.password.equals(password)) {
+        if (!rights.equals("")) {
             //get the old session and invalidate
             HttpSession oldSession = request.getSession(false);
             if (oldSession != null) {
@@ -39,12 +43,18 @@ public class LoginServlet extends HttpServlet {
             }
             //generate a new session
             HttpSession newSession = request.getSession(true);
-
+            
+            
             //setting session to expiry in 5 mins
             newSession.setMaxInactiveInterval(5*60);
-
+            newSession.setAttribute("rights", rights);
+            
             Cookie message = new Cookie("message", "Welcome");
+            Cookie rightsCookie = new Cookie("rights", rights);
+
             response.addCookie(message);
+            response.addCookie(rightsCookie);
+
             response.sendRedirect("/homebrew/LoginSuccess.jsp");
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");

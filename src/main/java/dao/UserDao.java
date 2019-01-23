@@ -18,7 +18,7 @@ public class UserDao {
 	private static String connectionError ="Connection Error";
 	private static UserDao instance = null;
 	
-	private UserDao() {}
+	public UserDao() {}
 	
 	public static UserDao getInstance() {
 		if(instance == null) {

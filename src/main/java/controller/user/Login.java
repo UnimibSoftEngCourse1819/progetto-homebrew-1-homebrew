@@ -14,7 +14,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 import controller.database.connection.MySQLConnection;
 
-public class Login {
+class Login {
 
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
@@ -28,16 +28,15 @@ public class Login {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	public boolean match(String login, String pass) {
+	private boolean match(String login, String pass) {
 		boolean result = false;
 		try {
-			// Class.forName(MySQLConnection.getDriver());
+			Class.forName(MySQLConnection.getDriver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(),
 					MySQLConnection.getPassword());
-			statement = connect.prepareStatement("SELECT password FROM User WHERE email = ?");
+			statement = connect.prepareStatement("SELECT password, rights FROM User WHERE email = ?");
 			statement.setString(1, login);
 			resultSet = statement.executeQuery();
-			System.out.println(resultSet);
 			if (resultSet.next()) {
 				String passGET = resultSet.getString("password");
 				
@@ -51,15 +50,28 @@ public class Login {
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
-			/*
-			 * }catch (ClassNotFoundException e) { logger.log(Level.SEVERE, connectionError,
-			 * e);
-			 */} finally {
-			close();
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, connectionError, e);
 		}
 
 		return result;
 	}
+	
+	public String getRights (String login, String pass) {
+		String rights = "";
+		if(match(login, pass)) {
+			try {
+				rights = resultSet.getString("rights");
+			} catch (SQLException e) {
+				logger.log(Level.SEVERE, sqlError, e);
+			} finally {
+				close();
+			}
+		}
+		return rights;
+	}
+	
+	
 
 	private void close() {
 		try {
