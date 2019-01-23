@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
- <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- <%@ page import="java.util.ArrayList" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -10,10 +10,10 @@
 </head>
 <body>
 
-
-<c:forEach var="columnHeader" items="${columnHeaders}">
-        <c:out value="${columnHeader}" />
+<c:forEach items="${requestScope.users}" var="item">
+    <c:out value="${item}" />
 </c:forEach>
+
 
 
 <br><br>

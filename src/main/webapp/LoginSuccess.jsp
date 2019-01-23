@@ -27,7 +27,7 @@ for(Cookie cookie : cookies){
 <input type="submit" value="Logout" >
 </form>
 <form action="./GetUsers" method="get">
-<input type="submit" value="Get Recipe" >
+<input type="submit" value="Get Users" >
 </form>
 </body>
 </html>

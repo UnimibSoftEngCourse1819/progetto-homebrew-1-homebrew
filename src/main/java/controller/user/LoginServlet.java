@@ -42,12 +42,14 @@ public class LoginServlet extends HttpServlet {
                 oldSession.invalidate();
             }
             //generate a new session
-            HttpSession newSession = request.getSession(true);
+            HttpSession session = request.getSession(true);
             
             
             //setting session to expiry in 5 mins
-            newSession.setMaxInactiveInterval(5*60);
-            newSession.setAttribute("rights", rights);
+            session.setMaxInactiveInterval(5*60);
+            session.setAttribute("rights", rights);
+            session.setAttribute("user", username);
+
             
             Cookie message = new Cookie("message", "Welcome");
             Cookie rightsCookie = new Cookie("rights", rights);

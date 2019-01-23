@@ -1,5 +1,5 @@
 package controller.user;
-/*
+
 import java.io.IOException;
 
 import java.io.PrintWriter;
@@ -13,11 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.UserDao;
 
 /**
  * Servlet implementation class LoginServlet
- 
+ */
 @WebServlet("/GetRecipe")
 public class GetRecipe extends HttpServlet {
 
@@ -26,7 +25,7 @@ public class GetRecipe extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		UserDao user = new UserDao();
+		
 
 		
 		if (login.match(username, password)) {
@@ -86,4 +85,3 @@ public class GetRecipe extends HttpServlet {
 		
 	}
 }
-*/
