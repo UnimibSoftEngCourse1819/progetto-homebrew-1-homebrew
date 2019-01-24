@@ -21,4 +21,17 @@ index.html:
 
 recipe:
 	- mostra le ricette
-	-le ricette possono essere modificate
+	- le ricette possono essere modificate
+	- scegliere la ricetta che verrà mostrata sulla base dell'equipaggiamento del birraio
+	- creare una ricetta
+	
+user:
+	- mostra la lista utenti
+	- si può modificare o eliminare l'utente
+	
+pantry:
+	- mostra la lista degli ingredienti a disposizione
+	- possibilità di aggiornare gli ingredienti a disposizione
+
+brew:
+	- creare una birra 
