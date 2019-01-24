@@ -1,0 +1,24 @@
+••• DIRECTORY •••
+
+index.html
+|-recipe
+   |- 
+|-brew
+|-pantry
+|-manage
+   |-users.jsp
+   |-recipe.jsp
+|-css [tutti i file .css]
+|-js [tutti i file .js]
+|-images [tutte le immagini organizzate in subdir]
+
+
+••• FUNZIONI •••
+
+index.html:
+	-login
+	-registrazione
+
+recipe:
+	- mostra le ricette
+	-le ricette possono essere modificate
