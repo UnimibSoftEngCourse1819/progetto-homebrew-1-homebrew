@@ -13,28 +13,17 @@
 <div id="page" class="container">
 	<div id="header">
 		<div id="logo">
-			<span>
-			<form method="post" action="./LoginServlet">
-				<table>
-					<tr>
-						<td>User:</td>
-						<td><input type="text" name="user"/></td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><input type="password" name="pass"></td>
-					</tr>
-					<tr>
-						<td><input type="submit" value = "Accedi" id="submit""></td>
-					</tr>
-				</table>
-			</form>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 		</div>
 		<div id="menu">
 			<ul>
-				<li class="current_page_item"><a href="#" accesskey="1" title="">Homepage</a></li>
+				<li><a href="<%=request.getContextPath()%>/index.jsp" accesskey="1" title="">Homepage</a></li>
 				<li><a href="<%=request.getContextPath()%>/registration.jsp" accesskey="2" title="">Registrati</a></li>
-				<li><a href="<%=request.getContextPath()%>/RicetteGlobali.jsp" accesskey="3" title="">Ricette </a></li>
+				<li class="current_page_item"><a href="#" accesskey="3" title="">Ricette </a></li>
 				<li><a href="#" accesskey="4" title=""></a></li>
 				<li><a href="#" accesskey="5" title=""></a></li>
 			</ul>
@@ -47,10 +36,17 @@
 		<div id="welcome">
 			<div class="title">
 				<h2>brewDay!</h2>
-				<span class="byline"> Il tuo ricettario di birra personale </span>
+				<span class="byline"> Alcune ricette presenti nella piattaforma</span>
 			</div>
-			<p>Questo è <strong> brewday</strong>, un forum dove puoi trovare molte nuove ricette per le tue birre casalinghe! </p>
-		</div>
+			<div id="featured">
+			<span class="byline"><marquee> Le tue birre</span></marquee>
+				<br>
+				<br>
+				#tabella in cui si visualizzano le birre pubbliche (visibili anche dai non registrati) degli utenti
+				<br>
+				<br>
+				<br>
+			</div>		
 		
 		<div id="copyright">
 			<span>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a></span>

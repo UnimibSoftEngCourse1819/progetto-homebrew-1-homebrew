@@ -25,9 +25,9 @@
 		</div>
 		<div id="menu">
 			<ul>
-				<li><a href="index.jsp" accesskey="1" title="">Homepage</a></li>
+				<li><a href="<%=request.getContextPath()%>/index.jsp" accesskey="1" title="">Homepage</a></li>
 				<li class="current_page_item"><a href="#" accesskey="2" title=""> Registrati </a></li>
-				<li><a href="#" accesskey="3" title=""> Ricette </a></li>
+				<li><a href="<%=request.getContextPath()%>/RicetteGlobali.jsp" accesskey="3" title=""> Ricette </a></li>
 				<li><a href="#" accesskey="4" title=""></a></li>
 				<li><a href="#" accesskey="5" title=""></a></li>
 			</ul>
@@ -39,6 +39,7 @@
 		</div>
 		<div id="welcome">
 			<div class="title">
+			<h2>brewDay!</h2>
 				<span class="byline"> Compila il form di iscrizione per diventare un birraio </span>
 			</div>
 		</div>
