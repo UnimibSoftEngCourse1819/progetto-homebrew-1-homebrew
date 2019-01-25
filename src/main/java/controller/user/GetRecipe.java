@@ -25,7 +25,7 @@ public class GetRecipe extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		
+		/*
 
 		
 		if (login.match(username, password)) {
@@ -49,12 +49,13 @@ public class GetRecipe extends HttpServlet {
 			out.println("<font color=red>Either username or password is wrong.</font>");
 			rd.include(request, response);
 		}
+		*/
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		/*
 		Login login = new Login();
 
 		// get request parameters for username and password
@@ -82,6 +83,7 @@ public class GetRecipe extends HttpServlet {
 			out.println("<font color=red>Either username or password is wrong.</font>");
 			rd.include(request, response);
 		}
+		*/
 		
 	}
 }
