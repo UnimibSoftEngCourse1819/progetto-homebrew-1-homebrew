@@ -24,56 +24,54 @@
 		</div>
 		<div id="menu">
 			<ul>
-				<li><a href="index.html" accesskey="1" title="">Homepage</a></li>
-				<li class="current_page_item"><a href="#" accesskey="2" title=""> Registrati </a></li>
-				<li><a href="#" accesskey="3" title=""> Ricette </a></li>
-				<li><a href="#" accesskey="4" title=""></a></li>
-				<li><a href="#" accesskey="5" title=""></a></li>
+				<li class="current_page_item"><a href="#" accesskey="1" title="">Area Personale</a></li>
+				<li><a href="<%=request.getContextPath()%>/RicetteGlobali.jsp" accesskey="3" title=""> Ricette </a></li>
+				<li><a href="WhatIShould.html" accesskey="4" title="">What Should I Brew today</a></li>
+				<li><a href="LeTueRicette.html" accesskey="5" title="">Le tue ricette personali</a></li>
+				<li><a href="" accesskey="6" title="">Le tue birre personali</a></li>
+				<li><a href="" accesskey="7" title="">Cerca Ricetta</a></li>
 			</ul>
 		</div>
 	</div>
 	<div id="main">
 		<div id="banner">
-			<img src="images/birra1.jpg" alt="" class="image-full" />
+			<img src="homepageBrew.jpg" alt="" class="image-full" />
 		</div>
 		<div id="welcome">
 			<div class="title">
-				<span class="byline"><marquee>Mantieni sempre aggiornato il tuo equipaggiamento</marquee></span>
+				<span class="byline"><marquee>Mantieni sempre aggiornata la tua dispensa</marquee></span>
 			</div>
 		</div>
 		<div id="featured">
 			<ul class="style1">
 				<li class="first">
-					<center> <form></form><table border="0">
+					<center><form><table border="0">
 					<tr>
-					<td><h3>Bilancia:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" pesatura"></h3>
+					<td><h3>MALTO:</h3></td>
+					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" grammi"></h3>
 					</tr>
 					<tr>
-					<td><h3>PENTOLONE:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" litri"></h3>
+					<td><h3>ZUCCHERO:</h3></td>
+					<td><h3> &nbsp &nbsp <input type="text" id="testoformdue" placeholder=" grammi"></h3>
 					</tr>
 					<tr>
-					<td><h3>FERMENTATORE:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="password" id="testoformdue" placeholder=" capacità"></h3>
+					<td><h3>LIEVITO:</h3></td>
+					<td><h3>&nbsp &nbsp <input type="password" id="testoformdue" placeholder=" grammi"></h3>
 					</tr>
 					<tr>
-					<td><h3>MESTOLI:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" quantità"></h3>
+					<td><h3>ADDITIVI:</h3></td>
+					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" grammi"></h3>
 					</tr>
 					<tr>
-					<td><h3>TERMOMETRI:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" quantità"></h3>
-					</tr>
-					<tr>
-					<td><h3>Tubo:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" cm"></h3>
+					<td><h3>LUPPOLO:</h3></td>
+					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" grammi"></h3>
 					</tr>
 					</table> </center>
 					<br>
 					<br>
+					<h3>
 				    <center><font face="Source Sans Pro"> <input type ="submit" value="AGGIORNA" id="submitdue"></center></font>
-				</form>
+				</form></h3>
 				</li>
 		<div id="copyright">
 			<span>&copy; Untitled. All rights reserved.</span>
