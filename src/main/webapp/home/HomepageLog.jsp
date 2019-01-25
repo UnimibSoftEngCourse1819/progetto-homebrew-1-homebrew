@@ -79,10 +79,6 @@
 				<br>
 				<br>
 			</div>
-		<div id="copyright">
-			<span>&copy; Untitled. All rights reserved.</span>
-			<span>Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</span>
-		</div>
 	</div>
 </div>
 </body>
