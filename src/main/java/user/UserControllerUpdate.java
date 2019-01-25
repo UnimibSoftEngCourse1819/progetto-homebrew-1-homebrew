@@ -1,4 +1,4 @@
-package controller.user;
+package user;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -8,10 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.RequestDispatcher;
 
-import dao.UserDao;
-import model.user.Brewer;
 
 public class UserControllerUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +28,7 @@ public class UserControllerUpdate extends HttpServlet {
 		
 			String action = request.getParameter("action");
 			String idStr = request.getParameter("id");
-			Brewer brewer = null;
+			User brewer = null;
 			if("update".equals(action) && idStr != null) {
 					int id = Integer.parseInt(idStr);
 					brewer = userDao.selectUserById(id);

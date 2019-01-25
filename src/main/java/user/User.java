@@ -1,9 +1,9 @@
-package model.user;
+package user;
 
 import java.util.Date;
 
-public class Admin implements User {
-
+public class User {
+	
 	private int id;
 	private String name;	
 	private String surname;
@@ -13,7 +13,7 @@ public class Admin implements User {
 	private String rights;
 	
 	
-	public Admin(int id, String name, String surname, Date dateOfBirth, String mail, String password, String rights) {
+	public User(int id, String name, String surname, Date dateOfBirth, String mail, String password, String rights) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -1,4 +1,4 @@
-package dao;
+package user;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import controller.database.connection.MySQLConnection;
-import model.user.Brewer;
+import database.MySQLConnection;
 
 public class UserDao {
 	
@@ -37,8 +36,8 @@ public class UserDao {
 	private static String seletUserById = "SELECT * From User WHERE userId =?";
 	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, rights =? WHERE userID =?";
 	
-	public List<Brewer> findAllUsers() {
-		List<Brewer> brewers = new ArrayList<>();
+	public List<User> findAllUsers() {
+		List<User> users = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
@@ -53,8 +52,8 @@ public class UserDao {
 				String mail = resultSet.getString("mail");
 				String password = resultSet.getString("password");
 				String rights = resultSet.getString("rights");
-				Brewer brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,rights);
-				brewers.add(brewer);
+				User user = new User(id, name, surname,dateOfBirth,mail,password,rights);
+				users.add(user);
 			}
 			
 		} catch (SQLException  e) {
@@ -64,11 +63,11 @@ public class UserDao {
 		} finally {
 			close();
 		}
-		return brewers;
+		return users;
 	}
 	
-	public Brewer selectUserById(int userId) {
-		Brewer brewer = null;
+	public User selectUserById(int userId) {
+		User user = null;
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
@@ -85,8 +84,8 @@ public class UserDao {
 				String mail = resultSet.getString("mail");
 				String password = resultSet.getString("password");
 				String rights = resultSet.getString("rights");
-				brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,rights);
-				return brewer;
+				user = new User(id, name, surname,dateOfBirth,mail,password,rights);
+				return user;
 			}
 			
 		} catch (SQLException  e) {
@@ -96,24 +95,24 @@ public class UserDao {
 		} finally {
 			close();
 		}
-		return brewer;
+		return user;
 	}
 	
-	public int createUser(Brewer brewer) {
+	public int createUser(User user) {
 		int result = -1;
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createUser);				
-			statement.setString(1, brewer.getName());
-			statement.setString(2, brewer.getSurname());
-			java.sql.Date castDate = new java.sql.Date(brewer.getDateOfBirth().getTime());
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getSurname());
+			java.sql.Date castDate = new java.sql.Date(user.getDateOfBirth().getTime());
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
-			statement.setString(4, brewer.getMail());
-			statement.setString(5, brewer.getPassword());
-			statement.setString(6, brewer.getRights());
+			statement.setString(4, user.getMail());
+			statement.setString(5, user.getPassword());
+			statement.setString(6, user.getRights());
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
@@ -126,21 +125,21 @@ public class UserDao {
 		return result;
 	}
 	
-	public int updateUser(int id, Brewer brewer) {
+	public int updateUser(int id, User user) {
 		int result = -1;
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(updateUser);				
-			statement.setString(1, brewer.getName());
-			statement.setString(2, brewer.getSurname());
-			java.sql.Date castDate = new java.sql.Date(brewer.getDateOfBirth().getTime());
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getSurname());
+			java.sql.Date castDate = new java.sql.Date(user.getDateOfBirth().getTime());
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
-			statement.setString(4, brewer.getMail());
-			statement.setString(5, brewer.getPassword());
-			statement.setString(6, brewer.getRights());
+			statement.setString(4, user.getMail());
+			statement.setString(5, user.getPassword());
+			statement.setString(6, user.getRights());
 			statement.setInt(7, id);
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {

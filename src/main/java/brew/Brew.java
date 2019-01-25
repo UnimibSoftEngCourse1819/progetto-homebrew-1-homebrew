@@ -1,4 +1,4 @@
-package model.brew;
+package brew;
 
 public class Brew {
 	

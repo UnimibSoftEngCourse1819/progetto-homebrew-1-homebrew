@@ -1,4 +1,4 @@
-package controller.user;
+package user;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.UserDao;
-import model.user.Brewer;
 
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,7 +36,7 @@ public class UserController extends HttpServlet {
 				int id = Integer.parseInt(idStr);
 				userDao.deleteUser(id);				
 			} 
-			 List<Brewer> brewers = userDao.findAllUsers();
+			 List<User> brewers = userDao.findAllUsers();
 			 request.setAttribute("brewers", brewers);
 			 
 			 String nextJSP = "/ListUser.jsp";
@@ -65,14 +63,14 @@ public class UserController extends HttpServlet {
 			String mail = request.getParameter("mail");
 			String password = request.getParameter("password");
 			String rights = request.getParameter("rights");
-			Brewer brewer = null;
+			User brewer = null;
 			
 			if("update".equals(action) && idStr != null) {
 				int id = Integer.parseInt(idStr);
-				brewer = new Brewer(id, name, surname, dateOfBirth ,mail, password, rights);
+				brewer = new User(id, name, surname, dateOfBirth ,mail, password, rights);
 				userDao.updateUser(id, brewer);				
 			} else if("create".equals(action)){
-				brewer = new Brewer(-1, name, surname, dateOfBirth ,mail, password, "brewer");
+				brewer = new User(-1, name, surname, dateOfBirth ,mail, password, "brewer");
 				userDao.createUser(brewer);
 			}
 			doGet(request, response);

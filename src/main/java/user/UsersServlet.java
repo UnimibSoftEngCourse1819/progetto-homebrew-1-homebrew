@@ -1,4 +1,4 @@
-package controller.user;
+package user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * viene chiamata da una pagina tramite il riferimento ./nomeServlet
  */
 @WebServlet("/GetUsers")
-public class GetUsers extends HttpServlet {
+public class UsersServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

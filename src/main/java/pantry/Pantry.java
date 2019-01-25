@@ -1,4 +1,4 @@
-package model.ingredient;
+package pantry;
 
 public class Pantry {
 	

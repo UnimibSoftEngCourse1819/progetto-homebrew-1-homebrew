@@ -1,4 +1,4 @@
-package model.ingredient;
+package ingredient;
 
 public class Ingredient {
 	

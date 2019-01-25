@@ -1,4 +1,4 @@
-package controller.user;
+package recipe;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class LoginServlet
  */
 @WebServlet("/GetRecipe")
-public class GetRecipe extends HttpServlet {
+public class RecipeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

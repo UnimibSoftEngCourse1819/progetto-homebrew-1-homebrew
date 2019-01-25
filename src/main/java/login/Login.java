@@ -1,4 +1,4 @@
-package controller.user;
+package login;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-import controller.database.connection.MySQLConnection;
+import database.MySQLConnection;
 
 class Login {
 
