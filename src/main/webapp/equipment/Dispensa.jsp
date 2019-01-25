@@ -73,10 +73,6 @@
 				    <center><font face="Source Sans Pro"> <input type ="submit" value="AGGIORNA" id="submitdue"></center></font>
 				</form></h3>
 				</li>
-		<div id="copyright">
-			<span>&copy; Untitled. All rights reserved.</span>
-			<span>Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</span>
-		</div>
 	</div>
 </div>
 </body>
