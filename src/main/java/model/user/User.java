@@ -28,9 +28,9 @@ public interface User {
 
 		public void setPassword(String password);
 
-		public String getKind();
+		public String getRights();
 
-		public void setKind(String kind);
+		public void setRights(String Rights);
 
 		@Override
 		public String toString();

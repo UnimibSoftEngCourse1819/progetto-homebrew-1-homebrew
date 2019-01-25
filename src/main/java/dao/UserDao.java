@@ -31,16 +31,11 @@ public class UserDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	
-	private static String findAllUsers = "SELECT * From Utente";
-	//private static String findAllUsers = "SELECT * From User";
-	private static String createUser = "INSERT INTO Utente (nome, cognome, dataDiNascita, mail, password, tipo) VALUES(?,?,?,?,?,?)";
-	//private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, mail, password, kind) VALUES(?,?,?,?,?,?)";
-	private static String deleteUser = "DELETE FROM Utente WHERE idUtente =?";
-	//private static String deleteUser = "DELETE FROM User WHERE userID =?";
-	private static String seletUserById = "SELECT * From Utente WHERE idUtente =?";
-	//private static String seletUserById = "SELECT * From User WHERE userId =?";
-	private static String updateUser = "UPDATE Utente SET nome =?, cognome =?, dataDiNascita =?, mail =?, password =?, tipo =? WHERE idUtente =?";
-	//private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, kind =? WHERE userID =?";
+	private static String findAllUsers = "SELECT * From User";
+	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, mail, password, rights) VALUES(?,?,?,?,?,?)";
+	private static String deleteUser = "DELETE FROM User WHERE userID =?";
+	private static String seletUserById = "SELECT * From User WHERE userId =?";
+	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, rights =? WHERE userID =?";
 	
 	public List<Brewer> findAllUsers() {
 		List<Brewer> brewers = new ArrayList<>();
@@ -51,19 +46,14 @@ public class UserDao {
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
-				int id = resultSet.getInt("idUtente");
-				//int id = resultSet.getInt("userId");
-				String name = resultSet.getString("nome");
-				//String name = resultSet.getString("name");
-				String surname = resultSet.getString("cognome");
-				//String surname = resultSet.getString("surname");
-				Date dateOfBirth = resultSet.getDate("dataDiNascita");
-				//Date dateOfBirth = resultSet.getDate("dateOfBirth");
+				int id = resultSet.getInt("userId");
+				String name = resultSet.getString("name");
+				String surname = resultSet.getString("surname");
+				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String mail = resultSet.getString("mail");
 				String password = resultSet.getString("password");
-				String kind = resultSet.getString("tipo");
-				//String kind = resultSet.getString("kind");
-				Brewer brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,kind);
+				String rights = resultSet.getString("rights");
+				Brewer brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,rights);
 				brewers.add(brewer);
 			}
 			
@@ -87,19 +77,15 @@ public class UserDao {
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
-				int id = resultSet.getInt("idUtente");
-				//int id = resultSet.getInt("userId");
-				String name = resultSet.getString("nome");
-				//String name = resultSet.getString("name");
-				String surname = resultSet.getString("cognome");
-				//String surname = resultSet.getString("surname");
-				Date dateOfBirth = resultSet.getDate("dataDiNascita");
-				//Date dateOfBirth = resultSet.getDate("dateOfBirth");
+				
+				int id = resultSet.getInt("userId");
+				String name = resultSet.getString("name");
+				String surname = resultSet.getString("surname");
+				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String mail = resultSet.getString("mail");
 				String password = resultSet.getString("password");
-				String kind = resultSet.getString("tipo");
-				//String kind = resultSet.getString("kind");
-				brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,kind);
+				String rights = resultSet.getString("rights");
+				brewer = new Brewer(id, name, surname,dateOfBirth,mail,password,rights);
 				return brewer;
 			}
 			
@@ -127,7 +113,7 @@ public class UserDao {
 			statement.setString(3, reportDate);
 			statement.setString(4, brewer.getMail());
 			statement.setString(5, brewer.getPassword());
-			statement.setString(6, brewer.getKind());
+			statement.setString(6, brewer.getRights());
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
@@ -154,7 +140,7 @@ public class UserDao {
 			statement.setString(3, reportDate);
 			statement.setString(4, brewer.getMail());
 			statement.setString(5, brewer.getPassword());
-			statement.setString(6, brewer.getKind());
+			statement.setString(6, brewer.getRights());
 			statement.setInt(7, id);
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {

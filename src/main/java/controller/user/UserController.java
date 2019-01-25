@@ -64,15 +64,15 @@ public class UserController extends HttpServlet {
 			Date dateOfBirth = dateformat.parse(request.getParameter("dateOfBirth"));
 			String mail = request.getParameter("mail");
 			String password = request.getParameter("password");
-			String kind = request.getParameter("kind");
+			String rights = request.getParameter("rights");
 			Brewer brewer = null;
 			
 			if("update".equals(action) && idStr != null) {
 				int id = Integer.parseInt(idStr);
-				brewer = new Brewer(id, name, surname, dateOfBirth ,mail, password, kind);
+				brewer = new Brewer(id, name, surname, dateOfBirth ,mail, password, rights);
 				userDao.updateUser(id, brewer);				
 			} else if("create".equals(action)){
-				brewer = new Brewer(-1, name, surname, dateOfBirth ,mail, password, "Brewer");
+				brewer = new Brewer(-1, name, surname, dateOfBirth ,mail, password, "brewer");
 				userDao.createUser(brewer);
 			}
 			doGet(request, response);

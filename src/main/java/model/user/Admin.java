@@ -10,10 +10,10 @@ public class Admin implements User {
 	private Date dateOfBirth;
 	private String mail;
 	private String password;
-	private String kind;
+	private String rights;
 	
 	
-	public Admin(int id, String name, String surname, Date dateOfBirth, String mail, String password, String kind) {
+	public Admin(int id, String name, String surname, Date dateOfBirth, String mail, String password, String rights) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -21,7 +21,7 @@ public class Admin implements User {
 		this.dateOfBirth = dateOfBirth;
 		this.mail = mail;
 		this.password = password;
-		this.kind = kind;
+		this.rights = rights;
 	}
 	
 	public int getId() {
@@ -60,11 +60,12 @@ public class Admin implements User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getKind() {
-		return kind;
+	public String getRights() {
+		return rights;
 	}
-	public void setKind(String kind) {
-		this.kind = kind;
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
+
 
 }
