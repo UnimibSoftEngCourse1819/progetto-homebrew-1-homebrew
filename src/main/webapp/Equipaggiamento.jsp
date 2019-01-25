@@ -28,7 +28,7 @@
 				<li><a href="<%=request.getContextPath()%>/RicetteGlobali.jsp" accesskey="3" title=""> Ricette </a></li>
 				<li><a href="WhatIShould.html" accesskey="4" title="">What Should I Brew today</a></li>
 				<li><a href="LeTueRicette.html" accesskey="5" title="">Le tue ricette personali</a></li>
-				<li><a href="" accesskey="6" title="">Le tue birre personali</a></li>
+				<li><a href="LeTueBirre.html" accesskey="6" title="">Le tue birre personali</a></li>
 				<li><a href="" accesskey="7" title="">Cerca Ricetta</a></li>
 			</ul>
 		</div>
