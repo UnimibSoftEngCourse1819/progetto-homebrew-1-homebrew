@@ -41,7 +41,7 @@ public class UserController extends HttpServlet {
 			 List<Brewer> brewers = userDao.findAllUsers();
 			 request.setAttribute("brewers", brewers);
 			 
-			 String nextJSP = "/usersList.jsp";
+			 String nextJSP = "/ListUser.jsp";
 			 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			 dispatcher.forward(request, response);
 		}catch(ServletException | IOException e){

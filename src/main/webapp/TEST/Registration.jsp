@@ -47,7 +47,7 @@
 		<div id="featured">
 			<ul class="style1">
 				<li class="first">
-					<form action = "<%=request.getContextPath()%>/UserController" method ="POST">
+					<form action = "./UserController" method ="POST">
 					<table border="0">
 					<tr>
 					<td><h3>Nome:</h3></td>
