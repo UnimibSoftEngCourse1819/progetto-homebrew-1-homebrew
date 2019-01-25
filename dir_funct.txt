@@ -5,6 +5,8 @@ index.html
    |- 
 |-brew
 |-pantry
+|-account
+   |-account.jsp
 |-manage
    |-users.jsp
    |-recipe.jsp
@@ -16,22 +18,22 @@ index.html
 ••• FUNZIONI •••
 
 index.html:
-	-login
-	-registrazione
+	- login
+	- registrazione
 
 recipe:
 	- mostra le ricette
 	- le ricette possono essere modificate
-	- scegliere la ricetta che verr� mostrata sulla base dell'equipaggiamento del birraio
+	- scegliere la ricetta che verra' mostrata sulla base dell'equipaggiamento del birraio
 	- creare una ricetta
 	
-user:
+menage > users:
 	- mostra la lista utenti
-	- si pu� modificare o eliminare l'utente
+	- si puo' modificare o eliminare l'utente [tramite finestra modale]
 	
 pantry:
 	- mostra la lista degli ingredienti a disposizione
-	- possibilit� di aggiornare gli ingredienti a disposizione
+	- possibilita' di aggiornare gli ingredienti a disposizione
 
 brew:
 	- creare una birra 
