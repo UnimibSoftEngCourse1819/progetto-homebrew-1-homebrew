@@ -12,23 +12,12 @@ import java.util.logging.Logger;
 
 import database.MySQLConnection;
 
-
-
-
-public class RecipeDao {
+class RecipeDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
-	private static RecipeDao instance = null;
 	
-private RecipeDao() {}
-	
-	public static RecipeDao getInstance() {
-		if(instance == null) {
-			instance = new RecipeDao();
-		}
-		return instance;
-	}
+	public RecipeDao() {}
 	
 	private Connection connect = null;
 	private PreparedStatement statement = null;
@@ -51,8 +40,6 @@ private RecipeDao() {}
 				String content = resultSet.getString("content");
 				int capacity = resultSet.getInt("capacity");
 				String visibility = resultSet.getString("visibility");
-				
-				
 				Recipe recipe = new Recipe(id, userID, name, content, capacity, visibility);
 				recipes.add(recipe);
 			}

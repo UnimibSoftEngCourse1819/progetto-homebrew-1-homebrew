@@ -23,12 +23,11 @@ public class RecipeController extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
-			RecipeDao recipeDao = RecipeDao.getInstance();
+			RecipeDao recipeDao = new RecipeDao();
 			List<Recipe> recipes = recipeDao.findAllRecipes();
 			request.setAttribute("recipes", recipes);
 			
-			String nextJSP = "/recipesList.jsp";
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/GlobalRecipe.jsp");
 			dispatcher.forward(request, response);
     	}catch(ServletException | IOException e){
 			logger.log(Level.SEVERE, "doGet Servlet error", e);

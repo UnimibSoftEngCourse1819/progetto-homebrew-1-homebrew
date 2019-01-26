@@ -42,8 +42,6 @@ public class AddUsersServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.html");
 			dispatcher.forward(request, response);
 
-
-
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
