@@ -4,40 +4,32 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import database.MySQLConnection;
 
-public class UserDao {
+class UserDao {
 	
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
-	private static UserDao instance = null;
 	
 	public UserDao() {}
-	
-	public static UserDao getInstance() {
-		if(instance == null) {
-			instance = new UserDao();
-		}
-		return instance;
-	}
+
 	
 	private Connection connect = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	
 	private static String findAllUsers = "SELECT * From User";
-	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, mail, password, rights) VALUES(?,?,?,?,?,?)";
+	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password, rights) VALUES(?,?,?,?,?,?)";
 	private static String deleteUser = "DELETE FROM User WHERE userID =?";
 	private static String seletUserById = "SELECT * From User WHERE userId =?";
-	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, mail =?, password =?, rights =? WHERE userID =?";
+	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, email =?, password =?, rights =? WHERE userID =?";
 	
-	public List<User> findAllUsers() {
-		List<User> users = new ArrayList<>();
+	public ArrayList<User> findAllUsers() {
+		ArrayList<User> users = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
@@ -49,10 +41,10 @@ public class UserDao {
 				String name = resultSet.getString("name");
 				String surname = resultSet.getString("surname");
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
-				String mail = resultSet.getString("mail");
+				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
 				String rights = resultSet.getString("rights");
-				User user = new User(id, name, surname,dateOfBirth,mail,password,rights);
+				User user = new User(id, name, surname, dateOfBirth, email, password, rights);
 				users.add(user);
 			}
 			
@@ -81,10 +73,10 @@ public class UserDao {
 				String name = resultSet.getString("name");
 				String surname = resultSet.getString("surname");
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
-				String mail = resultSet.getString("mail");
+				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
 				String rights = resultSet.getString("rights");
-				user = new User(id, name, surname,dateOfBirth,mail,password,rights);
+				user = new User(id, name, surname, dateOfBirth, email, password, rights);
 				return user;
 			}
 			
@@ -110,7 +102,7 @@ public class UserDao {
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
-			statement.setString(4, user.getMail());
+			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
 			statement.setString(6, user.getRights());
 			result = statement.executeUpdate();
@@ -137,7 +129,7 @@ public class UserDao {
 			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
-			statement.setString(4, user.getMail());
+			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
 			statement.setString(6, user.getRights());
 			statement.setInt(7, id);

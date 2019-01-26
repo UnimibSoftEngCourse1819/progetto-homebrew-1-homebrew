@@ -52,11 +52,11 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", username);
 
             
-            Cookie message = new Cookie("message", "Welcome");
-            Cookie rightsCookie = new Cookie("rights", rights);
+            //Cookie message = new Cookie("message", "Welcome");
+            //Cookie rightsCookie = new Cookie("rights", rights);
 
-            response.addCookie(message);
-            response.addCookie(rightsCookie);
+            //response.addCookie(message);
+            //response.addCookie(rightsCookie);
 
             response.sendRedirect("/homebrew/LoginSuccess.jsp");
         } else {

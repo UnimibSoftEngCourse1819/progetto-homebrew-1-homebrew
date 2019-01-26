@@ -8,20 +8,28 @@ public class User {
 	private String name;	
 	private String surname;
 	private Date dateOfBirth;
-	private String mail;
+	private String email;
 	private String password;
 	private String rights;
 	
 	
-	public User(int id, String name, String surname, Date dateOfBirth, String mail, String password, String rights) {
+	public User(int id, String name, String surname, Date dateOfBirth, String email, String password, String rights) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.dateOfBirth = dateOfBirth;
-		this.mail = mail;
+		this.email = email;
 		this.password = password;
 		this.rights = rights;
+	}
+	
+	public User(String name, String surname, Date dateOfBirth, String email, String password, String rights) {
+		this(0, name, surname, dateOfBirth, email, password, rights);
+	}
+	
+	public User(int id, String name, String surname, Date dateOfBirth, String email, String rights) {
+		this(0, name, surname, dateOfBirth, email, "hidden", rights);
 	}
 	
 	public int getId() {
@@ -48,11 +56,11 @@ public class User {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
