@@ -16,8 +16,6 @@
 <link href="css/default.css" rel="stylesheet" type="text/css"/>
 <link href="css/fonts.css" rel="stylesheet" type="text/css"/>
 
-<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-
 </head>
 <body>
 	<div id="page" class="container">
