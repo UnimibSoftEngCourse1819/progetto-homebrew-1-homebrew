@@ -28,7 +28,7 @@ class RecipeDao {
 	private static String findAllRecipes = "SELECT * From Recipe WHERE visibility='public'";
 	
 	public List<Recipe> findAllRecipes() {
-		List<Recipe> recipes = new ArrayList<Recipe>();
+		List<Recipe> recipes = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());

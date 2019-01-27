@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +16,9 @@ public class EquipmentDao {
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public EquipmentDao() {}
+	public EquipmentDao() {
+		//costructor
+	}
 
 	
 	private Connection connect = null;
@@ -52,7 +54,7 @@ public class EquipmentDao {
 		return result;
 	}
 	
-	public int UpdateEquipment(ArrayList<Equipment> tools) {
+	public int updateEquipment(List<Equipment> tools) {
 		int result = -1;
 		try {
 			Class.forName(MySQLConnection.getDriver());  
