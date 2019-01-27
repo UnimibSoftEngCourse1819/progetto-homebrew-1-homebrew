@@ -14,7 +14,7 @@
 	media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-
+<script type="text/javascript" src="../js/form_control.js"></script>
 </head>
 <body>
 	<div id="page" class="container">
@@ -42,7 +42,6 @@
 			</div>
 			<h1>GESTIRE ERRORI PRIMA INVIO FORM</h1>
 			<h2>- password coincidono</h2>
-			<h2>- email corretta</h2>
 		
 			<h2>- </h2>
 			<h1>GESTIRE ERRORI DOPO INVIO FORM</h1>
@@ -53,47 +52,47 @@
 			<div id="featured">
 				<ul class="style1">
 					<li class="first">
-						<form action="../AddUser" method="post">
+						<form action="../AddUser" method="post" name="registration_form">
 							<table>
 								<tr>
 									<td><h3>Nome:</h3></td>
 									<td><h3>
-											<input name="name" type="text">
+											<input name="name" type="text" required>
 										</h3>
 								</tr>
 								<tr>
 									<td><h3>Cognome:</h3></td>
 									<td><h3>
-											<input name="surname" type="text">
+											<input name="surname" type="text" required>
 										</h3>
 								</tr>
 								<tr>
 									<td><h3>Password:</h3></td>
 									<td><h3>
-											<input name="password" type="password">
+											<input name="password" type="password" required>
 										</h3>
 								</tr>
 								<tr>
 									<td><h3>Conferma password:</h3></td>
 									<td><h3>
-											<input name="checkPassword" type="password">
+											<input name="checkPassword" type="password" required>
 										</h3>
 								</tr>
 								<tr>
 									<td><h3>Data di nascita:</h3></td>
 									<td><h3>
-											<input name="dateOfBirth" type="date">
+											<input name="dateOfBirth" type="date" required>
 										</h3>
 								</tr>
 								<tr>
 									<td><h3>Email:</h3></td>
 									<td><h3>
-											<input name="email" type="email">
+											<input name="email" type="email" required>
 										</h3>
 								</tr>
 							</table>
 							<input name="action" type="submit"
-								value="ISCRIVITI" id="addNewUser">
+								value="ISCRIVITI" id="addNewUser" onClick ="return(controlForm());">
 								
 						</form>
 					</li>
