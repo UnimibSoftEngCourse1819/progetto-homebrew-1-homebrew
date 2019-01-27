@@ -10,7 +10,7 @@
 <link href="../css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-
+<script type="text/javascript" src="../js/form_control_createRecipe.js"></script>
 </head>
 <body>
 <div id="page" class="container">
@@ -48,33 +48,34 @@
 				<li class="first">
 					NB: I valori degli ingredienti inseriti si devono basare su una capienza del pentolone pari a 1L
 					<br>
+					<marquee> I valori inseriti vengono considerate parti rispetto alla ricetta finale </marquee>
 					<br>
 					<br>
-					<center><form>
+					<center><form method="post" name="createRecipe_form">
 					<table border="0">
 					<tr>
 					<td width="100"><h3>malto:</h3></td>
-					<td width="300"><h3><input name="malto" type="text" id="testoform" placeholder=" quantità"></h3>
+					<td width="300"><h3><input name="malto" type="number" id="testoform" required></h3>
 					</tr>
 					<tr>
 					<td><h3>Luppolo:</h3></td>
-					<td><h3><input name ="luppolo" type="text" id="testoform" placeholder=" grammi"></h3>
+					<td><h3><input name ="luppolo" type="number" id="testoform" required></h3>
 					</tr>
 					<tr>
 					<td><h3>zucchero:</h3></td>
-					<td><h3><input name="zucchero" type="password" id="testoform" placeholder =" dose"></h3>
+					<td><h3><input name="zucchero" type="number" id="testoform" required></h3>
 					</tr>
 					<tr>
 					<td><h3>lievito:</h3></td>
-					<td><h3><input name ="lievito" type="text" id="testoform" placeholder ="  grammi"></h3>
+					<td><h3><input name ="lievito" type="number" id="testoform" required></h3>
 					</tr>
 					<tr>
 					<td><h3>additivi:</h3></td>
-					<td><h3><input name ="additivi" type="text" id="testoform" placeholder=" dose"></h3>
+					<td><h3><input name ="additivi" type="number" id="testoform" required></h3>
 					</tr>
 					<tr>
 					<td><h3>Acqua:</h3></td>
-					<td><h3><input name ="additivi" type="text" id="testoform" placeholder=" porzione"></h3>
+					<td><h3><input name ="additivi" type="number" id="testoform" required></h3>
 					</tr>
 					<tr>
 					<td><h3>NOTE:</h3></td>
@@ -82,7 +83,7 @@
 					</tr>
 					<tr>
 					<td><h3>Procedimento:</h3></td>
-					<td><h3><input name ="procedimento" type="textarea" id="areaditesto"></h3>
+					<td><h3><input name ="procedimento" type="textarea" id="areaditesto" required></h3>
 					</tr>
 					<tr>
 					<td><h3><input type="checkbox" name="privato" value="privato">privata </h3></td>
@@ -91,7 +92,8 @@
 					</table>
 					<br>
 					<br>
-				    <center><font face="Source Sans Pro"> <input name ="action" type ="submit" value="CREA RICETTA" id="submitvertre"></center></font>
+				    <center><font face="Source Sans Pro"> 
+				    <input name ="action" type ="submit" value="CREA RICETTA" id="submitvertre" onClick ="return(controlForm ());"></center></font>
 				</li>
 				</form>
 	</div>
