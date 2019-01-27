@@ -1,0 +1,16 @@
+••• SERVLET •••
+
+Per inviare dati ad un jsp
+/*
+ * In getRequestDispatcher() inserire il path del file jsp a cui inviare i dati
+ * il path comincia SEMPRE con "/....."
+ * 
+ * setAttribute() aggiunge l'oggetto da inviare tramite ("nome", oggetto) nel
+ * jsp chiamare l'oggetto tramite "nome" ed accedere agli attributi con
+ * ${item.attributo} dove item è un elemento del ciclo foreach su "nome"
+ * 
+ * dispatcher.forward(request, response) formula fissa per inviare i dati
+ */
+RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListUser.jsp");
+request.setAttribute("users", users);
+dispatcher.forward(request, response);
