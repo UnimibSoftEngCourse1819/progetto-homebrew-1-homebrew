@@ -9,17 +9,20 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import database.MySQLConnection;
 
-public class User_BrewDao {
+public class UserBrewDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public User_BrewDao() {}
+	public UserBrewDao() {
+		//costructor
+	}
 
 	
 	private Connection connect = null;
@@ -32,8 +35,8 @@ public class User_BrewDao {
 										+ "WHERE UB.UserID = ?";
 	private static String createUserBrew = "INSERT INTO User_Brew (userID, brewID, brewDate, quantity) VALUES(?,?,?,?)";
 	
-	public ArrayList<User_Brew_Select> findAllUsers() {
-		ArrayList<User_Brew_Select> user_brew_selects = new ArrayList<>();
+	public List<UserBrewSelect> findAllUsers() {
+		List<UserBrewSelect> userBrewSelects = new ArrayList<UserBrewSelect>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
@@ -45,8 +48,8 @@ public class User_BrewDao {
 				String recipeName = resultSet.getString("recipeName");
 				Date brewDate = resultSet.getDate("brewDate");
 				int quantity = resultSet.getInt("quantity");
-				User_Brew_Select user_brew_select = new User_Brew_Select (brewName, recipeName, brewDate, quantity);
-				user_brew_selects.add(user_brew_select);
+				UserBrewSelect user_brew_select = new UserBrewSelect (brewName, recipeName, brewDate, quantity);
+				userBrewSelects.add(user_brew_select);
 			}
 			
 		} catch (SQLException  e) {
@@ -56,10 +59,10 @@ public class User_BrewDao {
 		} finally {
 			close();
 		}
-		return user_brew_selects;
+		return userBrewSelects;
 	}
 	
-	public int createUser(User_Brew user_brew) {
+	public int createUser(UserBrew user_brew) {
 		int result = -1;
 		try {
 			Class.forName(MySQLConnection.getDriver());  

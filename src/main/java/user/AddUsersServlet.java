@@ -35,7 +35,7 @@ public class AddUsersServlet extends HttpServlet {
 		User user;
 		try {
 			dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-			user = new User(name, surname, dateOfBirth, email, hash, "brewer");
+			user = new User(-1,name, surname, dateOfBirth, email, hash, "brewer");
 			UserDao adder = new UserDao();
 			adder.createUser(user);
 			

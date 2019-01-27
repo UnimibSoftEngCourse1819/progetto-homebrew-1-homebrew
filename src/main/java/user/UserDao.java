@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +16,9 @@ class UserDao {
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public UserDao() {}
+	public UserDao() {
+		//costructor
+	}
 
 	
 	private Connection connect = null;
@@ -28,7 +31,7 @@ class UserDao {
 	private static String seletUserById = "SELECT * From User WHERE userId =?";
 	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, email =?, password =?, rights =? WHERE userID =?";
 	
-	public ArrayList<User> findAllUsers() {
+	public List<User> findAllUsers() {
 		ArrayList<User> users = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  

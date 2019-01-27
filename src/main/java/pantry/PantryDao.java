@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +17,9 @@ public class PantryDao {
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public PantryDao() {}
+	public PantryDao() {
+		//costructor
+	}
 
 	
 	private Connection connect = null;
@@ -54,7 +56,7 @@ public class PantryDao {
 	}
 	
 	
-	public int UpdatePantry(ArrayList<Pantry> ingredients) {
+	public int updatePantry(List<Pantry> ingredients) {
 		int result = -1;
 		try {
 			Class.forName(MySQLConnection.getDriver());  

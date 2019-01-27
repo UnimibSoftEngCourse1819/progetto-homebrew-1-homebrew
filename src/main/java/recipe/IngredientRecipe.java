@@ -1,11 +1,11 @@
 package recipe;
 
-public class Ingredient_Recipe {
+public class IngredientRecipe {
 	private int recipeId;
 	private int ingredientId;
 	private int quantity;
 	
-	public Ingredient_Recipe(int recipeId, int ingredientId, int quantity) {
+	public IngredientRecipe(int recipeId, int ingredientId, int quantity) {
 		super();
 		this.recipeId = recipeId;
 		this.ingredientId = ingredientId;

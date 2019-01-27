@@ -24,14 +24,6 @@ public class User {
 		this.rights = rights;
 	}
 	
-	public User(String name, String surname, Date dateOfBirth, String email, String password, String rights) {
-		this(0, name, surname, dateOfBirth, email, password, rights);
-	}
-	
-	public User(int id, String name, String surname, Date dateOfBirth, String email, String rights) {
-		this(0, name, surname, dateOfBirth, email, "hidden", rights);
-	}
-	
 	public int getId() {
 		return id;
 	}

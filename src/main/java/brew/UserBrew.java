@@ -2,13 +2,13 @@ package brew;
 
 import java.util.Date;
 
-public class User_Brew {
+public class UserBrew {
 	private int userId;
 	private int brewId;
 	private Date brewDate;
 	private int quantity;
 	
-	public User_Brew(int userId, int brewId, Date brewDate, int quantity) {
+	public UserBrew(int userId, int brewId, Date brewDate, int quantity) {
 		super();
 		this.userId = userId;
 		this.brewId = brewId;

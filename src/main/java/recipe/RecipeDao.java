@@ -17,7 +17,9 @@ class RecipeDao {
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public RecipeDao() {}
+	public RecipeDao() {
+		//costructor
+	}
 	
 	private Connection connect = null;
 	private PreparedStatement statement = null;
@@ -26,7 +28,7 @@ class RecipeDao {
 	private static String findAllRecipes = "SELECT * From Recipe WHERE visibility='public'";
 	
 	public List<Recipe> findAllRecipes() {
-		List<Recipe> recipes = new ArrayList<>();
+		List<Recipe> recipes = new ArrayList<Recipe>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());

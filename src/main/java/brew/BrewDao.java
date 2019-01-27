@@ -14,7 +14,9 @@ public class BrewDao {
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public BrewDao() {}
+	public BrewDao() {
+		//costructor
+		}
 	
 	private Connection connect = null;
 	private PreparedStatement statement = null;

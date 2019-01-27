@@ -2,14 +2,14 @@ package brew;
 
 import java.util.Date;
 
-public class User_Brew_Select {
+public class UserBrewSelect {
 	private String brewName;	
 	private String recipeName;
 	private Date brewDate;
 	private int quantity;
 	
 	
-	public User_Brew_Select(String brewName, String recipeName, Date brewDate, int quantity) {
+	public UserBrewSelect(String brewName, String recipeName, Date brewDate, int quantity) {
 		super();
 		this.brewName = brewName;
 		this.recipeName = recipeName;
