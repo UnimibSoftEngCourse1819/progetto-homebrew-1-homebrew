@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +49,7 @@ public class LoginServlet extends HttpServlet {
             session.setMaxInactiveInterval(5*60);
             session.setAttribute("rights", rights);
             session.setAttribute("user", username);
+            String name  = login.getName();
 
             
             //Cookie message = new Cookie("message", "Welcome");
@@ -57,10 +57,12 @@ public class LoginServlet extends HttpServlet {
 
             //response.addCookie(message);
             //response.addCookie(rightsCookie);
-
-            response.sendRedirect("/homebrew/LoginSuccess.jsp");
+            login.close();
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home/homepage.jsp");
+			request.setAttribute("userID", name);
+			dispatcher.forward(request, response);
         } else {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.html");
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Either username or password is wrong.</font>");
             rd.include(request, response);

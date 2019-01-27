@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +29,8 @@ class UserDao {
 	private static String seletUserById = "SELECT * From User WHERE userId =?";
 	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, email =?, password =?, rights =? WHERE userID =?";
 	
-	public ArrayList<User> findAllUsers() {
-		ArrayList<User> users = new ArrayList<>();
+	public List<User> findAllUsers() {
+		List<User> users = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());

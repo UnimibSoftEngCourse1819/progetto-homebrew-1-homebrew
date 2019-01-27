@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false"%>
 
 <!DOCTYPE html>
 <html>
@@ -10,8 +11,8 @@
 </head>
 <body>
 
-<c:forEach items="${requestScope.users}" var="item">
-    <c:out value="${item}" />
+<c:forEach items="${users}" var="item">
+   ${item.name}<br><br>
 </c:forEach>
 
 

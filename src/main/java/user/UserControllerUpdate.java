@@ -1,5 +1,5 @@
 package user;
-
+/*
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +23,6 @@ public class UserControllerUpdate extends HttpServlet {
     
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	/*	
 		try {
 			UserDao userDao = UserDao.getInstance();
 		
@@ -50,7 +49,8 @@ public class UserControllerUpdate extends HttpServlet {
 			doGet(request, response);
 		}catch(ServletException | IOException e){
 			logger.log(Level.SEVERE, "doPost Servlet error", e);
-		}*/
+		}
 	}
 
 }
+*/

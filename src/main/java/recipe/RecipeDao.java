@@ -24,6 +24,8 @@ class RecipeDao {
 	private ResultSet resultSet = null;
 	
 	private static String findAllRecipes = "SELECT * From Recipe WHERE visibility='public'";
+	private static String findAllRecipesUser = "SELECT * From Recipe WHERE visibility='public' OR user=?";
+
 	
 	public List<Recipe> findAllRecipes() {
 		List<Recipe> recipes = new ArrayList<>();
@@ -35,7 +37,7 @@ class RecipeDao {
 			
 			while(resultSet.next()) {
 				int id = resultSet.getInt("recipeID");
-				int userID = resultSet.getInt("userID");
+				int userID = resultSet.getInt("user");
 				String name = resultSet.getString("name");
 				String content = resultSet.getString("content");
 				int capacity = resultSet.getInt("capacity");
@@ -54,6 +56,35 @@ class RecipeDao {
 		return recipes;
 	}
 	
+	public List<Recipe> findAllRecipes(int userRequest) {
+		List<Recipe> recipes = new ArrayList<>();
+		try {
+			Class.forName(MySQLConnection.getDriver());  
+			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
+			statement = connect.prepareStatement(findAllRecipesUser);
+			statement.setInt(1, userRequest);
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("user");
+				String name = resultSet.getString("name");
+				String content = resultSet.getString("content");
+				int capacity = resultSet.getInt("capacity");
+				String visibility = resultSet.getString("visibility");
+				Recipe recipe = new Recipe(id, userID, name, content, capacity, visibility);
+				recipes.add(recipe);
+			}
+			
+		} catch (SQLException  e) {
+			logger.log(Level.SEVERE,sqlError , e);
+		}catch  (ClassNotFoundException e) {
+			logger.log(Level.SEVERE, connectionError, e);
+		} finally {
+			close();
+		}
+		return recipes;
+	}
 	private void close() {
 		try {
 			if (resultSet != null) resultSet.close();

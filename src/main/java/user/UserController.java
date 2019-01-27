@@ -1,5 +1,5 @@
 package user;
-
+/*
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -27,7 +27,7 @@ public class UserController extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		/*try {
+		try {
 			UserDao userDao = UserDao.getInstance();
 		
 			String action = request.getParameter("action");
@@ -78,7 +78,8 @@ public class UserController extends HttpServlet {
 			logger.log(Level.SEVERE, "doPost Servlet error", e);
 		} catch (ParseException e) {
 			logger.log(Level.SEVERE, "Parsing error Date", e);
-		}*/
+		}
 	}
 
 }
+*/

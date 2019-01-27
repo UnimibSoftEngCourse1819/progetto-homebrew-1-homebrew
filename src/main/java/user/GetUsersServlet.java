@@ -1,7 +1,7 @@
 package user;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,9 +32,9 @@ public class GetUsersServlet extends HttpServlet {
 					int id = Integer.parseInt(idStr);
 					userDao.deleteUser(id);
 				}
-				ArrayList<User> users = userDao.findAllUsers();
+				List<User> users = userDao.findAllUsers();
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ListUser.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menage/ListUser.jsp");
 				request.setAttribute("users", users);
 				dispatcher.forward(request, response);
 

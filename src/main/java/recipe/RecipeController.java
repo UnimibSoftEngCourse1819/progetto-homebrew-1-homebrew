@@ -1,5 +1,5 @@
 package recipe;
-
+/*
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Recipe")
-public class RecipeController extends HttpServlet {
+@WebServlet("/GetRecipes")
+public class GetRecipes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");    
 
@@ -42,3 +42,4 @@ public class RecipeController extends HttpServlet {
 	}
 
 }
+*/

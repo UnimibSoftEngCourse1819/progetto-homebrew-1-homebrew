@@ -34,19 +34,19 @@ class Login {
 			Class.forName(MySQLConnection.getDriver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(),
 					MySQLConnection.getPassword());
-			statement = connect.prepareStatement("SELECT password, rights FROM User WHERE email = ?");
+			statement = connect.prepareStatement("SELECT name, password, rights FROM User WHERE email = ?");
 			statement.setString(1, login);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				String passGET = resultSet.getString("password");
-				
+
 				SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
 				passIN = digestSHA3.digest(pass.getBytes());
 
 				passDB = Hex.decode(passGET);
 
 				result = Arrays.equals(passIN, passDB);
-			}			
+			}
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
@@ -56,24 +56,30 @@ class Login {
 
 		return result;
 	}
-	
-	public String getRights (String login, String pass) {
+
+	String getRights(String login, String pass) {
 		String rights = "";
-		if(match(login, pass)) {
+		if (match(login, pass)) {
 			try {
 				rights = resultSet.getString("rights");
 			} catch (SQLException e) {
 				logger.log(Level.SEVERE, sqlError, e);
-			} finally {
-				close();
 			}
 		}
 		return rights;
 	}
-	
-	
 
-	private void close() {
+	String getName() {
+		String name = "";
+		try {
+			name = resultSet.getString("name");
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		}
+		return name;
+	}
+
+	void close() {
 		try {
 			if (resultSet != null)
 				resultSet.close();
