@@ -4,13 +4,13 @@ public class Pantry {
 	
 	private int userID;
 	private int ingredientId;
-	private int avilability;
+	private int availability;
 	
-	public Pantry(int userID, int ingredientId, int avilability) {
+	public Pantry(int userID, int ingredientId, int availability) {
 		super();
 		this.userID = userID;
 		this.ingredientId = ingredientId;
-		this.avilability = avilability;
+		this.availability = availability;
 	}
 	
 	public int getUserID() {
@@ -26,12 +26,12 @@ public class Pantry {
 		this.ingredientId = ingredientId;
 	}
 
-	public int getAvilability() {
-		return avilability;
+	public int getAvailability() {
+		return availability;
 	}
 
-	public void setAvilability(int avilability) {
-		this.avilability = avilability;
+	public void setAvailability(int availability) {
+		this.availability = availability;
 	}
 	
 
