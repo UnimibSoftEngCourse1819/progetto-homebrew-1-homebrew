@@ -23,7 +23,7 @@ public class EquipmentDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	
-	private static String createEquipment = "INSERT INTO Equipment (userID, toolID, avalibility) VALUES(?,?,?)";
+	private static String createEquipment = "INSERT INTO Equipment (userID, toolID, capacity) VALUES(?,?,?)";
 	private static String updateEquipment = "UPDATE Equipment SET  capacity =? WHERE userID =? AND toolID, =?";
 	
 	public int createEquipment(int userID) {
