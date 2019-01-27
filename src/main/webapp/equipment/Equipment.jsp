@@ -10,7 +10,7 @@
 <link href="../css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-
+<script type="text/javascript" src="../js/form_control_equipment.js"></script>
 </head>
 <body>
 <div id="page" class="container">
@@ -45,37 +45,42 @@
 		<div id="featured">
 			<ul class="style1">
 				<li class="first">
-					<center> <form></form><table border="0">
+					<center> <form method="post" name="equipment_form"><table border="0">
 					<tr>
 					<td><h3>Bilancia:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" pesatura"></h3>
+					<td><h3>&nbsp &nbsp <input type="number" name="weightScale" id="testoformdue" placeholder=" pesatura" required></h3>
 					</tr>
 					<tr>
 					<td><h3>PENTOLONE:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" litri"></h3>
+					<td><h3>&nbsp &nbsp <input type="number" name="cauldron" id="testoformdue" placeholder=" litri" required></h3>
 					</tr>
 					<tr>
 					<td><h3>FERMENTATORE:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="password" id="testoformdue" placeholder=" capacità"></h3>
+					<td><h3>&nbsp &nbsp <input type="number" name="fermenter" id="testoformdue" placeholder=" capacità" required></h3>
 					</tr>
 					<tr>
 					<td><h3>MESTOLI:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" quantità"></h3>
+					<td><h3>&nbsp &nbsp <input type="number" name = "ladles"id="testoformdue" placeholder=" quantità" required></h3>
 					</tr>
 					<tr>
 					<td><h3>TERMOMETRI:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" quantità"></h3>
+					<td><h3>&nbsp &nbsp <input type="number" name="thermometers" id="testoformdue" placeholder=" quantità" required></h3>
 					</tr>
 					<tr>
 					<td><h3>Tubo:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" cm"></h3>
+					<td><h3>&nbsp &nbsp <input type="number" name="tube" id="testoformdue" placeholder=" cm" required></h3>
 					</tr>
 					</table> </center>
 					<br>
 					<br>
-				    <center><font face="Source Sans Pro"> <input type ="submit" value="AGGIORNA" id="submitdue"></center></font>
+				    <center>
+				    <font face="Source Sans Pro">
+				    <input type ="submit" value="AGGIORNA" name="action" id="submitdue" onClick ="return(controlForm());">
+				    </center>
+				    </font>
 				</form>
 				</li>
+				 </ul>
 	</div>
 </div>
 </body>
