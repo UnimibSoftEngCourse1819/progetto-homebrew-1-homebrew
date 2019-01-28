@@ -27,6 +27,7 @@ public class UserDao {
 	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password, rights) VALUES(?,?,?,?,?,?)";
 	private static String deleteUser = "DELETE FROM User WHERE userID =?";
 	private static String seletUserById = "SELECT * From User WHERE userId =?";
+	private static String seletUserByEmail = "SELECT * From User WHERE email =?";
 	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, email =?, password =?, rights =? WHERE userID =?";
 	
 	public List<User> findAllUsers() {
@@ -64,6 +65,35 @@ public class UserDao {
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(seletUserById);			
 			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				int id = resultSet.getInt("userId");
+				String name = resultSet.getString("name");
+				String surname = resultSet.getString("surname");
+				Date dateOfBirth = resultSet.getDate("dateOfBirth");
+				String email = resultSet.getString("email");
+				String password = resultSet.getString("password");
+				String rights = resultSet.getString("rights");
+				user = new User(id, name, surname, dateOfBirth, email, password, rights);
+				return user;
+			}
+			
+		} catch (SQLException  e) {
+			logger.log(Level.SEVERE,sqlError , e);
+		} finally {
+			close();
+		}
+		return user;
+	}
+	public User selectUserByEmail(String userEmail) {
+		User user = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
+			statement = connect.prepareStatement(seletUserByEmail);			
+			statement.setString(1, userEmail);
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {

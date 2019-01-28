@@ -15,7 +15,7 @@
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-				<form method="post" action="./home">
+				<form method="post" action="./login">
 					<table>
 						<tr>
 							<td>User:</td>

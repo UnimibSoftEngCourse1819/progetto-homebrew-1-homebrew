@@ -1,7 +1,6 @@
 package model.login;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +13,6 @@ import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
 import model.database.MySQLConnection;
-import model.user.User;
 
 public class Login {
 
@@ -32,7 +30,7 @@ public class Login {
 
 	private void getUserDao(String login) {
 		try {
-			Class.forName(MySQLConnection.getDriver());
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(),
 					MySQLConnection.getPassword());
 
@@ -42,14 +40,12 @@ public class Login {
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
-		} catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		}
 	}
 
-	public User match(String login, String pass) {
+	public boolean match(String login, String pass) {
 		getUserDao(login);
-		User user = null;
+		boolean match = false;
 		try {
 			if (resultSet.next()) {
 				String password = resultSet.getString("password");
@@ -57,13 +53,7 @@ public class Login {
 				passIN = digestSHA3.digest(pass.getBytes());
 				passDB = Hex.decode(password);
 				if (Arrays.equals(passIN, passDB)) {
-					int id = resultSet.getInt("userId");
-					String name = resultSet.getString("name");
-					String surname = resultSet.getString("surname");
-					Date dateOfBirth = resultSet.getDate("dateOfBirth");
-					String email = resultSet.getString("email");
-					String rights = resultSet.getString("rights");
-					user = new User(id, name, surname, dateOfBirth, email, password, rights);
+					match = true;
 				}
 			}
 		} catch (SQLException e) {
@@ -71,7 +61,7 @@ public class Login {
 		} finally {
 			close();
 		}
-		return user;
+		return match;
 	}
 
 	private void close() {

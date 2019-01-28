@@ -11,10 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.login.Login;
-import model.user.User;
 
 
-@WebServlet("/home")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -32,25 +31,18 @@ public class LoginServlet extends HttpServlet {
 
 		Login login = new Login();
 
-		// get request parameters for username and password
+		//get request parameters for username and password
 		String username = request.getParameter("user");
 		String password = request.getParameter("pass");
 
-		User user = login.match(username, password);
-
-		if (user != null) {
-			// get the old session and invalidate
+		if (login.match(username, password)) {
 			HttpSession oldSession = request.getSession(false);
 			if (oldSession != null) {
 				oldSession.invalidate();
 			}
-			// generate a new session
 			HttpSession session = request.getSession(true);
-
-			// setting session to expiry in 20 mins
+			session.setAttribute("username", username);
 			session.setMaxInactiveInterval(20 * 60);
-			session.setAttribute("user", user);
-			session.setAttribute("logged", true);
 
 
 			// Cookie message = new Cookie("message", "Welcome");
@@ -58,8 +50,9 @@ public class LoginServlet extends HttpServlet {
 
 			// response.addCookie(message);
 			// response.addCookie(rightsCookie);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/homepage.jsp");
-			dispatcher.forward(request, response);
+
+			response.sendRedirect("/homebrew/home");
+
 		} else {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 			String error = "Login errata";
@@ -67,4 +60,6 @@ public class LoginServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
+
+
 }

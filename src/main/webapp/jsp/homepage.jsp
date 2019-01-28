@@ -28,7 +28,7 @@
 			</div>
 			<div id="menu">
 				<ul>
-					<li><c:out value="${userID}" default="User"></c:out></li>
+					<li><c:out value="${user.name}" default="nullo"></c:out></li>
 
 					<li class="current_page_item">Area Personale</li>
 					<li><a href="./ricette">Ricette</a></li>
