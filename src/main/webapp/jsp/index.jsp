@@ -1,8 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Homepage</title>
+<title>Accesso - Homebrew</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link
@@ -17,7 +22,7 @@
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-				<form method="post" action="./Login">
+				<form method="post" action="./login">
 					<table>
 						<tr>
 							<td>User:</td>
@@ -30,6 +35,9 @@
 						<tr>
 							<td colspan="2" style="text-align: center;"><input
 								type="submit" value="Accedi" id="submit"></td>
+						</tr>
+						<tr>
+							<td><span id="errorLogin"><c:out value="${errorLogin}" default=""></c:out></span></td>
 						</tr>
 					</table>
 				</form>
@@ -52,8 +60,8 @@
 					<span class="byline"> Il tuo ricettario di birra personale </span>
 				</div>
 				<p>
-					<strong> brewday</strong> è un forum dove puoi trovare
-					molte nuove ricette per le tue birre casalinghe
+					<strong> brewday</strong> e' un forum dove puoi trovare molte nuove
+					ricette per le tue birre casalinghe
 				</p>
 			</div>
 
