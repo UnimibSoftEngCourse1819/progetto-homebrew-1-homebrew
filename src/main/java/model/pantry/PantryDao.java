@@ -30,7 +30,7 @@ public class PantryDao {
 	public int createPantry(int userID) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createPantry);				
 			
@@ -44,8 +44,6 @@ public class PantryDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -57,7 +55,7 @@ public class PantryDao {
 	public int UpdatePantry(ArrayList<Pantry> ingredients) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(updatePantry);				
 			
@@ -75,8 +73,6 @@ public class PantryDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

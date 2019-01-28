@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +49,7 @@
 		
 			<h2>- </h2>
 			<h1>GESTIRE ERRORI DOPO INVIO FORM</h1>
-			<h2>- email è una chiave sul db e non può essere già presente</h2>
+			<h2>- email Ã¨ una chiave sul db e non puÃ² essere giÃ  presente</h2>
 			<h2>- </h2>
 
 			

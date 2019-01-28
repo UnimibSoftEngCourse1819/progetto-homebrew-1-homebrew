@@ -16,9 +16,7 @@ public class IngredientRecipeDao {
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public IngredientRecipeDao() {
-		//costructor
-	}
+	public IngredientRecipeDao() {}
 
 	
 	private Connection connect = null;
@@ -30,7 +28,7 @@ public class IngredientRecipeDao {
 	public int updateEquipment(List<IngredientRecipe> ingredientRecipes) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createIngredientRecipe);				
 			
@@ -48,8 +46,6 @@ public class IngredientRecipeDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

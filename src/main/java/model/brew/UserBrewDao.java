@@ -39,7 +39,7 @@ public class UserBrewDao {
 	public List<UserBrewSelect> findAllUsers() {
 		List<UserBrewSelect> userBrewSelects = new ArrayList<>();
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(findAllBrew);			
 			resultSet = statement.executeQuery();
@@ -55,8 +55,6 @@ public class UserBrewDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -66,7 +64,7 @@ public class UserBrewDao {
 	public int createUser(UserBrew userBrew) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createUserBrew);				
 			statement.setInt(1, userBrew.getUserId());
@@ -79,8 +77,6 @@ public class UserBrewDao {
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

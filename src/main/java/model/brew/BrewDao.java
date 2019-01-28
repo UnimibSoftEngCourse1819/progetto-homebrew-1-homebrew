@@ -26,7 +26,7 @@ public class BrewDao {
 	public int createBrew(Brew brew) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createBrew);				
 			statement.setInt(1, brew.getRecipeID());
@@ -34,8 +34,6 @@ public class BrewDao {
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

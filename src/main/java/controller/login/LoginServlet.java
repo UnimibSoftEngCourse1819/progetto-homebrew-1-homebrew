@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/index.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 		dispatcher.forward(request, response);
 
 
@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 			// response.addCookie(rightsCookie);
 			response.sendRedirect("/homebrew/home");
 		} else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/index.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 			String error = "Login errata";
 			request.setAttribute("errorLogin", error);
 			dispatcher.forward(request, response);

@@ -12,19 +12,18 @@
 <link
 	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
 	rel="stylesheet" />
-<link href="css/default.css" rel="stylesheet" type="text/css"
-	media="all" />
-<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-				<span> <br> <br>
+
 					<form>
 						<input type="submit" value="LOGOUT" id="submit">
-					</form> <br> <br>
+					</form>
 			</div>
 			<div id="menu">
 				<ul>

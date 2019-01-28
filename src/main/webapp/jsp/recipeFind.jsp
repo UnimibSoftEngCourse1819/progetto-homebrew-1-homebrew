@@ -7,8 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
-<link href="css/default.css" rel="stylesheet" type="text/css" />
-<link href="css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="default.css" rel="stylesheet" type="text/css" />
+<link href="fonts.css" rel="stylesheet" type="text/css" />
 
 
 </head>
@@ -16,45 +16,41 @@
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-
 				<form>
 					<input type="submit" value="LOGOUT" id="submit">
 				</form>
-
 			</div>
 			<div id="menu">
 				<ul>
-					<li><a href="../home/HomepageLog.jsp">Area Personale</a></li>
-					<li><a href="../recipe/GlobalRecipe.jsp">Ricette</a></li>
-					<li><a href="../home/WhatIShould.html">What Should I Brew
-							today</a></li>
-					<li class="current_page_item">Le tue ricette personali</li>
-					<li><a href="../brew/YourBrew.html">Le tue birre personali</a></li>
-					<li><a href="">Cerca Ricetta</a></li>
+					<li><a href="#">Area Personale</a></li>
+					<li><a href="#">Ricette</a></li>
+					<li><a href="#">What Should I Brew today</a></li>
+					<li><a href="#">Le tue ricette personali</a></li>
+					<li><a href="#">Le tue birre personali</a></li>
+					<li class="current_page_item">Cerca ricetta</li>
 				</ul>
 			</div>
 		</div>
 		<div id="main">
 			<div id="banner">
-				<img src="images/homepageBrew.jpg" alt="" class="image-full" />
+				<img src="homepageBrew.jpg" alt="" class="image-full" />
 			</div>
 			<div id="welcome">
 				<div class="title">
-					<span class="byline"><marquee>Crea la tua ricetta
-							per farla scoprire agli altri birrai!</marquee></span>
+					<span class="byline"><marquee>Cerca la ricetta che
+							fa al caso tuo!</marquee></span>
 				</div>
 			</div>
 			<div id="featured">
-
 				NB: I valori degli ingredienti inseriti si devono basare su una
-				capienza del pentolone pari a 1L <br> <br> <br>
+				capienza del pentolone pari a 1L
 				<form>
 					<table>
 						<tr>
 							<td width="100"><h3>malto:</h3></td>
 							<td width="300"><h3>
 									<input name="malto" type="text" id="testoform"
-										placeholder=" quantitÃ ">
+										placeholder=" quantità">
 								</h3>
 						</tr>
 						<tr>
@@ -92,26 +88,8 @@
 										placeholder=" porzione">
 								</h3>
 						</tr>
-						<tr>
-							<td><h3>NOTE:</h3></td>
-							<td><h3>
-									<input name="note" type="text" id="testoform">
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>Procedimento:</h3></td>
-							<td><h3>
-									<textarea name="procedimento" id="areaditesto"></textarea>
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>
-									<input type="checkbox" name="privato" value="checkbox">privata
-								</h3></td>
-							<td>
-						</tr>
 					</table>
-					<input name="action" type="submit" value="CREA RICETTA"
+					<br> <input name="action" type="submit" value="CERCA RICETTA"
 						id="submitvertre">
 				</form>
 			</div>
