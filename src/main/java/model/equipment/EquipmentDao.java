@@ -1,37 +1,35 @@
-package equipment;
+package model.equipment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import database.MySQLConnection;
+import model.database.MySQLConnection;
 
 public class EquipmentDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public EquipmentDao() {
-		//costructor
-	}
+	public EquipmentDao() {}
 
 	
 	private Connection connect = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	
-	private static String createEquipment = "INSERT INTO Equipment (userID, toolID, capacity) VALUES(?,?,?)";
+	private static String createEquipment = "INSERT INTO Equipment (userID, toolID, avalibility) VALUES(?,?,?)";
 	private static String updateEquipment = "UPDATE Equipment SET  capacity =? WHERE userID =? AND toolID, =?";
 	
 	public int createEquipment(int userID) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createEquipment);				
 			
@@ -45,8 +43,6 @@ public class EquipmentDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -54,10 +50,10 @@ public class EquipmentDao {
 		return result;
 	}
 	
-	public int updateEquipment(List<Equipment> tools) {
+	public int UpdateEquipment(ArrayList<Equipment> tools) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(updateEquipment);				
 			
@@ -75,8 +71,6 @@ public class EquipmentDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
