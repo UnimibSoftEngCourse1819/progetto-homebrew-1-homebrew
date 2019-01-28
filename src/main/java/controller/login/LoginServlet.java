@@ -50,15 +50,15 @@ public class LoginServlet extends HttpServlet {
 			// setting session to expiry in 20 mins
 			session.setMaxInactiveInterval(20 * 60);
 			session.setAttribute("user", user);
+			session.setAttribute("logged", true);
+
 
 			// Cookie message = new Cookie("message", "Welcome");
 			// Cookie rightsCookie = new Cookie("rights", rights);
 
 			// response.addCookie(message);
 			// response.addCookie(rightsCookie);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/homepage.jsp");
-			request.setAttribute("userID", user.getName());
-			dispatcher.forward(request, response);
+			response.sendRedirect("/homebrew/home");
 		} else {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/index.jsp");
 			String error = "Login errata";

@@ -18,7 +18,7 @@ import org.bouncycastle.util.encoders.Hex;
 import model.user.User;
 import model.user.UserDao;
 
-@WebServlet("/registrazione")
+@WebServlet("/register")
 public class AddUsersServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

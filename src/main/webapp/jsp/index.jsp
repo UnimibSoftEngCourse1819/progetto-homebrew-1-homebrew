@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
 
 <!DOCTYPE html>
 <html>
@@ -22,7 +21,7 @@
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-				<form method="post" action="./login">
+				<form method="post" action="./home">
 					<table>
 						<tr>
 							<td>User:</td>
@@ -36,17 +35,22 @@
 							<td colspan="2" style="text-align: center;"><input
 								type="submit" value="Accedi" id="submit"></td>
 						</tr>
-						<tr>
-							<td><span id="errorLogin"><c:out value="${errorLogin}" default=""></c:out></span></td>
-						</tr>
+						<c:if test="${errorLogin != null}">
+							<tr>
+								<td><span id="errorLogin"> <c:out
+											value="${errorLogin}" default=""></c:out>
+								</span></td>
+							</tr>
+						</c:if>
+
 					</table>
 				</form>
 			</div>
 			<div id="menu">
 				<ul>
 					<li class="current_page_item">Homepage</li>
-					<li><a href="./registrazione">Registrati</a></li>
-					<li><a href="./ricette">Ricette</a></li>
+					<li><a href="./register">Registrati</a></li>
+					<li><a href="./recipe">Ricette</a></li>
 				</ul>
 			</div>
 		</div>
@@ -60,8 +64,8 @@
 					<span class="byline"> Il tuo ricettario di birra personale </span>
 				</div>
 				<p>
-					<strong> brewday</strong> e' un forum dove puoi trovare molte nuove
-					ricette per le tue birre casalinghe
+					<b>brewday</b> e' un forum dove puoi trovare molte nuove ricette
+					per le tue birre casalinghe
 				</p>
 			</div>
 

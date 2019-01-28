@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
 
 <!DOCTYPE html>
 <html>
@@ -21,6 +20,7 @@
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
+			
 				<form method="post" action="./Login">
 					<table>
 						<tr>
@@ -59,7 +59,7 @@
 				<div id="featured">
 					<span class="byline"><marquee> Le tue birre</marquee></span>
 					<c:forEach items="${recipes}" var="item">
-	   					${item.name}
+	   					<c:out value="${item.name}" default=""></c:out>
 	   					<br>
 						<br>
 					</c:forEach>

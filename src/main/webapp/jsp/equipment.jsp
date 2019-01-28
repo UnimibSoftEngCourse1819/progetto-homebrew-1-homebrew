@@ -1,87 +1,96 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
+<title>Equipaggiamento - Homebrew</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="../css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link
+	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
+	rel="stylesheet" />
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" />
 
-<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
 </head>
 <body>
-<div id="page" class="container">
-	<div id="header">
-	<div id="logo">
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-		</div>
-		<div id="menu">
-			<ul>
-				<li class="current_page_item"><a href="#" accesskey="1" title="">Area Personale</a></li>
-				<li><a href="../recipe/GlobalRecipe.jsp" accesskey="3" title=""> Ricette </a></li>
-				<li><a href="../home/WhatIShould.html" accesskey="4" title="">What Should I Brew today</a></li>
-				<li><a href="../recipe/YourRecipe.html" accesskey="5" title="">Le tue ricette personali</a></li>
-				<li><a href="../brew/YourBrew.html" accesskey="6" title="">Le tue birre personali</a></li>
-				<li><a href="" accesskey="7" title="">Cerca Ricetta</a></li>
-			</ul>
-		</div>
-	</div>
-	<div id="main">
-		<div id="banner">
-			<img src="../images/homepageBrew.jpg" alt="" class="image-full" />
-		</div>
-		<div id="welcome">
-			<div class="title">
-				<span class="byline"><marquee>Mantieni sempre aggiornato il tuo equipaggiamento</marquee></span>
+	<div id="page" class="container">
+		<div id="header">
+			<div id="logo">
+				<form action="./LogoutServlet" method="get">
+					<input type="submit" value="Logout">
+				</form>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item">Area Personale</li>
+					<li><a href="./recipe"> Ricette </a></li>
+					<li><a href="./wsibt">What Should I Brew today</a></li>
+					<li><a href="./recipe">Le tue ricette personali</a></li>
+					<li><a href="./brew">Le tue birre personali</a></li>
+					<li><a href="./brew/create">Cerca Ricetta</a></li>
+				</ul>
 			</div>
 		</div>
-		<div id="featured">
-			<ul class="style1">
-				<li class="first">
-					<center> <form></form><table border="0">
-					<tr>
-					<td><h3>Bilancia:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" pesatura"></h3>
-					</tr>
-					<tr>
-					<td><h3>PENTOLONE:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" litri"></h3>
-					</tr>
-					<tr>
-					<td><h3>FERMENTATORE:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="password" id="testoformdue" placeholder=" capacitÃ "></h3>
-					</tr>
-					<tr>
-					<td><h3>MESTOLI:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" quantitÃ "></h3>
-					</tr>
-					<tr>
-					<td><h3>TERMOMETRI:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" quantitÃ "></h3>
-					</tr>
-					<tr>
-					<td><h3>Tubo:</h3></td>
-					<td><h3>&nbsp &nbsp <input type="text" id="testoformdue" placeholder=" cm"></h3>
-					</tr>
-					</table> </center>
-					<br>
-					<br>
-				    <center><font face="Source Sans Pro"> <input type ="submit" value="AGGIORNA" id="submitdue"></center></font>
+		<div id="main">
+			<div id="banner">
+				<img src="images/homepageBrew.jpg" alt="" class="image-full" />
+			</div>
+			<div id="welcome">
+				<div class="title">
+					<span class="byline">Mantieni sempre
+							aggiornato il tuo equipaggiamento</span>
+				</div>
+			</div>
+			<div id="featured">
+				<form>
+					<table>
+						<tr>
+							<td><h3>BILANCIA:</h3></td>
+							<td><h3>
+									<input type="number" id="">
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>PENTOLONE:</h3></td>
+							<td><h3>
+									<input type="number" id="">
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>FERMENTATORE:</h3></td>
+							<td><h3>
+									<input type="number" id="">
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>MESTOLI:</h3></td>
+							<td><h3>
+									<input type="number" id="">
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>TERMOMETRI:</h3></td>
+							<td><h3>
+									<input type="number" id="">
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>TUBO:</h3></td>
+							<td><h3>
+									<input type="number" id="">
+								</h3>
+						</tr>
+					</table>
+
+					<input type="submit" value="AGGIORNA" id="submitdue">
 				</form>
-				</li>
+			</div>
+		</div>
 	</div>
-</div>
 </body>
 </html>

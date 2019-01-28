@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,19 +12,19 @@
 <link
 	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
 	rel="stylesheet" />
-<link href="css/default.css" rel="stylesheet" type="text/css"/>
-<link href="css/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-
-				<form action="./LogoutServlet" method="get">
-					<input type="submit" value="Logout">
-				</form>
-
+				<c:if test="${logged != null}">
+					<form action="./logout" method="get">
+						<input type="submit" value="Logout">
+					</form>
+				</c:if>
 			</div>
 			<div id="menu">
 				<ul>
@@ -33,12 +32,11 @@
 
 					<li class="current_page_item">Area Personale</li>
 					<li><a href="./ricette">Ricette</a></li>
-					<li><a href="../home/WhatIShould.html">What
-							Should I Brew today</a></li>
-					<li><a href="../recipe/YourRecipe.html">Le
-							tue ricette personali</a></li>
-					<li><a href="../brew/YourBrew.html">Le
-							tue birre personali</a></li>
+					<li><a href="../home/WhatIShould.html">What Should I Brew
+							today</a></li>
+					<li><a href="../recipe/YourRecipe.html">Le tue ricette
+							personali</a></li>
+					<li><a href="../brew/YourBrew.html">Le tue birre personali</a></li>
 					<li><a href="">Cerca Ricetta</a></li>
 				</ul>
 			</div>
