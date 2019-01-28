@@ -30,7 +30,7 @@ class RecipeDao {
 	public List<Recipe> findAllRecipes() {
 		List<Recipe> recipes = new ArrayList<>();
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(findAllRecipes);			
 			resultSet = statement.executeQuery();
@@ -48,8 +48,6 @@ class RecipeDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -59,7 +57,7 @@ class RecipeDao {
 	public List<Recipe> findAllRecipes(int userRequest) {
 		List<Recipe> recipes = new ArrayList<>();
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(findAllRecipesUser);
 			statement.setInt(1, userRequest);
@@ -78,8 +76,6 @@ class RecipeDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.User;
 
-@WebServlet("/GetRecipe")
+@WebServlet("/ricette")
 public class GetRecipeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -23,24 +24,22 @@ public class GetRecipeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			HttpSession session = request.getSession(false);
 			List<Recipe> recipes = null;
-			if (session != null) {
-				int userID = Integer.parseInt((String) session.getAttribute("userID"));
-				//ottiene anche le ricette private dell'utente
+			if (session != null && session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
 				RecipeDao recipeDao = new RecipeDao();
-				recipes = recipeDao.findAllRecipes(userID);
+				System.out.println(user.getId());
+				recipes = recipeDao.findAllRecipes(user.getId());
 				request.setAttribute("recipes", recipes);
 			} else {
-				
 				RecipeDao recipeDao = new RecipeDao();
 				recipes = recipeDao.findAllRecipes();
 				request.setAttribute("recipes", recipes);
 			}
 
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/recipe/GlobalRecipe.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
 			request.setAttribute("recipes", recipes);
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {

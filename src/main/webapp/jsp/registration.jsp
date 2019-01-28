@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,22 +13,37 @@
 <link
 	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
 	rel="stylesheet" />
-<link href="../css/default.css" rel="stylesheet" type="text/css"/>
-<link href="../css/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" />
 
-<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
 </head>
 <body>
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
+				<form method="post" action="./Login">
+					<table>
+						<tr>
+							<td>User:</td>
+							<td><input type="text" name="user" /></td>
+						</tr>
+						<tr>
+							<td>Password:</td>
+							<td><input type="password" name="pass"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;"><input
+								type="submit" value="Accedi" id="submit"></td>
+						</tr>
+					</table>
+				</form>
 			</div>
 			<div id="menu">
 				<ul>
-					<li><a href="../index.html">Homepage</a></li>
+					<li><a href="../homebrew/index.html">Homepage</a></li>
 					<li class="current_page_item">Registrati</li>
-					<li><a href="../recipe/GlobalRecipe.jsp">Ricette</a></li>
+					<li><a href="./ricette">Ricette</a></li>
 				</ul>
 			</div>
 		</div>
@@ -41,17 +61,16 @@
 			<h1>GESTIRE ERRORI PRIMA INVIO FORM</h1>
 			<h2>- password coincidono</h2>
 			<h2>- email corretta</h2>
-		
-			<h2>- </h2>
-			<h1>GESTIRE ERRORI DOPO INVIO FORM</h1>
-			<h2>- email è una chiave sul db e non può essere già presente</h2>
-			<h2>- </h2>
 
-			
+			<h1>GESTIRE ERRORI DOPO INVIO FORM</h1>
+			<h2>- email e' una chiave sul db e non puo' essere gia' 
+				presente</h2>
+
+
 			<div id="featured">
 				<ul class="style1">
 					<li class="first">
-						<form action="../AddUser" method="post">
+						<form action="./registrazione" method="post">
 							<table>
 								<tr>
 									<td><h3>Nome:</h3></td>
@@ -90,9 +109,9 @@
 										</h3>
 								</tr>
 							</table>
-							<input name="action" type="submit"
-								value="ISCRIVITI" id="addNewUser">
-								
+							<input name="registrationSubmit" type="submit" value="ISCRIVITI"
+								id="addNewUser">
+
 						</form>
 					</li>
 				</ul>

@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import database.MySQLConnection;
 
-class UserDao {
+public class UserDao {
 	
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
@@ -32,7 +32,7 @@ class UserDao {
 	public List<User> findAllUsers() {
 		List<User> users = new ArrayList<>();
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(findAllUsers);			
 			resultSet = statement.executeQuery();
@@ -51,8 +51,6 @@ class UserDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -62,7 +60,7 @@ class UserDao {
 	public User selectUserById(int userId) {
 		User user = null;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(seletUserById);			
 			statement.setInt(1, userId);
@@ -83,8 +81,6 @@ class UserDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -94,7 +90,7 @@ class UserDao {
 	public int createUser(User user) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createUser);				
 			statement.setString(1, user.getName());
@@ -109,8 +105,6 @@ class UserDao {
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -121,7 +115,7 @@ class UserDao {
 	public int updateUser(int id, User user) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(updateUser);				
 			statement.setString(1, user.getName());
@@ -137,8 +131,6 @@ class UserDao {
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -149,7 +141,7 @@ class UserDao {
 	public int deleteUser(int id) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(deleteUser);				
 			statement.setInt(1, id);
@@ -157,8 +149,6 @@ class UserDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

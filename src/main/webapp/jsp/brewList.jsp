@@ -1,10 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
-
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
@@ -20,7 +15,7 @@
 <body>
 <div id="page" class="container">
 	<div id="header">
-	<div id="logo">
+		<div id="logo">
 			<span>
 			<br>
 			<br>
@@ -32,9 +27,9 @@
 			<ul>
 				<li><a href="../home/HomepageLog.jsp" accesskey="1" title="">Area Personale</a></li>
 				<li><a href="../recipe/GlobalRecipe.jsp" accesskey="3" title="">Ricette</a></li>
-				<li class="current_page_item"><a href="#" accesskey="4" title="">What Should I Brew today</a></li>
+				<li><a href="../home/WhatIShould.html" accesskey="4" title="">What Should I Brew today</a></li>
 				<li><a href="../recipe/YourRecipe.html" accesskey="5" title="">Le tue ricette personali</a></li>
-				<li><a href="../brew/YourBrew.html" accesskey="6" title="">Le tue birre personali</a></li>
+				<li class="current_page_item"><a href="#" accesskey="5" title="">Le tue birre personali</a></li>
 				<li><a href="" accesskey="7" title="">Cerca Ricetta</a></li>
 			</ul>
 		</div>
@@ -45,25 +40,18 @@
 		</div>
 		<div id="welcome">
 			<div class="title">
-				<span class="byline"><marquee>Ecco la ricetta a te consigliata!</marquee></span>
+				<h2>Brew Day!</h2>
+				<span class="byline"> Tieni traccia delle birre che hai già prodotto </span>
 			</div>
-		</div>
-		<div id="featured">
-			<ul class="style1">
-				<li class="first">
-				
-				<center>#ricetta consigliata</center>
+			<div id="featured">
+			<span class="byline"><marquee> Le tue birre</span></marquee>
+				<br>
+				<br>
+				#tabella in cui si visualizzano le birre dell'utente
 				<br>
 				<br>
 				<br>
-				<center>
-				<form> 
-				<h3><input type="submit" id="submitverquattro" value="CREA RICETTA"></h3>
-				</form>
-				</center>
-		        </li>
-			</ul>
-		</div>
+			</div>		
 	</div>
 </div>
 </body>

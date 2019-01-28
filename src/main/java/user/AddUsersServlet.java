@@ -15,17 +15,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-@WebServlet("/AddUser")
+@WebServlet("/registrazione")
 public class AddUsersServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/registration.jsp");
+		dispatcher.forward(request, response);
+
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		String date = request.getParameter("dateOfBirth");
-		System.out.println(date);
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
@@ -38,14 +45,13 @@ public class AddUsersServlet extends HttpServlet {
 			user = new User(name, surname, dateOfBirth, email, hash, "brewer");
 			UserDao adder = new UserDao();
 			adder.createUser(user);
-			
+
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.html");
 			dispatcher.forward(request, response);
 
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

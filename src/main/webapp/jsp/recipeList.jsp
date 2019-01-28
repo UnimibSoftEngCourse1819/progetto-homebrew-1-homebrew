@@ -13,27 +13,36 @@
 <link
 	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
 	rel="stylesheet" />
-<link href="../css/default.css" rel="stylesheet" type="text/css"
-	media="all" />
-<link href="../css/fonts.css" rel="stylesheet" type="text/css"
-	media="all" />
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-				<br> <br> <br> <br> <br>
+				<form method="post" action="./Login">
+					<table>
+						<tr>
+							<td>User:</td>
+							<td><input type="text" name="user" /></td>
+						</tr>
+						<tr>
+							<td>Password:</td>
+							<td><input type="password" name="pass"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;"><input
+								type="submit" value="Accedi" id="submit"></td>
+						</tr>
+					</table>
+				</form>
 			</div>
 			<div id="menu">
 				<ul>
-					<li><a href="../index.html" accesskey="1" title="">Homepage</a></li>
-					<li><a href="../registration/index.html" accesskey="2"
-						title="">Registrati</a></li>
-					<li class="current_page_item"><a href="#" accesskey="3"
-						title="">Ricette </a></li>
-					<li><a href="#" accesskey="4" title=""></a></li>
-					<li><a href="#" accesskey="5" title=""></a></li>
+					<li><a href="../homebrew/index.html">Homepage</a></li>
+					<li><a href="./registrazione">Registrati</a></li>
+					<li class="current_page_item">Ricette</li>
 				</ul>
 			</div>
 		</div>
@@ -49,7 +58,7 @@
 				</div>
 				<div id="featured">
 					<span class="byline"><marquee> Le tue birre</marquee></span>
-					<c:forEach items="${users}" var="item">
+					<c:forEach items="${recipes}" var="item">
 	   					${item.name}
 	   					<br>
 						<br>

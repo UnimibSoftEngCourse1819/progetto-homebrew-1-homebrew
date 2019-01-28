@@ -1,6 +1,7 @@
 package login;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
 import database.MySQLConnection;
+import user.User;
 
 class Login {
 
@@ -28,55 +30,46 @@ class Login {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private boolean match(String login, String pass) {
-		boolean result = false;
+	private void getUserDao(String login) {
 		try {
 			Class.forName(MySQLConnection.getDriver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(),
 					MySQLConnection.getPassword());
-			statement = connect.prepareStatement("SELECT name, password, rights FROM User WHERE email = ?");
+
+			statement = connect.prepareStatement("SELECT * FROM User WHERE email = ?");
 			statement.setString(1, login);
 			resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				String passGET = resultSet.getString("password");
-
-				SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
-				passIN = digestSHA3.digest(pass.getBytes());
-
-				passDB = Hex.decode(passGET);
-
-				result = Arrays.equals(passIN, passDB);
-			}
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} catch (ClassNotFoundException e) {
 			logger.log(Level.SEVERE, connectionError, e);
 		}
-
-		return result;
 	}
 
-	String getRights(String login, String pass) {
-		String rights = "";
-		if (match(login, pass)) {
-			try {
-				rights = resultSet.getString("rights");
-			} catch (SQLException e) {
-				logger.log(Level.SEVERE, sqlError, e);
-			}
-		}
-		return rights;
-	}
-
-	String getName() {
-		String name = "";
+	public User match(String login, String pass) {
+		getUserDao(login);
+		User user = null;
 		try {
-			name = resultSet.getString("name");
+			if (resultSet.next()) {
+				String password = resultSet.getString("password");
+				SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+				passIN = digestSHA3.digest(pass.getBytes());
+				passDB = Hex.decode(password);
+				if (Arrays.equals(passIN, passDB)) {
+					int id = resultSet.getInt("userId");
+					String name = resultSet.getString("name");
+					String surname = resultSet.getString("surname");
+					Date dateOfBirth = resultSet.getDate("dateOfBirth");
+					String email = resultSet.getString("email");
+					String rights = resultSet.getString("rights");
+					user = new User(id, name, surname, dateOfBirth, email, password, rights);
+				}
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		}
-		return name;
+		return user;
 	}
 
 	void close() {

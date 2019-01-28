@@ -29,11 +29,11 @@ public class EquipmentDao {
 	public int createEquipment(int userID) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createEquipment);				
 			
-			//userID sarà ottenuto dalla sessione
+			//userID sarï¿½ ottenuto dalla sessione
 			for(int i=1; i<=6; i++){			
 				 statement.setInt(1, userID);
 				 statement.setInt(2, i);
@@ -43,8 +43,6 @@ public class EquipmentDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}
@@ -55,13 +53,13 @@ public class EquipmentDao {
 	public int UpdateEquipment(ArrayList<Equipment> tools) {
 		int result = -1;
 		try {
-			Class.forName(MySQLConnection.getDriver());  
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(updateEquipment);				
 			
-			//la Servlet passera un arrayList di Equipment dove il primo attributo sarà l'id dell'utente preso dalla sessione
-			//il secondo attributo sarà l'id dell'attrezzo
-			//il terzo attributo sarà la nuova capacità
+			//la Servlet passera un arrayList di Equipment dove il primo attributo sarï¿½ l'id dell'utente preso dalla sessione
+			//il secondo attributo sarï¿½ l'id dell'attrezzo
+			//il terzo attributo sarï¿½ la nuova capacitï¿½
 			for(int i=0; i<tools.size(); i++){
 				Equipment tool= tools.get(i);
 				
@@ -73,8 +71,6 @@ public class EquipmentDao {
 			
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		
-		}catch  (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, connectionError, e);
 		} finally {
 			close();
 		}

@@ -32,7 +32,7 @@
 					<li><c:out value="${userID}" default="User"></c:out></li>
 
 					<li class="current_page_item">Area Personale</li>
-					<li><a href="../recipe/GlobalRecipe.jsp">Ricette</a></li>
+					<li><a href="./ricette">Ricette</a></li>
 					<li><a href="../home/WhatIShould.html">What
 							Should I Brew today</a></li>
 					<li><a href="../recipe/YourRecipe.html">Le
