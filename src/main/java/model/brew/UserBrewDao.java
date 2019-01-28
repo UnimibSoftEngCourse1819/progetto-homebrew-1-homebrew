@@ -1,51 +1,56 @@
-package recipe;
+package model.brew;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import database.MySQLConnection;
+import controller.brew.UserBrewSelect;
+import model.database.MySQLConnection;
 
-class RecipeDao {
+public class UserBrewDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
 	private static String connectionError ="Connection Error";
 	
-	public RecipeDao() {
+	public UserBrewDao() {
 		//costructor
 	}
+
 	
 	private Connection connect = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 	
-	private static String findAllRecipes = "SELECT * From Recipe WHERE visibility='public'";
-	private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, content, capacity, visibility) VALUES(?,?,?,?,?,?)";
+	private static String findAllBrew = "SELECT B.name, R.name, UB.brewDate, UB.quantity From Brew as B "
+										+ "INNER JOIN Recipe AS R ON B.recipeID = R.recipeID"
+										+ "INNER JOIN User_Brew AS R ON B.brewID = UB.brewID"
+										+ "WHERE UB.UserID = ?";
+	private static String createUserBrew = "INSERT INTO User_Brew (userID, brewID, brewDate, quantity) VALUES(?,?,?,?)";
 	
-	public List<Recipe> findAllRecipes() {
-		List<Recipe> recipes = new ArrayList<>();
+	public List<UserBrewSelect> findAllUsers() {
+		List<UserBrewSelect> userBrewSelects = new ArrayList<>();
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
-			statement = connect.prepareStatement(findAllRecipes);			
+			statement = connect.prepareStatement(findAllBrew);			
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
-				int id = resultSet.getInt("recipeID");
-				int userID = resultSet.getInt("userID");
-				String name = resultSet.getString("name");
-				String content = resultSet.getString("content");
-				int capacity = resultSet.getInt("capacity");
-				String visibility = resultSet.getString("visibility");
-				Recipe recipe = new Recipe(id, userID, name, content, capacity, visibility);
-				recipes.add(recipe);
+				String brewName = resultSet.getString("brewName");
+				String recipeName = resultSet.getString("recipeName");
+				Date brewDate = resultSet.getDate("brewDate");
+				int quantity = resultSet.getInt("quantity");
+				UserBrewSelect userBrewSelect = new UserBrewSelect (brewName, recipeName, brewDate, quantity);
+				userBrewSelects.add(userBrewSelect);
 			}
 			
 		} catch (SQLException  e) {
@@ -55,22 +60,22 @@ class RecipeDao {
 		} finally {
 			close();
 		}
-		return recipes;
+		return userBrewSelects;
 	}
 	
-	public int createRecipe(Recipe recipe) {
+	public int createUser(UserBrew userBrew) {
 		int result = -1;
 		try {
 			Class.forName(MySQLConnection.getDriver());  
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
-			statement = connect.prepareStatement(createRecipe);				
-			
-			statement.setInt(1, recipe.getRecipeID());
-			statement.setInt(2, recipe.getUserID());
-			statement.setString(3, recipe.getName());
-			statement.setString(4, recipe.getContent());
-			statement.setInt(5, recipe.getCapacity());
-			statement.setString(6, recipe.getVisibility());
+			statement = connect.prepareStatement(createUserBrew);				
+			statement.setInt(1, userBrew.getUserId());
+			statement.setInt(2, userBrew.getBrewId());
+			java.sql.Date castDate = new java.sql.Date(userBrew.getBrewDate().getTime());
+			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+			String reportDate = dateformat.format(castDate);
+			statement.setString(3, reportDate);
+			statement.setInt(4, userBrew.getQuantity());
 			result = statement.executeUpdate();
 		} catch (SQLException  e) {
 			logger.log(Level.SEVERE,sqlError , e);		

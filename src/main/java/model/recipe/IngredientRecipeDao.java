@@ -1,4 +1,4 @@
-package recipe;
+package model.recipe;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import database.MySQLConnection;
+import model.database.MySQLConnection;
 
 public class IngredientRecipeDao {
 	final Logger logger = Logger.getLogger("MyLog");
@@ -34,9 +34,9 @@ public class IngredientRecipeDao {
 			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
 			statement = connect.prepareStatement(createIngredientRecipe);				
 			
-			//la Servlet passera un arrayList di Ingredient_Recipe dove il primo attributo sarà l'id della ricetta 
-			//il secondo attributo sarà l'id dell'ingrediente
-			//il terzo attributo sarà la quantità
+			//la Servlet passera un arrayList di Ingredient_Recipe dove il primo attributo sarï¿½ l'id della ricetta 
+			//il secondo attributo sarï¿½ l'id dell'ingrediente
+			//il terzo attributo sarï¿½ la quantitï¿½
 			for(int i=0; i<ingredientRecipes.size(); i++){
 				IngredientRecipe ingredientRecipe= ingredientRecipes.get(i);
 				

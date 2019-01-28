@@ -1,4 +1,4 @@
-package recipe;
+package model.recipe;
 
 public class IngredientRecipe {
 	private int recipeId;
