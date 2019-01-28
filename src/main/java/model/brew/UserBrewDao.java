@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import controller.brew.UserBrewSelect;
+import model.brew.UserBrewSelect;
 import model.database.MySQLConnection;
 
 public class UserBrewDao {

@@ -1,4 +1,4 @@
-package controller.brew;
+package model.brew;
 
 import java.util.Date;
 

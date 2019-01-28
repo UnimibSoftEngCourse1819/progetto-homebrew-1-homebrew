@@ -1,6 +1,8 @@
 package controller.login;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,28 +19,29 @@ import model.user.UserDao;
 public class HomePage extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	final Logger logger = Logger.getLogger("MyLog");
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession(false);
-		if (session != null) {
+		try {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
 
-			String username = (String) session.getAttribute("username");
-			UserDao userDao = new UserDao();
-			User user = userDao.selectUserByEmail(username);
-			session.setAttribute("user", user);
-			session.setAttribute("logged", true);
-			
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/homepage.jsp");
-			dispatcher.forward(request, response);
+				String username = (String) session.getAttribute("username");
+				UserDao userDao = new UserDao();
+				User user = userDao.selectUserByEmail(username);
+				session.setAttribute("user", user);
+				session.setAttribute("logged", true);
+
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/homepage.jsp");
+				dispatcher.forward(request, response);
+			}
+		} catch (ServletException | IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-		
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-	}
 }

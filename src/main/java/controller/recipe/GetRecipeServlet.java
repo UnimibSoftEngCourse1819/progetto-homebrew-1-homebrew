@@ -24,6 +24,7 @@ public class GetRecipeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -32,13 +33,10 @@ public class GetRecipeServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				RecipeDao recipeDao = new RecipeDao();
-				System.out.println(user.getId());
 				recipes = recipeDao.findAllRecipes(user.getId());
-				request.setAttribute("recipes", recipes);
 			} else {
 				RecipeDao recipeDao = new RecipeDao();
 				recipes = recipeDao.findAllRecipes();
-				request.setAttribute("recipes", recipes);
 			}
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
