@@ -19,54 +19,58 @@ import model.database.MySQLConnection;
 public class UserBrewDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
-	private static String connectionError ="Connection Error";
-	
+	private static String connectionError = "Connection Error";
+
 	public UserBrewDao() {
-		//costructor
+		// costructor
 	}
 
-	
 	private Connection connect = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
-	
+
 	private static String findAllBrew = "SELECT B.name, R.name, UB.brewDate, UB.quantity From Brew as B "
-										+ "INNER JOIN Recipe AS R ON B.recipeID = R.recipeID"
-										+ "INNER JOIN User_Brew AS R ON B.brewID = UB.brewID"
-										+ "WHERE UB.UserID = ?";
+			+ "INNER JOIN Recipe AS R ON B.recipeID = R.recipeID" + "INNER JOIN User_Brew AS R ON B.brewID = UB.brewID"
+			+ "WHERE UB.UserID = ?";
 	private static String createUserBrew = "INSERT INTO User_Brew (userID, brewID, brewDate, quantity) VALUES(?,?,?,?)";
-	
+
 	public List<UserBrewSelect> findAllUsers() {
 		List<UserBrewSelect> userBrewSelects = new ArrayList<>();
+		MySQLConnection mysql;
 		try {
+			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
-			statement = connect.prepareStatement(findAllBrew);			
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
+					mysql.getPassword());
+			statement = connect.prepareStatement(findAllBrew);
 			resultSet = statement.executeQuery();
-			
-			while(resultSet.next()) {
+
+			while (resultSet.next()) {
 				String brewName = resultSet.getString("brewName");
 				String recipeName = resultSet.getString("recipeName");
 				Date brewDate = resultSet.getDate("brewDate");
 				int quantity = resultSet.getInt("quantity");
-				UserBrewSelect userBrewSelect = new UserBrewSelect (brewName, recipeName, brewDate, quantity);
+				UserBrewSelect userBrewSelect = new UserBrewSelect(brewName, recipeName, brewDate, quantity);
 				userBrewSelects.add(userBrewSelect);
 			}
-			
-		} catch (SQLException  e) {
-			logger.log(Level.SEVERE,sqlError , e);
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
 		} finally {
 			close();
 		}
 		return userBrewSelects;
 	}
-	
+
 	public int createUser(UserBrew userBrew) {
 		int result = -1;
+		MySQLConnection mysql;
 		try {
+			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(), MySQLConnection.getPassword());
-			statement = connect.prepareStatement(createUserBrew);				
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
+					mysql.getPassword());
+			statement = connect.prepareStatement(createUserBrew);
 			statement.setInt(1, userBrew.getUserId());
 			statement.setInt(2, userBrew.getBrewId());
 			java.sql.Date castDate = new java.sql.Date(userBrew.getBrewDate().getTime());
@@ -75,20 +79,23 @@ public class UserBrewDao {
 			statement.setString(3, reportDate);
 			statement.setInt(4, userBrew.getQuantity());
 			result = statement.executeUpdate();
-		} catch (SQLException  e) {
-			logger.log(Level.SEVERE,sqlError , e);		
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
 		} finally {
 			close();
 		}
-		
+
 		return result;
 	}
-	
+
 	private void close() {
 		try {
-			if (resultSet != null) resultSet.close();
-			if (statement != null) statement.close();
-			if (connect != null) connect.close();			
+			if (resultSet != null)
+				resultSet.close();
+			if (statement != null)
+				statement.close();
+			if (connect != null)
+				connect.close();
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, connectionError, e);
 		}

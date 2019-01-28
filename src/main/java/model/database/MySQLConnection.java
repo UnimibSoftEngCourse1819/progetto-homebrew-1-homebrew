@@ -1,27 +1,54 @@
 package model.database;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MySQLConnection {
 
-	private static String url = "jdbc:mysql://micorx.com:3306/micorxco_brewday";
-	private static String user = "micorxco_maik";
-	private static String password = "b#(&mBJ8Q9RC1x1s";
-	private static String driver = "com.mysql.jdbc.Driver";
-	
-	public static String getDriver() {
-		return driver;
+	private String url;
+	private String user;
+	private String password;
+
+	final Logger logger = Logger.getLogger("MyLog");
+
+	public MySQLConnection() {
+		InputStream inputStream = null;
+
+		try {
+			Properties prop = new Properties();
+			String propFileName = "config.properties";
+
+			inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+			if (inputStream != null) {
+				prop.load(inputStream);
+			} else {
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			}
+			url = prop.getProperty("url");
+			user = prop.getProperty("user");
+			password = prop.getProperty("password");
+			inputStream.close();
+
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "MySQLConnector error", e);
+		}
 	}
-	public static String getUrl() {
+
+	public String getUrl() {
 		return url;
 	}
-	public static String getUser() {
+
+	public String getUser() {
 		return user;
 	}
-	public static String getPassword() {
+
+	public String getPassword() {
 		return password;
 	}
-	
-	private MySQLConnection() {
-	    throw new IllegalStateException("Utility class");
-	}
+
 }

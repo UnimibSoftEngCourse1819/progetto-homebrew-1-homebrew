@@ -29,10 +29,12 @@ public class Login {
 	private ResultSet resultSet = null;
 
 	private void getUserDao(String login) {
+		MySQLConnection mysql;
 		try {
+			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(MySQLConnection.getUrl(), MySQLConnection.getUser(),
-					MySQLConnection.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
+					mysql.getPassword());
 
 			statement = connect.prepareStatement("SELECT * FROM User WHERE email = ?");
 			statement.setString(1, login);

@@ -2,6 +2,8 @@ package controller.user;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -22,17 +24,23 @@ import model.user.UserDao;
 public class AddUsersServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	final Logger logger = Logger.getLogger("MyLog");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/registration.jsp");
-		dispatcher.forward(request, response);
+		try {
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/registration.jsp");
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		String date = request.getParameter("dateOfBirth");
@@ -49,12 +57,16 @@ public class AddUsersServlet extends HttpServlet {
 			UserDao adder = new UserDao();
 			adder.createUser(user);
 
+		} catch (ParseException e) {
+			logger.log(Level.SEVERE, "Parser error", e);
+		}
+		try {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.html");
 			dispatcher.forward(request, response);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ServletException | IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
 		}
+
 	}
 
 }
