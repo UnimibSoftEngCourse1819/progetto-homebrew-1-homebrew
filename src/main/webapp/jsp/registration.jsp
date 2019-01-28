@@ -6,16 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Registrazione</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link
-	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
-	rel="stylesheet" />
+<title>Registrazione - Homebrew</title>
 <link href="css/default.css" rel="stylesheet" type="text/css" />
 <link href="css/fonts.css" rel="stylesheet" type="text/css" />
-
-
+<script type="text/javascript" src="js/form_control.js"></script>
 </head>
 <body>
 	<div id="page" class="container">
@@ -109,7 +103,7 @@
 								</tr>
 							</table>
 							<input name="registrationSubmit" type="submit" value="ISCRIVITI"
-								id="addNewUser">
+								id="addNewUser" onClick ="return(controlForm ());">
 
 						</form>
 					</li>

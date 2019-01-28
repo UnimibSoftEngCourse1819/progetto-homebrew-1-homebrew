@@ -14,7 +14,7 @@ import model.login.Login;
 import model.user.User;
 
 
-@WebServlet("/login")
+@WebServlet("/home")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -58,7 +58,8 @@ public class LoginServlet extends HttpServlet {
 
 			// response.addCookie(message);
 			// response.addCookie(rightsCookie);
-			response.sendRedirect("/homebrew/home");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/homepage.jsp");
+			dispatcher.forward(request, response);
 		} else {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 			String error = "Login errata";
