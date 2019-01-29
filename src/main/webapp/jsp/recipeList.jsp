@@ -7,11 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Homepage</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link
-	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
-	rel="stylesheet" />
 <link href="css/default.css" rel="stylesheet" type="text/css" />
 <link href="css/fonts.css" rel="stylesheet" type="text/css" />
 </head>
@@ -20,8 +15,7 @@
 	<div id="page" class="container">
 		<div id="header">
 			<div id="logo">
-			
-				<form method="post" action="./Login">
+				<form method="post" action="./login">
 					<table>
 						<tr>
 							<td>User:</td>
@@ -35,20 +29,28 @@
 							<td colspan="2" style="text-align: center;"><input
 								type="submit" value="Accedi" id="submit"></td>
 						</tr>
+						<c:if test="${errorLogin != null}">
+							<tr>
+								<td><span id="errorLogin"> <c:out
+											value="${errorLogin}" default=""></c:out>
+								</span></td>
+							</tr>
+						</c:if>
+
 					</table>
 				</form>
 			</div>
 			<div id="menu">
 				<ul>
-					<li><a href="../homebrew/index.html">Homepage</a></li>
-					<li><a href="./registrazione">Registrati</a></li>
+					<li><a href="./login">Homepage</a></li>
+					<li><a href="./register">Registrati</a></li>
 					<li class="current_page_item">Ricette</li>
 				</ul>
 			</div>
 		</div>
 		<div id="main">
 			<div id="banner">
-				<img src="../images/homepageBrew.jpg" alt="" class="image-full" />
+				<img src="images/homepageBrew.jpg" alt="" class="image-full" />
 			</div>
 			<div id="welcome">
 				<div class="title">

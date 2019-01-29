@@ -18,7 +18,7 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-@WebServlet("/ricette")
+@WebServlet("/recipes")
 public class GetRecipeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -30,12 +30,11 @@ public class GetRecipeServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			List<Recipe> recipes = null;
+			RecipeDao recipeDao = new RecipeDao();
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
-				RecipeDao recipeDao = new RecipeDao();
 				recipes = recipeDao.findAllRecipes(user.getId());
 			} else {
-				RecipeDao recipeDao = new RecipeDao();
 				recipes = recipeDao.findAllRecipes();
 			}
 

@@ -1,6 +1,7 @@
 package controller.login;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,34 +14,41 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.login.Login;
+import model.recipe.Recipe;
+import model.recipe.RecipeDao;
+import model.user.User;
+import model.user.UserDao;
 
-@WebServlet("/login")
+@WebServlet("/home")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
-	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+			RecipeDao recipeDao = new RecipeDao();
+			List<Recipe> recipes = recipeDao.findAllRecipes();
+
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
+			request.setAttribute("recipes", recipes);
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		try {
 			Login login = new Login();
 			String username = request.getParameter("user");
 			String password = request.getParameter("pass");
-			
+
 			if (login.match(username, password)) {
 				HttpSession oldSession = request.getSession(false);
 				if (oldSession != null) {
@@ -50,10 +58,23 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("username", username);
 				session.setMaxInactiveInterval(20 * 60);
 
-				response.sendRedirect("/homebrew/home");
+				UserDao userDao = new UserDao();
+				User user = userDao.selectUserByEmail(username);
+				session.setAttribute("user", user);
+				session.setAttribute("logged", true);
+
+
+				RecipeDao recipeDao = new RecipeDao();
+				List<Recipe> recipes = recipeDao.findAllRecipes(user.getId());
+
+
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
+				request.setAttribute("recipes", recipes);
+
+				dispatcher.forward(request, response);
 
 			} else {
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 				String error = "Login errata";
 				request.setAttribute("errorLogin", error);
 				dispatcher.forward(request, response);
