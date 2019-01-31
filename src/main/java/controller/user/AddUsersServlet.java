@@ -60,6 +60,7 @@ public class AddUsersServlet extends HttpServlet {
 			adder.createUser(user);
 			
 			User registeredUser =adder.selectUserByEmail(email);
+			System.out.println(registeredUser);
 			int registeredUserId = registeredUser.getId();
 			
 			EquipmentDao equipDao = new EquipmentDao();

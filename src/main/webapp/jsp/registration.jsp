@@ -69,7 +69,7 @@
 						<tr>
 							<td><h3>Data di nascita:</h3></td>
 							<td><h3>
-									<input name="dateOfBirth" type="date">
+									<input name="dateOfBirth" type="date" placeholder="yyyy-mm-dd">
 								</h3>
 						</tr>
 						<tr>
