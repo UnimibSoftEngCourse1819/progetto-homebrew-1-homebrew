@@ -32,7 +32,7 @@ public class AddUsersServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/registration.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/register.jsp");
 			request.setAttribute("page", "register");
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -43,41 +43,59 @@ public class AddUsersServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		String date = request.getParameter("dateOfBirth");
+		String password = request.getParameter("new_password");
+		String checkPassword = request.getParameter("confirm_password");
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
-		byte[] passwordToHash = digestSHA3.digest(password.getBytes());
-		String hash = Hex.toHexString(passwordToHash);
-		Date dateOfBirth;
-		User user;
-		try {
-			dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-			user = new User(name, surname, dateOfBirth, email, hash, "brewer");
-			UserDao adder = new UserDao();
-			adder.createUser(user);
-			
-			User registeredUser =adder.selectUserByEmail(email);
-			System.out.println(registeredUser);
-			int registeredUserId = registeredUser.getId();
-			
-			EquipmentDao equipDao = new EquipmentDao();
-			equipDao.createEquipment(registeredUserId);
-			
-			PantryDao pantryDao = new PantryDao();
-			pantryDao.createPantry(registeredUserId); 
+		UserDao userDao = new UserDao();
 
-		} catch (ParseException e) {
-			logger.log(Level.SEVERE, "Parser error", e);
-		}
-		try {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.html");
-			dispatcher.forward(request, response);
-		} catch (ServletException | IOException e) {
-			logger.log(Level.SEVERE, "Servlet error", e);
+		if (password.equals(checkPassword) && userDao.usableEmail(email)) {
+			
+			SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+			byte[] passwordToHash = digestSHA3.digest(password.getBytes());
+			String hash = Hex.toHexString(passwordToHash);
+			Date dateOfBirth;
+			User user;
+
+			try {
+
+				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+				user = new User(name, surname, dateOfBirth, email, hash, "brewer");
+				userDao.createUser(user);
+
+				//User registeredUser = userDao.selectUserByEmail(email);
+
+				///int registeredUserId = registeredUser.getId();
+
+				//EquipmentDao equipDao = new EquipmentDao();
+				//equipDao.createEquipment(registeredUserId);
+
+				//PantryDao pantryDao = new PantryDao();
+				//pantryDao.createPantry(registeredUserId);
+
+			} catch (ParseException e) {
+				logger.log(Level.SEVERE, "Parser error", e);
+			}
+
+			try {
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
+				request.setAttribute("page", "home");
+				dispatcher.forward(request, response);
+			} catch (ServletException | IOException e) {
+				logger.log(Level.SEVERE, "Servlet error", e);
+			}
+
+		} else {
+			try {
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/register.jsp");
+				request.setAttribute("page", "register");
+				request.setAttribute("errorEmail", true);
+				dispatcher.forward(request, response);
+			} catch (ServletException | IOException e) {
+				logger.log(Level.SEVERE, "Servlet error", e);
+			}
 		}
 
 	}

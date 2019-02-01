@@ -23,12 +23,13 @@ public class UserDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String findAllUsers = "SELECT * From User";
+	private static String findAllUsers = "SELECT * FROM User";
 	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password, rights) VALUES(?,?,?,?,?,?)";
-	private static String deleteUser = "DELETE FROM User WHERE userID =?";
-	private static String seletUserById = "SELECT * From User WHERE userId =?";
-	private static String seletUserByEmail = "SELECT * From User WHERE email =?";
-	private static String updateUser = "UPDATE User SET name =?, surname =?, dateOfBirth =?, email =?, password =?, rights =? WHERE userID =?";
+	private static String deleteUser = "DELETE FROM User WHERE userID=?";
+	private static String seletUserById = "SELECT * FROM User WHERE userId=?";
+	private static String seletUserByEmail = "SELECT * FROM User WHERE email=?";
+	private static String checkUserEmail = "SELECT * FROM User WHERE email=?";
+	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, password=?, rights=? WHERE userID=?";
 
 	public List<User> findAllUsers() {
 		List<User> users = new ArrayList<>();
@@ -36,8 +37,7 @@ public class UserDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(findAllUsers);
 			resultSet = statement.executeQuery();
 
@@ -67,8 +67,7 @@ public class UserDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(seletUserById);
 			statement.setInt(1, userId);
 			resultSet = statement.executeQuery();
@@ -100,8 +99,7 @@ public class UserDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(seletUserByEmail);
 			statement.setString(1, userEmail);
 			resultSet = statement.executeQuery();
@@ -132,8 +130,7 @@ public class UserDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(createUser);
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getSurname());
@@ -160,8 +157,7 @@ public class UserDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(updateUser);
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getSurname());
@@ -189,11 +185,32 @@ public class UserDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(deleteUser);
 			statement.setInt(1, id);
 			result = statement.executeUpdate();
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	public boolean usableEmail(String email) {
+		boolean result = false;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(checkUserEmail);
+			statement.setString(1, email);
+			resultSet = statement.executeQuery();
+			if(!resultSet.next()) {
+				result = true;
+			}
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);

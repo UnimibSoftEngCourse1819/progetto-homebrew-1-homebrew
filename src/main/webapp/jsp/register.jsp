@@ -25,50 +25,48 @@
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="main">
-			<div class="image_home">
-				<img src="images/homepageBrew.jpg" alt="Image Home" />
-			</div>
-			<div class="home_desc">
-				<h6>BrewDay ti permette di tenere traccia delle tue birre
-					artigianali</h6>
-				<p>
-					Sarai in grado di creare le tue ricette e visualizzare quelle della
-					community<br> Potrai gestire le tue miscele e provare quelle
-					degli altri membri
-				</p>
-			</div>
 			<div class="registration_cont">
 				<h2>Iscriviti ora al portale</h2>
 
 				<form id="registration_form" action="./register" method="post">
 					<div>
-						<h3>Nome*:</h3>
-						<input name="name" type="text" placeholder="Nome">
+						<h3>Nome:</h3>
+						<input name="name" type="text" placeholder="Inserisci il tuo Nome">
 					</div>
 					<div>
 
-						<h3>Cognome*:</h3>
-						<input name="surname" type="text" placeholder="Cognome">
+						<h3>Cognome:</h3>
+						<input name="surname" type="text"
+							placeholder="Inserisci il tuo Cognome">
 					</div>
 					<div>
-						<h3>Password*:</h3>
-						<input id="new_password" name="new_password" type="password"
-							autocomplete="off" placeholder="Password">
-					</div>
-					<div>
-						<h3>Conferma password*:</h3>
-						<input name="confirm_password" type="password" autocomplete="off" placeholder="Password">
-					</div>
-					<div>
-						<h3>Data di nascita*:</h3>
+						<h3>Data di nascita:</h3>
 						<input name="dateOfBirth" id="dateOfBirth" type="date" required
 							pattern="[0-9]{4}/[0-9]{2}/[0-9]{2}">
 					</div>
 					<div>
-						<h3>Email*:</h3>
-						<input name="email" type="email" placeholder="Email">
+						<h3>Email:</h3>
+						<input name="email" type="email"
+							placeholder="Inserisci la tua Email">
 					</div>
-					<input name="registrationSubmit" type="submit" value="Iscriviti" id="addNewUser" disabled>
+					<div>
+						<h3>Password [minimo 8 caratteri]:</h3>
+						<input id="new_password" name="new_password" type="password"
+							autocomplete="off" placeholder="Inserisci una nuova Password">
+					</div>
+					<div>
+						<h3>Conferma password:</h3>
+						<input name="confirm_password" type="password" autocomplete="off"
+							placeholder="Conferma la nuova Password">
+					</div>
+					<c:if test="${errorEmail != null}">
+						<div class="error_email">
+							<p>L'email e' gia' presente nel sistema</p>
+						</div>
+					</c:if>
+
+					<input name="registrationSubmit" type="submit" value="Iscriviti"
+						id="addNewUser" disabled>
 				</form>
 			</div>
 
