@@ -13,12 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-import model.equipment.EquipmentDao;
-import model.pantry.PantryDao;
+//import model.equipment.EquipmentDao;
+//import model.pantry.PantryDao;
 import model.user.User;
 import model.user.UserDao;
 
@@ -52,7 +53,7 @@ public class AddUsersServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 
 		if (password.equals(checkPassword) && userDao.usableEmail(email)) {
-			
+
 			SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
 			byte[] passwordToHash = digestSHA3.digest(password.getBytes());
 			String hash = Hex.toHexString(passwordToHash);
@@ -65,25 +66,26 @@ public class AddUsersServlet extends HttpServlet {
 				user = new User(name, surname, dateOfBirth, email, hash, "brewer");
 				userDao.createUser(user);
 
-				//User registeredUser = userDao.selectUserByEmail(email);
+				// User registeredUser = userDao.selectUserByEmail(email);
 
-				///int registeredUserId = registeredUser.getId();
+				/// int registeredUserId = registeredUser.getId();
 
-				//EquipmentDao equipDao = new EquipmentDao();
-				//equipDao.createEquipment(registeredUserId);
+				// EquipmentDao equipDao = new EquipmentDao();
+				// equipDao.createEquipment(registeredUserId);
 
-				//PantryDao pantryDao = new PantryDao();
-				//pantryDao.createPantry(registeredUserId);
+				// PantryDao pantryDao = new PantryDao();
+				// pantryDao.createPantry(registeredUserId);
 
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
 			}
 
 			try {
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
-				request.setAttribute("page", "home");
-				dispatcher.forward(request, response);
-			} catch (ServletException | IOException e) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
+				session.setAttribute("alertType", "success");
+				response.sendRedirect("./home");
+			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Servlet error", e);
 			}
 

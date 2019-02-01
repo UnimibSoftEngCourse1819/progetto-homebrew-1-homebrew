@@ -11,8 +11,14 @@
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
 <link href="css/home.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/main.js"></script>
+
 </head>
 <body>
+	<jsp:include page="includer/alert.jsp" />
 	<div class="layout_left"></div>
 	<div class="layout_right"></div>
 	<div class="row page" class="container">

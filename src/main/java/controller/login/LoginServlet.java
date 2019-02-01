@@ -29,12 +29,22 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			HttpSession session = request.getSession(false);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
+
+			if (session != null) {
+				String message = (String) session.getAttribute("alertMessage");
+				String type = (String) session.getAttribute("alertType");
+				request.setAttribute("alertMessage", message);
+				request.setAttribute("alertType", type);
+				session.invalidate();
+			}
 			RecipeDao recipeDao = new RecipeDao();
 			List<Recipe> recipes = recipeDao.findAllRecipes();
 
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 			request.setAttribute("recipes", recipes);
 			request.setAttribute("page", "home");
+
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
@@ -64,10 +74,8 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("user", user);
 				session.setAttribute("logged", true);
 
-
 				RecipeDao recipeDao = new RecipeDao();
 				List<Recipe> recipes = recipeDao.findAllRecipes(user.getId());
-
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 				request.setAttribute("recipes", recipes);

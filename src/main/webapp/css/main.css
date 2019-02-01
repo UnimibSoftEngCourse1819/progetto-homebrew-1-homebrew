@@ -1,7 +1,5 @@
 
-p, ol, ul {
-	margin-top: 0;
-}
+
 
 ol, ul {
 	padding: 0;
@@ -313,6 +311,9 @@ ul.contact li a.icon-rss:before {
 input:focus {
 	outline: none;
 }
+p, ol, ul {
+	margin: 0;
+}
 
 body {
 	position: relative;
@@ -347,4 +348,13 @@ body {
 	bottom: 0;
 	right: 0;
 	width: 75%;
+}
+
+/* ------------------- ALERT MODAL ------------------- */
+.modal-body p {
+	text-align: center;
+}
+.modal-content.success {
+	background-color: #daffd7;
+    border: 1px solid #58b351;
 }
