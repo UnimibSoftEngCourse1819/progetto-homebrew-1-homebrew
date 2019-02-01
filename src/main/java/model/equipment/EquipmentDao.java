@@ -53,7 +53,7 @@ public class EquipmentDao {
 		return result;
 	}
 
-	public int UpdateEquipment(ArrayList<Equipment> tools) {
+	public int updateEquipment(ArrayList<Equipment> tools) {
 		int result = -1;
 		MySQLConnection mysql;
 		try {
