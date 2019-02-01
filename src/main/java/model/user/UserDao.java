@@ -105,7 +105,6 @@ public class UserDao {
 			statement = connect.prepareStatement(seletUserByEmail);
 			statement.setString(1, userEmail);
 			resultSet = statement.executeQuery();
-
 			while (resultSet.next()) {
 
 				int id = resultSet.getInt("userId");

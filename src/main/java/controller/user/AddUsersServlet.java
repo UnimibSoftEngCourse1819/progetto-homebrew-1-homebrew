@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
+import model.equipment.EquipmentDao;
+import model.pantry.PantryDao;
 import model.user.User;
 import model.user.UserDao;
 
@@ -57,6 +59,16 @@ public class AddUsersServlet extends HttpServlet {
 			user = new User(name, surname, dateOfBirth, email, hash, "brewer");
 			UserDao adder = new UserDao();
 			adder.createUser(user);
+			
+			User registeredUser =adder.selectUserByEmail(email);
+			System.out.println(registeredUser);
+			int registeredUserId = registeredUser.getId();
+			
+			EquipmentDao equipDao = new EquipmentDao();
+			equipDao.createEquipment(registeredUserId);
+			
+			PantryDao pantryDao = new PantryDao();
+			pantryDao.createPantry(registeredUserId); 
 
 		} catch (ParseException e) {
 			logger.log(Level.SEVERE, "Parser error", e);
