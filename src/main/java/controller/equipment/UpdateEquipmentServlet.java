@@ -71,19 +71,16 @@ public class UpdateEquipmentServlet extends HttpServlet {
 					EquipmentDao equipmentDao = new EquipmentDao();
 					int update = equipmentDao.updateEquipment(equipment);
 					if (update > 0) {
-						String success ="L'aggiornamento è andato a buon fine";
-						request.setAttribute("success", success);
+						request.setAttribute("success", true);
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 						dispatcher.forward(request, response);
 					} else {
-						String failure ="L'aggiornamento non è andato a buon fine";
-						request.setAttribute("failure", failure);
+						request.setAttribute("failure", true);
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 						dispatcher.forward(request, response);
 					}
 				} else {
-					String failure ="L'aggiornamento non è andato a buon fine";
-					request.setAttribute("failure", failure);
+					request.setAttribute("failure", true);
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 					dispatcher.forward(request, response);
 				}
