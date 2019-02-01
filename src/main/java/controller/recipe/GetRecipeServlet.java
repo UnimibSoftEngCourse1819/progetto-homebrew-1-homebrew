@@ -2,7 +2,6 @@ package controller.recipe;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,18 +28,24 @@ public class GetRecipeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
-			List<Recipe> recipes = null;
-			RecipeDao recipeDao = new RecipeDao();
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
-				recipes = recipeDao.findAllRecipes(user.getId());
-			} else {
-				recipes = recipeDao.findAllRecipes();
+				if (request.getParameter("id") != null) {
+					System.out.println(request.getParameter("id"));
+					int idRecipe = Integer.parseInt((String) request.getParameter("id"));
+					RecipeDao recipeDao = new RecipeDao();
+					
+					Recipe recipe = recipeDao.findRecipeByID(idRecipe);
+					if (user.getId() == recipe.getUserID()) {
+						System.out.println("User=Recipe");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeEdit.jsp");
+						request.setAttribute("recipe", recipe);
+						dispatcher.forward(request, response);
+					}
+				}
+
 			}
 
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
-			request.setAttribute("recipes", recipes);
-			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}

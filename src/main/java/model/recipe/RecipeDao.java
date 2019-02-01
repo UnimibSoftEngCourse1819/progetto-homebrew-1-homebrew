@@ -25,10 +25,42 @@ public class RecipeDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String findAllRecipes = "SELECT * From Recipe WHERE visibility='public'";
-	private static String findAllRecipesUser = "SELECT * From Recipe WHERE visibility='public' OR user=?";
+	private static String findAllRecipes = "SELECT * FROM Recipe WHERE visibility='public'";
+	private static String findAllRecipesUser = "SELECT * FROM Recipe WHERE visibility='public' OR user=?";
+	private static String findRecipeByID = "SELECT * FROM Recipe WHERE recipeID=?";
 	private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, content, capacity, visibility) VALUES(?,?,?,?,?,?)";
 
+	
+	public Recipe findRecipeByID(int idRecipe) {
+		Recipe recipe = null;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
+					mysql.getPassword());
+			statement = connect.prepareStatement(findRecipeByID);
+			statement.setInt(1, idRecipe);
+			resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("user");
+				String name = resultSet.getString("name");
+				String content = resultSet.getString("content");
+				int capacity = resultSet.getInt("capacity");
+				String visibility = resultSet.getString("visibility");
+				recipe = new Recipe(id, userID, name, content, capacity, visibility);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return recipe;
+	}
+	
 	public List<Recipe> findAllRecipes() {
 		List<Recipe> recipes = new ArrayList<>();
 		MySQLConnection mysql;

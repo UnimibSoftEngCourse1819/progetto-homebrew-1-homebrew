@@ -34,6 +34,7 @@ public class LoginServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 			request.setAttribute("recipes", recipes);
+			request.setAttribute("page", "home");
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
@@ -46,8 +47,8 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			Login login = new Login();
-			String username = request.getParameter("user");
-			String password = request.getParameter("pass");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
 
 			if (login.match(username, password)) {
 				HttpSession oldSession = request.getSession(false);
@@ -70,13 +71,14 @@ public class LoginServlet extends HttpServlet {
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 				request.setAttribute("recipes", recipes);
-
+				request.setAttribute("page", "home");
 				dispatcher.forward(request, response);
 
 			} else {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 				String error = "Login errata";
 				request.setAttribute("errorLogin", error);
+				request.setAttribute("page", "home");
 				dispatcher.forward(request, response);
 			}
 		} catch (ServletException | IOException e) {

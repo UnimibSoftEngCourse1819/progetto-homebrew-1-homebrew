@@ -1,0 +1,39 @@
+/* ------------------- MAIN ------------------- */
+.main {
+	width: 75%;
+	background: #ffffff;
+	text-align: center;
+}
+
+.image_home {
+	padding: 120px 50px;
+	width: 100%;
+}
+
+.image_home img {
+	width: 100%;
+}
+
+.home_desc {
+	width: 100%;
+	padding-bottom: 100px;
+}
+
+.home_desc h6 {
+	color: #3e3e3e;
+	font-size: 26px;
+	font-weight: 600;
+	line-height: 55px;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+.home_desc p {
+	color: #3e3e3e;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 40px;
+	letter-spacing: 1px;
+	text-align: center;
+	font-size: 18px;
+}

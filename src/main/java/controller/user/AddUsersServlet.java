@@ -31,6 +31,7 @@ public class AddUsersServlet extends HttpServlet {
 
 		try {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/registration.jsp");
+			request.setAttribute("page", "register");
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
