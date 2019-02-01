@@ -1,52 +1,9 @@
 .layout_right {
-	
+	background: #ffaf0080;
 }
 /* ------------------- MAIN ------------------- */
 .main {
 	width: 75%;
-	text-align: center;
-}
-
-.image_home {
-	padding: 120px 50px;
-	width: 100%;
-}
-
-.image_home img {
-	width: 100%;
-}
-
-.image_home {
-	padding: 120px 50px;
-	width: 100%;
-}
-
-.image_home img {
-	width: 100%;
-}
-
-.home_desc {
-	width: 100%;
-	padding-bottom: 100px;
-}
-
-.home_desc h6 {
-	color: #3e3e3e;
-	font-size: 26px;
-	font-weight: 600;
-	line-height: 55px;
-	letter-spacing: 1px;
-	text-align: center;
-}
-
-.home_desc p {
-	color: #3e3e3e;
-	font-size: 18px;
-	font-weight: 400;
-	line-height: 40px;
-	letter-spacing: 1px;
-	text-align: center;
-	font-size: 18px;
 }
 
 .registration_cont {
@@ -54,16 +11,18 @@
 	top: 0;
 	right: calc(37.5% - 300px);
 	width: 600px;
-	padding: 50px 0 70px;
-	margin: 100px auto;
-	border-radius: 10px;
+	padding: 30px 0 50px;
+	margin: 50px auto;
+	border-radius: 5px;
 	background: #ffaf00f2;
-	box-shadow: 0px 0px 20px 0px #00000066;
+	box-shadow: 0px 0px 10px 0px #00000066;
 }
 
 .main h2 {
-	margin: 0 0 60px;
+	margin: 0 0 30px;
 	font-size: 40px;
+	font-weight: 300;
+	text-align: center;
 }
 
 #registration_form {
@@ -75,21 +34,23 @@
 
 #registration_form div {
 	width: 100%;
-	height: 60px;
+	height: 100%;
+	margin-bottom: 10px;
 }
 
 #registration_form h3 {
-	float: left;
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: 300;
 }
 
 #registration_form input {
-	float: right;
-	padding: 3px 6px 2px;
+	width: 100%;
+	margin: 0 0 10px;
+	padding: 7px 12px 6px;
 	background-color: #ffffff;
 	border: solid 1px #ffffff;
 	border-radius: 5px;
+	box-shadow: 0px 0px 5px 0px #00000080;
 }
 
 #registration_form input.valid {
@@ -98,15 +59,18 @@
 }
 
 #registration_form #addNewUser {
-	margin: 0;
-	padding: 4px 8px 3px;
+	width: auto;
+	float: right;
+	margin: 20px 0 0;
+	padding: 4px 15px 3px;
 	border: 0;
 	background-color: #333333;
 	color: #ffffff;
-	font-size: 14px;
+	font-size: 16px;
+	box-shadow: none;
 }
 
 #registration_form #addNewUser:disabled {
-	background-color: #a9a9a9;
+	background-color: #ffffff80;
 	color: #cecece;
 }
