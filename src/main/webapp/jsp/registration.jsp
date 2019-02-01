@@ -41,7 +41,6 @@
 				<h2>Iscriviti ora al portale</h2>
 
 				<form id="registration_form" action="./register" method="post">
-<<<<<<< HEAD
 					<div>
 						<h3>Nome*:</h3>
 						<input name="name" type="text" placeholder="Nome">
@@ -69,49 +68,7 @@
 						<h3>Email*:</h3>
 						<input name="email" type="email" placeholder="Email">
 					</div>
-					<input name="registrationSubmit" type="submit" value="Iscriviti"
-=======
-					<table>
-						<tr>
-							<td><h3>Nome:</h3></td>
-							<td><h3>
-									<input name="name" type="text">
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>Cognome:</h3></td>
-							<td><h3>
-									<input name="surname" type="text">
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>Password:</h3></td>
-							<td><h3>
-									<input name="password" type="password">
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>Conferma password:</h3></td>
-							<td><h3>
-									<input name="checkPassword" type="password">
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>Data di nascita:</h3></td>
-							<td><h3>
-									<input name="dateOfBirth" type="date" placeholder="yyyy-mm-dd">
-								</h3>
-						</tr>
-						<tr>
-							<td><h3>Email:</h3></td>
-							<td><h3>
-									<input name="email" type="email">
-								</h3>
-						</tr>
-					</table>
-					<input name="registrationSubmit" type="submit" value="ISCRIVITI"
->>>>>>> branch 'master' of https://github.com/UnimibSoftEngCourse1819/progetto-homebrew-1-homebrew
-						id="addNewUser" disabled>
+					<input name="registrationSubmit" type="submit" value="Iscriviti" id="addNewUser" disabled>
 				</form>
 			</div>
 
