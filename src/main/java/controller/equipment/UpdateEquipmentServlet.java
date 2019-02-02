@@ -17,7 +17,7 @@ import model.equipment.Equipment;
 import model.equipment.EquipmentDao;
 import model.user.User;
 
-@WebServlet("/updateEquipmen")
+@WebServlet("/updateEquipment")
 public class UpdateEquipmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
