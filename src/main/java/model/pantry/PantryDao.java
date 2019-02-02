@@ -7,10 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
+import model.ingredient.Ingredient;
 
 public class PantryDao {
 	final Logger logger = Logger.getLogger("MyLog");
@@ -24,9 +26,11 @@ public class PantryDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String createPantry = "INSERT INTO Pantry (userID, ingredientID, avalibility) VALUES(?,?,?)";
-	private static String updatePantry = "UPDATE Pantry SET  avalibility =? WHERE userID =? AND ingredientID, =?";
-
+	private static String createPantry = "INSERT INTO Pantry (userID, ingredientID, availability) VALUES(?,?,?)";
+	private static String updatePantry = "UPDATE Pantry SET  availability =? WHERE userID =? AND ingredientID, =?";
+	private static String userPantry = "SELECT I.name, P.availability From Pantry as P "
+			+ "INNER JOIN Ingredient AS I ON I.ingredientID = P.ingredientID" + "WHERE P.userID = ?";
+	
 	public int createPantry(int userID) {
 		int result = -1;
 		MySQLConnection mysql;
@@ -37,7 +41,6 @@ public class PantryDao {
 					mysql.getPassword());
 			statement = connect.prepareStatement(createPantry);
 
-			// userID sar� ottenuto dalla sessione
 			for (int i = 1; i <= 6; i++) {
 				statement.setInt(1, userID);
 				statement.setInt(2, i);
@@ -54,7 +57,7 @@ public class PantryDao {
 		return result;
 	}
 
-	public int UpdatePantry(ArrayList<Pantry> ingredients) {
+	public int updatePantry(ArrayList<Pantry> ingredients) {
 		int result = -1;
 		MySQLConnection mysql;
 		try {
@@ -64,10 +67,6 @@ public class PantryDao {
 					mysql.getPassword());
 			statement = connect.prepareStatement(updatePantry);
 
-			// la Servlet passera un arrayList di Pantry dove il primo attributo sar� l'id
-			// dell'utente preso dalla sessione
-			// il secondo attributo sar� l'id dell ingrediente
-			// il terzo attributo sar� la nuova disponibilit�
 			for (int i = 0; i < ingredients.size(); i++) {
 				Pantry ingredient = ingredients.get(i);
 
@@ -84,6 +83,31 @@ public class PantryDao {
 		}
 
 		return result;
+	}
+	
+	public List<Ingredient> userPantry() {
+		List<Ingredient> ingredients = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(userPantry);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				String name = resultSet.getString("name");
+				int availability = resultSet.getInt("availability");				
+				Ingredient ingredient = new Ingredient( name, availability);
+				ingredients.add(ingredient);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return ingredients;
 	}
 
 	private void close() {

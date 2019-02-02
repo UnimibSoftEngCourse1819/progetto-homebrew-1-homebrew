@@ -31,7 +31,7 @@ public class UserBrewDao {
 
 	private static String findAllBrew = "SELECT B.name, R.name, UB.brewDate, UB.quantity From Brew as B "
 			+ "INNER JOIN Recipe AS R ON B.recipeID = R.recipeID" + "INNER JOIN User_Brew AS R ON B.brewID = UB.brewID"
-			+ "WHERE UB.UserID = ?";
+			+ "WHERE UB.userID = ?";
 	private static String createUserBrew = "INSERT INTO User_Brew (userID, brewID, brewDate, quantity) VALUES(?,?,?,?)";
 
 	public List<UserBrewSelect> findAllUsers() {

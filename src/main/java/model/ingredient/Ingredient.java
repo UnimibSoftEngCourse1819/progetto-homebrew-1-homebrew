@@ -2,26 +2,27 @@ package model.ingredient;
 
 public class Ingredient {
 	
-	private int ingredientId;
 	private String name;
+	private int availability;
 	
-	public Ingredient(int ingredientId, String name) {
+	public Ingredient(String name, int availability) {
 		super();
-		this.ingredientId = ingredientId;
 		this.name = name;
+		this.availability = availability;
 	}
 	
-	public int getIngredientId() {
-		return ingredientId;
-	}
-	public void setIngredientId(int ingredientId) {
-		this.ingredientId = ingredientId;
-	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}	
+	}
+	public int getAvailability() {
+		return availability;
+	}
+	public void setAvailability(int availability) {
+		this.availability = availability;
+	}
+	
 	
 }
