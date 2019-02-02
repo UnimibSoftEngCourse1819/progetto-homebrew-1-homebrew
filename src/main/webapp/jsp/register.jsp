@@ -41,13 +41,12 @@
 					</div>
 					<div>
 						<h3>Data di nascita:</h3>
-						<input name="dateOfBirth" id="dateOfBirth" type="date" required
-							pattern="[0-9]{4}/[0-9]{2}/[0-9]{2}">
+						<input name="dateOfBirth" id="dateOfBirth" type="date" placeholder="AAAA-MM-DD" required
+							pattern="[0-9]{4}/[0-1][0-9]/[0-3][0-9]">
 					</div>
 					<div>
 						<h3>Email:</h3>
-						<input name="email" type="email"
-							placeholder="Inserisci la tua Email">
+						<input name="email" type="email" placeholder="Inserisci la tua Email">
 					</div>
 					<div>
 						<h3>Password [minimo 8 caratteri]:</h3>
