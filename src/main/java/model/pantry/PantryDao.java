@@ -85,7 +85,7 @@ public class PantryDao {
 		return result;
 	}
 	
-	public List<Ingredient> userPantry() {
+	public List<Ingredient> userPantry(int userID) {
 		List<Ingredient> ingredients = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
@@ -93,6 +93,7 @@ public class PantryDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(userPantry);
+			statement.setInt(1, userID);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {

@@ -84,7 +84,7 @@ public class EquipmentDao {
 		return result;
 	}
 	
-	public List<Tool> userEquipment() {
+	public List<Tool> userEquipment(int userID) {
 		List<Tool> tools = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
@@ -92,6 +92,7 @@ public class EquipmentDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(userEquipment);
+			statement.setInt(1, userID);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
