@@ -349,6 +349,10 @@ body {
 	right: 0;
 	width: 75%;
 }
+.main {
+	width: 75%;
+	background: #ffffff;
+}
 
 /* ------------------- ALERT MODAL ------------------- */
 .modal-body p {

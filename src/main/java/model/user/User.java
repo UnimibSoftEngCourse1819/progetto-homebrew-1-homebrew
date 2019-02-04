@@ -13,10 +13,9 @@ public class User implements Serializable {
 	private Date dateOfBirth;
 	private String email;
 	private String password;
-	private String rights;
 	
 	
-	public User(int id, String name, String surname, Date dateOfBirth, String email, String password, String rights) {
+	public User(int id, String name, String surname, Date dateOfBirth, String email, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -24,15 +23,14 @@ public class User implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
 		this.password = password;
-		this.rights = rights;
 	}
 	
-	public User(String name, String surname, Date dateOfBirth, String email, String password, String rights) {
-		this(0, name, surname, dateOfBirth, email, password, rights);
+	public User(String name, String surname, Date dateOfBirth, String email, String password) {
+		this(0, name, surname, dateOfBirth, email, password);
 	}
 	
-	public User(int id, String name, String surname, Date dateOfBirth, String email, String rights) {
-		this(0, name, surname, dateOfBirth, email, "hidden", rights);
+	public User(int id, String name, String surname, Date dateOfBirth, String email) {
+		this(0, name, surname, dateOfBirth, email, "hidden");
 	}
 	
 	public int getId() {
@@ -70,12 +68,6 @@ public class User implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getRights() {
-		return rights;
-	}
-	public void setRights(String rights) {
-		this.rights = rights;
 	}
 
 

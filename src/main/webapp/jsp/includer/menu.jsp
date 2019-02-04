@@ -82,7 +82,7 @@
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
 					<li class="menu_item"><a href="./equipment">AGGIORNAMENTO UTENSILI</a></li>
 				</c:when>
-				<c:when test="${page == 'home'}">
+				<c:when test="${page == 'recipes'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
 					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
 							TODAY?</a></li>

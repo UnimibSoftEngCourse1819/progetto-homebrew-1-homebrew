@@ -1,11 +1,13 @@
 package model.recipe;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +25,33 @@ public class IngredientRecipeDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
+	private static String findIngredientRecipe = "SELECT * FROM Ingredient_Recipe WHERE recipeID=?";
 	private static String createIngredientRecipe = "INSERT INTO Ingredient_Recipe (recipeID, ingredientID, quantity) VALUES(?,?,?)";
+
+	public IngredientRecipe findRecipeByID(int recipeID) {
+		IngredientRecipe ingredientRecipe = null;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(findIngredientRecipe);
+			statement.setInt(1, recipeID);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int recipeId = resultSet.getInt("recipeID");
+				int ingredientId = resultSet.getInt("ingredientID");
+				int quantity = resultSet.getInt("quantity");
+				String measure = resultSet.getString("measure");
+				ingredientRecipe = new IngredientRecipe(recipeId, ingredientId, quantity, measure);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return ingredientRecipe;
+	}
 
 	public int updateEquipment(List<IngredientRecipe> ingredientRecipes) {
 		int result = -1;
@@ -31,8 +59,7 @@ public class IngredientRecipeDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(createIngredientRecipe);
 
 			// la Servlet passera un arrayList di Ingredient_Recipe dove il primo attributo

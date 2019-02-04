@@ -15,8 +15,8 @@
 <script src="js/jquery.validate.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/main.js"></script>
-
 </head>
+
 <body>
 	<jsp:include page="includer/alert.jsp" />
 	<div class="layout_left"></div>

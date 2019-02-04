@@ -24,12 +24,12 @@ public class UserDao {
 	private ResultSet resultSet = null;
 
 	private static String findAllUsers = "SELECT * FROM User";
-	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password, rights) VALUES(?,?,?,?,?,?)";
+	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password) VALUES(?,?,?,?,?)";
 	private static String deleteUser = "DELETE FROM User WHERE userID=?";
 	private static String seletUserById = "SELECT * FROM User WHERE userId=?";
 	private static String seletUserByEmail = "SELECT * FROM User WHERE email=?";
 	private static String checkUserEmail = "SELECT * FROM User WHERE email=?";
-	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, password=?, rights=? WHERE userID=?";
+	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, password=? WHERE userID=?";
 
 	public List<User> findAllUsers() {
 		List<User> users = new ArrayList<>();
@@ -48,8 +48,7 @@ public class UserDao {
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
-				String rights = resultSet.getString("rights");
-				User user = new User(id, name, surname, dateOfBirth, email, password, rights);
+				User user = new User(id, name, surname, dateOfBirth, email, password);
 				users.add(user);
 			}
 
@@ -80,8 +79,7 @@ public class UserDao {
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
-				String rights = resultSet.getString("rights");
-				user = new User(id, name, surname, dateOfBirth, email, password, rights);
+				user = new User(id, name, surname, dateOfBirth, email, password);
 				return user;
 			}
 
@@ -111,8 +109,7 @@ public class UserDao {
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
-				String rights = resultSet.getString("rights");
-				user = new User(id, name, surname, dateOfBirth, email, password, rights);
+				user = new User(id, name, surname, dateOfBirth, email, password);
 				return user;
 			}
 
@@ -140,7 +137,6 @@ public class UserDao {
 			statement.setString(3, reportDate);
 			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
-			statement.setString(6, user.getRights());
 			result = statement.executeUpdate();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
@@ -167,8 +163,7 @@ public class UserDao {
 			statement.setString(3, reportDate);
 			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
-			statement.setString(6, user.getRights());
-			statement.setInt(7, id);
+			statement.setInt(6, id);
 			result = statement.executeUpdate();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
