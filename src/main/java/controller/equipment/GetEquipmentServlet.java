@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.equipment.EquipmentDao;
+import model.equipment.ToolEquipmentDao;
 import model.tool.Tool;
 import model.user.User;
 
@@ -31,7 +31,7 @@ public class GetEquipmentServlet extends HttpServlet {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getId();
 				List<Tool> equipment = new ArrayList<>();
-				EquipmentDao equipmentDao = new EquipmentDao();
+				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
 				equipment = equipmentDao.userEquipment(userID);
 					
 				request.setAttribute("equipment", equipment);

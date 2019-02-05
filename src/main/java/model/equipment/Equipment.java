@@ -1,34 +1,34 @@
 package model.equipment;
 
 public class Equipment {
+	private int equipmentID;
 	private int userID;
-	private int toolID;
-	private int capacity;
+	private int batchSize;
 	
-	public Equipment(int userID, int toolID, int capacity) {
+	public Equipment(int equipmentID, int userID, int batchSize) {
 		super();
+		this.equipmentID = equipmentID;
 		this.userID = userID;
-		this.toolID = toolID;
-		this.capacity = capacity;
+		this.batchSize = batchSize;
 	}
 	
+	public int getEquipmentID() {
+		return equipmentID;
+	}
+	public void setEquipmentID(int equipmentID) {
+		this.equipmentID = equipmentID;
+	}
 	public int getUserID() {
 		return userID;
 	}
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-	public int getToolID() {
-		return toolID;
+	public int getBatchSize() {
+		return batchSize;
 	}
-	public void setToolID(int toolID) {
-		this.toolID = toolID;
-	}
-	public int getCapacity() {
-		return capacity;
-	}
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
+	public void setBatchSize(int batchSize) {
+		this.batchSize = batchSize;
 	}
 	
 }

@@ -5,30 +5,32 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
+import model.tool.Tool;
 
-
-public class EquipmentDao {
+public class ToolEquipmentDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
 	private static String connectionError = "Connection Error";
 
-	public EquipmentDao() {
+	public ToolEquipmentDao() {
 	}
 
 	private Connection connect = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String createEquipment = "INSERT INTO Equipment (userID, batchSize) VALUES(?,?)";
-	private static String updateEquipment = "UPDATE Equipment SET  batchSize =? WHERE userID =? AND equipmentID, =?";
-	private static String userEquipment = "SELECT * From Equipment WHERE userID = ?";
+	private static String createToolEquipment = "INSERT INTO Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
+	private static String updateToolEquipment = "UPDATE Equipment SET  capacity =? WHERE equipmentID =? AND toolID, =?";
+	private static String userToolEquipment = "SELECT T.name, E.capacity, T.measure From Tool_Equipment as E "
+			+ "INNER JOIN Tool AS T ON T.toolID = E.toolID" + "WHERE E.equipmentID = ?";
 	
-	public int createEquipment(int userID) {
+	public int createToolEquipment(int equipmentID) {
 		int result = -1;
 		MySQLConnection mysql;
 		try {
@@ -36,63 +38,13 @@ public class EquipmentDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
 					mysql.getPassword());
-			statement = connect.prepareStatement(createEquipment);
+			statement = connect.prepareStatement(createToolEquipment);
 
-				statement.setInt(1, userID);
-				statement.setInt(2, 0);
+			for (int i = 1; i <= 6; i++) {
+				statement.setInt(1, equipmentID);
+				statement.setInt(2, i);
+				statement.setInt(3, 1);
 				result = statement.executeUpdate();
-
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, sqlError, e);
-		} finally {
-			close();
-		}
-
-		return result;
-	}
-
-	public int updateEquipment(Equipment equipment) {
-		int result = -1;
-		MySQLConnection mysql;
-		try {
-			mysql = new MySQLConnection();
-			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
-			statement = connect.prepareStatement(updateEquipment);
-
-				statement.setInt(1, equipment.getBatchSize());
-				statement.setInt(2, equipment.getEquipmentID());
-				statement.setInt(3, equipment.getUserID());
-				result = statement.executeUpdate();
-			
-
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, sqlError, e);
-		} finally {
-			close();
-		}
-
-		return result;
-	}
-	
-	public Equipment selectEquipmentByUser(int userID) {
-		Equipment equipment= null;
-		MySQLConnection mysql;
-		try {
-			mysql = new MySQLConnection();
-			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(userEquipment);
-			statement.setInt(1, userID);
-			resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				int equipmentID = resultSet.getInt("equipmentID");
-				int userId = resultSet.getInt("userID");
-				int batchSize = resultSet.getInt("batchSize");
-				equipment = new Equipment(equipmentID, userId, batchSize);
-				return equipment;
 			}
 
 		} catch (SQLException e) {
@@ -100,7 +52,63 @@ public class EquipmentDao {
 		} finally {
 			close();
 		}
-		return equipment;
+
+		return result;
+	}
+
+	public int updateToolEquipment(ArrayList<ToolEquipment> tools) {
+		int result = -1;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
+					mysql.getPassword());
+			statement = connect.prepareStatement(updateToolEquipment);
+
+			for (int i = 0; i < tools.size(); i++) {
+				ToolEquipment tool = tools.get(i);
+
+				statement.setInt(1, tool.getCapacity());
+				statement.setInt(2, tool.getEquipmentID());
+				statement.setInt(3, tool.getToolID());
+				result = statement.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+
+		return result;
+	}
+	
+	public List<Tool> userToolEquipment(int userID) {
+		List<Tool> tools = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(userToolEquipment);
+			statement.setInt(1, userID);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				String name = resultSet.getString("name");
+				int capacity = resultSet.getInt("batchSize");
+				String measure = resultSet.getString("measure");
+				Tool tool = new Tool( name, capacity, measure);
+				tools.add(tool);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return tools;
 	}
 
 	private void close() {

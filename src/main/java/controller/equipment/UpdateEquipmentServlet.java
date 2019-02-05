@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.equipment.Equipment;
-import model.equipment.EquipmentDao;
+import model.equipment.ToolEquipmentDao;
 import model.user.User;
 
 @WebServlet("/updateEquipment")
@@ -68,7 +68,7 @@ public class UpdateEquipmentServlet extends HttpServlet {
 				}
 				
 				if(equipment.size() > 0) {
-					EquipmentDao equipmentDao = new EquipmentDao();
+					ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
 					int update = equipmentDao.updateEquipment(equipment);
 					if (update > 0) {
 						request.setAttribute("success", true);
