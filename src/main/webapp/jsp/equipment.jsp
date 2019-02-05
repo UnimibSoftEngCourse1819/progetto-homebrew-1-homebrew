@@ -47,16 +47,30 @@
 				<form method="post" name="equipment_form">
 					<table>
 						<tr>
-							<td><h3>Bilancia:</h3></td>
+							<td><h3>PENTOLA PER BOLLITURA:</h3></td>
 							<td><h3>
-									<input type="number" name="weightScale" id="testoformdue"
-										placeholder=" pesatura" required>
+									<input type="number" name="boilingCauldron" id="testoformdue"
+										placeholder=" litri" required>
 								</h3>
 						</tr>
 						<tr>
-							<td><h3>PENTOLONE:</h3></td>
+							<td><h3>PENTOLA PER MASHING:</h3></td>
 							<td><h3>
-									<input type="number" name="cauldron" id="testoformdue"
+									<input type="number" name="mashingCauldron" id="testoformdue"
+										placeholder=" litri" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>PENTOLA PER LIQUIDI CALDI:</h3></td>
+							<td><h3>
+									<input type="number" name="hotLiquidsCauldron" id="testoformdue"
+										placeholder=" litri" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>BOLLITORE:</h3></td>
+							<td><h3>
+									<input type="number" name="kettle" id="testoformdue"
 										placeholder=" litri" required>
 								</h3>
 						</tr>
@@ -64,28 +78,50 @@
 							<td><h3>FERMENTATORE:</h3></td>
 							<td><h3>
 									<input type="number" name="fermenter" id="testoformdue"
-										placeholder=" capacitÃ " required>
+										placeholder="litri" required>
 								</h3>
 						</tr>
 						<tr>
-							<td><h3>MESTOLI:</h3></td>
+							<td><h3>FILTRO:</h3></td>
 							<td><h3>
-									<input type="number" name="ladles" id="testoformdue"
-										placeholder=" quantitÃ " required>
+									<input type="number" name="filter" id="testoformdue"
+										placeholder="litri" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>BILANCIA:</h3></td>
+							<td><h3>
+									<input type="number" name="weightScale" id="testoformdue"
+										placeholder="kg" required>
 								</h3>
 						</tr>
 						<tr>
 							<td><h3>TERMOMETRI:</h3></td>
 							<td><h3>
 									<input type="number" name="thermometers" id="testoformdue"
-										placeholder=" quantitÃ " required>
+										placeholder="quantità" required>
 								</h3>
 						</tr>
 						<tr>
-							<td><h3>Tubo:</h3></td>
+							<td><h3>DENSIMETRO:</h3></td>
+							<td><h3>
+									<input type="number" name="densimetro" id="testoformdue"
+										placeholder="quantità" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>MESTOLI:</h3></td>
+							<td><h3>
+									<input type="number" name="ladles" id="testoformdue"
+										placeholder=" quantità" required>
+								</h3>
+						</tr>
+
+						<tr>
+							<td><h3>TUBO:</h3></td>
 							<td><h3>
 									<input type="number" name="tube" id="testoformdue"
-										placeholder=" cm" required>
+										placeholder="litri" required>
 								</h3>
 						</tr>
 					</table>

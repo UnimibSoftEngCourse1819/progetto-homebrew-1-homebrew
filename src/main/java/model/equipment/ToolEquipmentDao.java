@@ -40,7 +40,7 @@ public class ToolEquipmentDao {
 					mysql.getPassword());
 			statement = connect.prepareStatement(createToolEquipment);
 
-			for (int i = 1; i <= 6; i++) {
+			for (int i = 1; i <= 9; i++) {
 				statement.setInt(1, equipmentID);
 				statement.setInt(2, i);
 				statement.setInt(3, 1);
