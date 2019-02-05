@@ -32,44 +32,48 @@
 			<div class="main_shadow">
 				<div></div>
 			</div>
-
-			<div class="row recipe_img"
-				style="background-image: url(${recipe.imagePath})">
-				<div class="recipe_titCont">
-					<div class="recipe_title">
-						<h3>${recipe.name}</h3>
-						<c:set var="splitdate" value="${fn:split(recipe.creation,'-')}" />
-						<p>${splitdate[2]}/${splitdate[1]}/${splitdate[0]}</p>
-						<form action="./recipe" method="post">
-							<input type="hidden" name="recipeID" value="${recipe.recipeID}">
-							<button name="editRecipe" type="submit">
-								<img alt="editable" src="images/editable.svg">
-							</button>
-						</form>
+			<div class="content_main">
+				<a class="back_recipes" href="./recipes">&larr;RICETTE</a>
+				<div class="row recipe_img"
+					style="background-image: url(${recipe.imagePath})">
+					<div class="recipe_titCont">
+						<div class="recipe_title">
+							<h3>${recipe.name}</h3>
+							<c:set var="splitdate" value="${fn:split(recipe.creation,'-')}" />
+							<p>${splitdate[2]}/${splitdate[1]}/${splitdate[0]}</p>
+							<c:if test="${editable != null}">
+								<form class="recipe_to_edit" action="./recipe" method="post">
+									<input type="hidden" name="recipeID" value="${recipe.recipeID}">
+									<button name="editRecipe" type="submit">
+										<img alt="editable" src="images/logos/edit.svg">
+									</button>
+								</form>
+							</c:if>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="recipe_cont">
-				<p class="recipe_description">${recipe.description}</p>
-				<h5 class="recipe_ingredient">Ingredienti</h5>
-				<table>
-					<tbody>
-						<c:forEach items="${ingredientsRecipe}" var="item">
-							<tr>
-								<td class="leftIngr">${item.ingredientName}</td>
-								<td class="rightIngr">${item.quantity}${item.measure}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+				<div class="recipe_cont">
+					<p class="recipe_description">${recipe.description}</p>
+					<h5 class="recipe_ingredient">Ingredienti</h5>
+					<table>
+						<tbody>
+							<c:forEach items="${ingredientsRecipe}" var="item">
+								<tr>
+									<td class="leftIngr">${item.ingredientName}</td>
+									<td class="rightIngr">${item.quantity}${item.measure}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 
-				<div class="recipe_steps">
-					<h5>Procedimento</h5>
-					<ul>
-						<c:forEach items="${recipe.steps}" var="item">
-							<li>${item.key}.&nbsp;${item.value}</li>
-						</c:forEach>
-					</ul>
+					<div class="recipe_steps">
+						<h5>Procedimento</h5>
+						<ul>
+							<c:forEach items="${recipe.steps}" var="item">
+								<li>${item.key}.&nbsp;${item.value}</li>
+							</c:forEach>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

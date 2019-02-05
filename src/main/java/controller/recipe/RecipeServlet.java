@@ -45,7 +45,8 @@ public class RecipeServlet extends HttpServlet {
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipe.jsp");
-					if (recipe.getVisibility().equals("private")) {
+
+					if (user.getId() == recipe.getUserID()) {
 						request.setAttribute("editable", true);
 					}
 					request.setAttribute("recipe", recipe);

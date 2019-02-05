@@ -31,10 +31,12 @@ public class RecipeDao {
 	private static String findAllRecipes = "SELECT * FROM Recipe WHERE visibility='public'";
 	private static String findAllRecipesUser = "SELECT * FROM Recipe WHERE visibility='public' OR userID=?";
 	private static String findRecipeByID = "SELECT * FROM Recipe WHERE recipeID=?";
-	private static String findStepsRecipeByID = "SELECT stepPos, text FROM Step_Recipe WHERE recipeID=?";
 	private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
-	// private static String createSteps = "INSERT INTO Steps_Recipe (recipeID,
-	// stepPos, text) VALUES(?,?,?)";
+	private static String updateRecipe = "UPDATE Recipe SET name=?, description=?, visibility=?, imagePath=? WHERE recipeID=?";
+
+	private static String findStepsRecipeByID = "SELECT stepPos, text FROM Step_Recipe WHERE recipeID=?";
+	private static String createSteps = "INSERT INTO Step_Recipe (recipeID, stepPos, text) VALUES(?,?,?)";
+	private static String deleteStepsByRecipeID = "DELETE FROM Step_Recipe WHERE recipeID=?";
 
 	public Recipe findRecipeByID(int recipeID) {
 		Recipe recipe = null;
@@ -154,6 +156,30 @@ public class RecipeDao {
 		return result;
 	}
 
+	public int updateRecipe(Recipe recipe) {
+		int result = -1;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(updateRecipe);
+			statement.setString(1, recipe.getName());
+			statement.setString(2, recipe.getDescription());
+			statement.setString(3, recipe.getVisibility());
+			statement.setString(4, recipe.getImagePath());
+			statement.setInt(5, recipe.getRecipeID());
+			result = statement.executeUpdate();
+			editSteps(recipe);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+
+		return result;
+	}
+
 	private Map<Integer, String> getSteps(int recipeID) {
 		Map<Integer, String> steps = new HashMap<>();
 		MySQLConnection mysql;
@@ -177,6 +203,49 @@ public class RecipeDao {
 			close();
 		}
 		return steps;
+	}
+
+	private int editSteps(Recipe recipe) {
+		int result = -1;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(deleteStepsByRecipeID);
+			statement.setInt(1, recipe.getRecipeID());
+			result = statement.executeUpdate();
+			result = createSteps(recipe.getRecipeID(), recipe.getSteps());
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	private int createSteps(int recipeID, Map<Integer, String> steps) {
+		int result = -1;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(createSteps);
+			for (Integer key : steps.keySet()) {
+				statement.setInt(1, recipeID);
+				statement.setInt(2, key);
+				statement.setString(3, steps.get(key));
+				result = statement.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return result;
 	}
 
 	private void close() {

@@ -43,7 +43,7 @@
 						<div class="col-9">
 							<h3>${item.name}</h3>
 							<c:if test="${item.visibility == 'private'}">
-								<img class="recipes_lock" src="images/lock.svg" alt="lock">
+								<img class="recipes_lock" src="images/logos/lock.svg" alt="lock">
 							</c:if>
 							<c:if test="${(fn:length(item.description)) > 300}">
 								<c:set var="text"

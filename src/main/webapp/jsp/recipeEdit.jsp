@@ -34,18 +34,73 @@
 			</div>
 
 			<div class="content_main recipe_cont">
-				<form action="./recipe_edit" method="post">
+				<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">ANNULLA</a>
+
+				<form action="./edit_recipe" method="post" class="recipe_edit_form">
 					<input type="hidden" name="recipeID" value="${recipe.recipeID}">
-					<input type="text" name="name" value="${recipe.name}">
-					<textarea name="description">${recipe.description}</textarea>
-					<select name="visibility">
-						<option value="public">Pubblica</option>
-						<option value="private">Privata</option>
-					</select>
+					<div class="row">
+						<div class="col-9">
+							<h6>Titolo</h6>
+							<input type="text" name="name" value="${recipe.name}">
+						</div>
+						<div class="col-3">
+							<h6>Visibilita'</h6>
+							<select name="visibility">
+								<option value="public">Pubblica</option>
+								<option value="private">Privata</option>
+							</select>
+						</div>
+					</div>
+					<div>
+						<h6>Descrizione</h6>
+						<textarea name="description">${recipe.description}</textarea>
+					</div>
+					<div class="row">
+						<div class="col-4">
+							<h6>Ingredienti</h6>
+							<table>
+								<tbody>
+									<c:forEach items="${ingredients}" var="item">
+										<tr>
+											<td class="leftIngr">${item.name}</td>
+											<td class="rightIngr"><c:forEach
+													items="${ingredientsRecipe}" var="itemRecipe">
+													<c:if
+														test="${itemRecipe.ingredientId == item.ingredientID}">
+														<c:set var="valueIngredient"
+															value="${itemRecipe.quantity}"></c:set>
+														<c:set var="measureIngredient"
+															value="${itemRecipe.measure}"></c:set>
+													</c:if>
+												</c:forEach> <input type="number" name="value-${item.ingredientID}"
+												value="${valueIngredient}" min="0"> <input
+												type="text" name="measure-${item.ingredientID}"
+												value="${measureIngredient}"></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-8">
+							<h6>Passaggi</h6>
+							<table>
+								<tbody>
+									<c:forEach items="${recipe.steps}" var="item">
+										<tr>
+											<td class="leftStep">${item.key}</td>
+											<td class="rightStep"><textarea name="step-${item.key}">${item.value}</textarea>
+											</td>
+											<td>
+												<button name="deleteStep" type="button">&times;</button>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
 
-
-					<button name="editRecipe" type="submit">INVIA
-					</button>
+					<button name="editRecipe" type="submit">INVIA</button>
 				</form>
 			</div>
 		</div>
