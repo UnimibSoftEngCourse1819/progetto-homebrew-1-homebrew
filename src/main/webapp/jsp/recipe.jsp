@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>"${recipe.name}" - HomeBrew</title>
+<title>${recipe.name}&nbsp;-&nbsp;HomeBrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -29,6 +29,10 @@
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="row main">
+			<div class="main_shadow">
+				<div></div>
+			</div>
+
 			<div class="row recipe_img"
 				style="background-image: url(${recipe.imagePath})">
 				<div class="recipe_titCont">
@@ -36,24 +40,41 @@
 						<h3>${recipe.name}</h3>
 						<c:set var="splitdate" value="${fn:split(recipe.creation,'-')}" />
 						<p>${splitdate[2]}/${splitdate[1]}/${splitdate[0]}</p>
+						<form action="./recipe" method="post">
+							<input type="hidden" name="recipeID" value="${recipe.recipeID}">
+							<button name="editRecipe" type="submit">
+								<img alt="editable" src="images/editable.svg">
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
 			<div class="recipe_cont">
 				<p class="recipe_description">${recipe.description}</p>
-				<p class="recipe_capacity">Ingredienti per ${recipe.capacity}l</p>
+				<h5 class="recipe_ingredient">Ingredienti</h5>
+				<table>
+					<tbody>
+						<c:forEach items="${ingredientsRecipe}" var="item">
+							<tr>
+								<td class="leftIngr">${item.ingredientName}</td>
+								<td class="rightIngr">${item.quantity}${item.measure}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 
 				<div class="recipe_steps">
 					<h5>Procedimento</h5>
 					<ul>
 						<c:forEach items="${recipe.steps}" var="item">
-							<li>${item.key}.${item.value}</li>
+							<li>${item.key}.&nbsp;${item.value}</li>
 						</c:forEach>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>
 

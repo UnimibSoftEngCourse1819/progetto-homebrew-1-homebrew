@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.recipe.IngredientRecipe;
+import model.recipe.IngredientRecipeDao;
 import model.recipe.Recipe;
 import model.recipe.RecipeDao;
+import model.user.User;
 
 @WebServlet("/recipe")
 public class RecipeServlet extends HttpServlet {
@@ -29,40 +32,71 @@ public class RecipeServlet extends HttpServlet {
 			int id = (int) Integer.parseInt((String) request.getParameter("n"));
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				/*
-				 * User user = (User) session.getAttribute("user");
-				 * 
-				 * if (request.getParameter("id") != null) { int idRecipe =
-				 * Integer.parseInt((String) request.getParameter("id")); RecipeDao recipeDao =
-				 * new RecipeDao();
-				 * 
-				 * Recipe recipe = recipeDao.findRecipeByID(idRecipe); if (user.getId() ==
-				 * recipe.getUserID()) { RequestDispatcher dispatcher =
-				 * getServletContext().getRequestDispatcher("/jsp/recipeEdit.jsp");
-				 * request.setAttribute("recipe", recipe); dispatcher.forward(request,
-				 * response); } }
-				 * 
-				 * RecipeDao recipeDao = new RecipeDao(); List<Recipe> recipes =
-				 * recipeDao.findAllRecipes((int) session.getAttribute("user"));
-				 * 
-				 * RequestDispatcher dispatcher =
-				 * getServletContext().getRequestDispatcher("/jsp/recipe.jsp");
-				 * request.setAttribute("recipes", recipes); request.setAttribute("page",
-				 * "recipe"); dispatcher.forward(request, response);
-				 */
+
+				User user = (User) session.getAttribute("user");
+				RecipeDao recipeDao = new RecipeDao();
+
+				Recipe recipe = recipeDao.findRecipeByID(id);
+
+				if (recipe.getVisibility().equals("public")
+						|| (recipe.getVisibility().equals("private") && user.getId() == recipe.getUserID())) {
+					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+
+					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
+
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipe.jsp");
+					if (recipe.getVisibility().equals("private")) {
+						request.setAttribute("editable", true);
+					}
+					request.setAttribute("recipe", recipe);
+					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+					request.setAttribute("page", "recipe");
+					dispatcher.forward(request, response);
+				} else {
+					response.sendRedirect("/homebrew/recipes");
+				}
 
 			} else {
 				RecipeDao recipeDao = new RecipeDao();
 				Recipe recipe = recipeDao.findRecipeByID(id);
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipe.jsp");
-				request.setAttribute("recipe", recipe);
-				request.setAttribute("page", "recipe");
-				dispatcher.forward(request, response);
+				if (recipe.getVisibility().equals("public")) {
+					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+
+					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
+
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipe.jsp");
+					request.setAttribute("recipe", recipe);
+					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+					request.setAttribute("page", "recipe");
+					dispatcher.forward(request, response);
+				} else {
+					response.sendRedirect("/homebrew");
+				}
 
 			}
 
 		} catch (ServletException | IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
+
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			HttpSession session = request.getSession(false);
+			if (session != null && session.getAttribute("user") != null) {
+				int recipeID = (int) Integer.parseInt((String) request.getParameter("recipeID"));
+
+				session.setAttribute("recipeID", recipeID);
+				response.sendRedirect("./edit_recipe");
+			} else {
+				response.sendRedirect("/homebrew");
+			}
+
+		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 

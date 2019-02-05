@@ -3,13 +3,15 @@ package model.recipe;
 public class IngredientRecipe {
 	private int recipeId;
 	private int ingredientId;
+	private String ingredientName;
 	private int quantity;
 	private String measure;
 
-	public IngredientRecipe(int recipeId, int ingredientId, int quantity, String measure) {
+	public IngredientRecipe(int recipeId, int ingredientId, String ingredientName, int quantity, String measure) {
 		super();
 		this.recipeId = recipeId;
 		this.ingredientId = ingredientId;
+		this.ingredientName = ingredientName;
 		this.quantity = quantity;
 		this.measure = measure;
 	}
@@ -44,6 +46,14 @@ public class IngredientRecipe {
 
 	public void setMeasure(String measure) {
 		this.measure = measure;
+	}
+
+	public String getIngredientName() {
+		return ingredientName;
+	}
+
+	public void setIngredientName(String ingredientName) {
+		this.ingredientName = ingredientName;
 	}
 
 }

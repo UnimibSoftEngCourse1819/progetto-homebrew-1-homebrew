@@ -32,7 +32,7 @@ public class RecipeDao {
 	private static String findAllRecipesUser = "SELECT * FROM Recipe WHERE visibility='public' OR userID=?";
 	private static String findRecipeByID = "SELECT * FROM Recipe WHERE recipeID=?";
 	private static String findStepsRecipeByID = "SELECT stepPos, text FROM Step_Recipe WHERE recipeID=?";
-	private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, creation, description, capacity, visibility, imagePath) VALUES(?,?,?,?,?,?,?,?)";
+	private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
 	// private static String createSteps = "INSERT INTO Steps_Recipe (recipeID,
 	// stepPos, text) VALUES(?,?,?)";
 
@@ -54,11 +54,10 @@ public class RecipeDao {
 				String name = resultSet.getString("name");
 				Date creation = resultSet.getDate("creation");
 				String description = resultSet.getString("description");
-				int capacity = resultSet.getInt("capacity");
 				String visibility = resultSet.getString("visibility");
 				String imagePath = resultSet.getString("imagePath");
 				steps = getSteps(recipeID);
-				recipe = new Recipe(id, userID, name, creation, description, capacity, visibility, imagePath, steps);
+				recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, steps);
 			}
 
 		} catch (SQLException e) {
@@ -85,10 +84,9 @@ public class RecipeDao {
 				String name = resultSet.getString("name");
 				Date creation = resultSet.getDate("creation");
 				String description = resultSet.getString("description");
-				int capacity = resultSet.getInt("capacity");
 				String visibility = resultSet.getString("visibility");
 				String imagePath = resultSet.getString("imagePath");
-				Recipe recipe = new Recipe(id, userID, name, creation, description, capacity, visibility, imagePath, null);
+				Recipe recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, null);
 				recipes.add(recipe);
 			}
 
@@ -100,7 +98,7 @@ public class RecipeDao {
 		return recipes;
 	}
 
-	public List<Recipe> findAllRecipes(int userRequest) {
+	public List<Recipe> findAllRecipesUser(int userRequest) {
 		List<Recipe> recipes = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
@@ -117,10 +115,9 @@ public class RecipeDao {
 				String name = resultSet.getString("name");
 				Date creation = resultSet.getDate("creation");
 				String description = resultSet.getString("description");
-				int capacity = resultSet.getInt("capacity");
 				String visibility = resultSet.getString("visibility");
 				String imagePath = resultSet.getString("imagePath");
-				Recipe recipe = new Recipe(id, userID, name, creation, description, capacity, visibility, imagePath, null);
+				Recipe recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, null);
 				recipes.add(recipe);
 			}
 
@@ -145,9 +142,8 @@ public class RecipeDao {
 			statement.setInt(2, recipe.getUserID());
 			statement.setString(3, recipe.getName());
 			statement.setString(4, recipe.getDescription());
-			statement.setInt(5, recipe.getCapacity());
-			statement.setString(6, recipe.getVisibility());
-			statement.setString(7, recipe.getImagePath());
+			statement.setString(5, recipe.getVisibility());
+			statement.setString(6, recipe.getImagePath());
 			result = statement.executeUpdate();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);

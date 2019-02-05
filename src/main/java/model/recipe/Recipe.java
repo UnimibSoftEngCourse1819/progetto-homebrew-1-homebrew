@@ -1,9 +1,7 @@
 package model.recipe;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-
 
 public class Recipe {
 
@@ -12,13 +10,11 @@ public class Recipe {
 	private String name;
 	private Date creation;
 	private String description;
-	private int capacity;
 	private String visibility;
 	private String imagePath;
 	private Map<Integer, String> steps;
 
-
-	public Recipe(int recipeID, int userID, String name, Date creation, String description, int capacity, String visibility,
+	public Recipe(int recipeID, int userID, String name, Date creation, String description, String visibility,
 			String imagePath, Map<Integer, String> steps) {
 		super();
 		this.recipeID = recipeID;
@@ -26,7 +22,6 @@ public class Recipe {
 		this.name = name;
 		this.creation = creation;
 		this.description = description;
-		this.capacity = capacity;
 		this.visibility = visibility;
 		this.imagePath = imagePath;
 		this.steps = steps;
@@ -73,14 +68,6 @@ public class Recipe {
 		this.description = description;
 	}
 
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-
 	public String getVisibility() {
 		return visibility;
 	}
@@ -104,8 +91,5 @@ public class Recipe {
 	public void setSteps(Map<Integer, String> steps) {
 		this.steps = steps;
 	}
-
-	
-
 
 }

@@ -1,13 +1,12 @@
 package model.recipe;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,11 +24,11 @@ public class IngredientRecipeDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String findIngredientRecipe = "SELECT * FROM Ingredient_Recipe WHERE recipeID=?";
+	private static String findIngredientRecipe = "SELECT r.recipeID AS recipeID, r.ingredientID AS ingredientID, r.quantity AS quantity, r.measure AS measure, i.name AS ingredientName FROM Ingredient_Recipe as r JOIN Ingredient as i ON r.ingredientID=i.ingredientID WHERE recipeID=?";
 	private static String createIngredientRecipe = "INSERT INTO Ingredient_Recipe (recipeID, ingredientID, quantity) VALUES(?,?,?)";
 
-	public IngredientRecipe findRecipeByID(int recipeID) {
-		IngredientRecipe ingredientRecipe = null;
+	public List<IngredientRecipe> findIngredientsRecipe(int recipeID) {
+		List<IngredientRecipe> ingredientsRecipe = new ArrayList<IngredientRecipe>();
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
@@ -38,22 +37,24 @@ public class IngredientRecipeDao {
 			statement = connect.prepareStatement(findIngredientRecipe);
 			statement.setInt(1, recipeID);
 			resultSet = statement.executeQuery();
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				int recipeId = resultSet.getInt("recipeID");
 				int ingredientId = resultSet.getInt("ingredientID");
+				String ingredientName = resultSet.getString("ingredientName");
 				int quantity = resultSet.getInt("quantity");
 				String measure = resultSet.getString("measure");
-				ingredientRecipe = new IngredientRecipe(recipeId, ingredientId, quantity, measure);
+				IngredientRecipe ingredientRecipe = new IngredientRecipe(recipeId, ingredientId, ingredientName, quantity, measure);
+				ingredientsRecipe.add(ingredientRecipe);
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {
 			close();
 		}
-		return ingredientRecipe;
+		return ingredientsRecipe;
 	}
 
-	public int updateEquipment(List<IngredientRecipe> ingredientRecipes) {
+	public int updateEquipment(List<IngredientRecipe> ingredientsRecipes) {
 		int result = -1;
 		MySQLConnection mysql;
 		try {
@@ -63,11 +64,11 @@ public class IngredientRecipeDao {
 			statement = connect.prepareStatement(createIngredientRecipe);
 
 			// la Servlet passera un arrayList di Ingredient_Recipe dove il primo attributo
-			// sar� l'id della ricetta
-			// il secondo attributo sar� l'id dell'ingrediente
-			// il terzo attributo sar� la quantit�
-			for (int i = 0; i < ingredientRecipes.size(); i++) {
-				IngredientRecipe ingredientRecipe = ingredientRecipes.get(i);
+			// sara' l'id della ricetta
+			// il secondo attributo sara' l'id dell'ingrediente
+			// il terzo attributo sara' la quantita'
+			for (int i = 0; i < ingredientsRecipes.size(); i++) {
+				IngredientRecipe ingredientRecipe = ingredientsRecipes.get(i);
 
 				statement.setInt(1, ingredientRecipe.getRecipeId());
 				statement.setInt(2, ingredientRecipe.getIngredientId());

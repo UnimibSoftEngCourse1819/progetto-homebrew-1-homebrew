@@ -16,8 +16,8 @@ import model.login.Login;
 import model.user.User;
 import model.user.UserDao;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/home")
+public class HomeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
@@ -27,16 +27,20 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-			if (session != null) {
-				String message = (String) session.getAttribute("alertMessage");
-				String type = (String) session.getAttribute("alertType");
-				request.setAttribute("alertMessage", message);
-				request.setAttribute("alertType", type);
-				session.invalidate();
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
+
+			if (session != null && session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				request.setAttribute("user", user);
+				request.setAttribute("logged", true);
+				request.setAttribute("page", "home");
+
+				dispatcher.forward(request, response);
+			} else {
+				response.sendRedirect("/homebrew/");
+
 			}
-			request.setAttribute("page", "login");
-			dispatcher.forward(request, response);
+
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
@@ -57,12 +61,16 @@ public class LoginServlet extends HttpServlet {
 					oldSession.invalidate();
 				}
 				HttpSession session = request.getSession(true);
+				session.setAttribute("username", username);
 				session.setMaxInactiveInterval(20 * 60);
+
 				UserDao userDao = new UserDao();
 				User user = userDao.selectUserByEmail(username);
 				session.setAttribute("user", user);
 				session.setAttribute("logged", true);
+
 				response.sendRedirect("/homebrew/home");
+
 			} else {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 				String error = "Login errata";

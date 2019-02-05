@@ -25,6 +25,7 @@ public class LogoutServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null) {
+				session.setMaxInactiveInterval(0);
 				session.invalidate();
 			}
 			response.sendRedirect("/homebrew");

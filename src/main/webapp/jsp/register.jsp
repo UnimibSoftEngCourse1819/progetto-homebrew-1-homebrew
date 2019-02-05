@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Registrazione - Homebrew</title>
+<title>Registrazione&nbsp;-&nbsp;Homebrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -25,6 +25,7 @@
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="main">
+		<div class="main_shadow"><div></div></div>
 			<div class="registration_cont">
 				<h2>Iscriviti ora al portale</h2>
 
@@ -66,8 +67,8 @@
 						</div>
 					</c:if>
 
-					<input name="registrationSubmit" type="submit" value="Iscriviti"
-						id="addNewUser" disabled>
+					<button name="registrationSubmit" type="submit" id="addNewUser"
+						disabled>Iscriviti</button>
 				</form>
 			</div>
 

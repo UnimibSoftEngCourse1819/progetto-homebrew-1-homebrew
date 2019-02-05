@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import model.recipe.Recipe;
 import model.recipe.RecipeDao;
+import model.user.User;
 
 @WebServlet("/recipes")
 public class RecipeListServlet extends HttpServlet {
@@ -28,23 +29,10 @@ public class RecipeListServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				/*
-				User user = (User) session.getAttribute("user");
 				
-				if (request.getParameter("id") != null) {
-					int idRecipe = Integer.parseInt((String) request.getParameter("id"));
-					RecipeDao recipeDao = new RecipeDao();
-
-					Recipe recipe = recipeDao.findRecipeByID(idRecipe);
-					if (user.getId() == recipe.getUserID()) {
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeEdit.jsp");
-						request.setAttribute("recipe", recipe);
-						dispatcher.forward(request, response);
-					}
-				}
-				*/
+				User user = (User) session.getAttribute("user");				
 				RecipeDao recipeDao = new RecipeDao();
-				List <Recipe> recipes = recipeDao.findAllRecipes((int) session.getAttribute("user"));
+				List <Recipe> recipes = recipeDao.findAllRecipesUser(user.getId());
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
 				request.setAttribute("recipes", recipes);

@@ -31,12 +31,11 @@
 	</c:if>
 	<c:if test="${logged != null}">
 		<div class="logout">
-			<h4 class="name_user">
-				<c:out value="${user.name}" default="User"></c:out>
-			</h4>
-			<form action="./logout" method="get">
-				<input type="submit" value="Logout">
-			</form>
+			<div class="log_user">
+				<img src="images/logo_account.svg" alt="Logo">
+				<h4 class="name_user">${user.name}&nbsp;${user.surname}</h4>
+			</div>
+			<a href="./account">ACCOUNT</a> <a href="./logout">ESCI</a>
 		</div>
 	</c:if>
 </div>
@@ -49,16 +48,16 @@
 	<c:if test="${logged == null}">
 		<ul>
 			<c:choose>
-				<c:when test="${page == 'home'}">
+				<c:when test="${page == 'login'}">
 					<li class="menu_item active">HOME</li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 				</c:when>
 				<c:when test="${page == 'recipes'}">
-					<li class="menu_item"><a href="./home">HOME</a></li>
+					<li class="menu_item"><a href="./login">HOME</a></li>
 					<li class="menu_item active">RICETTE</li>
 				</c:when>
 				<c:otherwise>
-					<li class="menu_item"><a href="./home">HOME</a></li>
+					<li class="menu_item"><a href="./login">HOME</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 				</c:otherwise>
 			</c:choose>
@@ -73,14 +72,14 @@
 							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">AGGIORNAMENTO UTENSILI</a></li>
+					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
-				<c:when test="${page == 'home'}">
+				<c:when test="${page == 'wsibt'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
 					<li class="menu_item active">WHAT SHOULD I BREW TODAY?</li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">AGGIORNAMENTO UTENSILI</a></li>
+					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
 				<c:when test="${page == 'recipes'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
@@ -88,24 +87,32 @@
 							TODAY?</a></li>
 					<li class="menu_item active">RICETTE</li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">AGGIORNAMENTO UTENSILI</a></li>
+					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
-				<c:when test="${page == 'home'}">
+				<c:when test="${page == 'brews'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
 					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
 							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item active">MISCELE</li>
-					<li class="menu_item"><a href="./equipment">AGGIORNAMENTO UTENSILI</a></li>
+					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
-				<c:when test="${page == 'home'}">
+				<c:when test="${page == 'tools'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
 					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
 							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item active">AGGIORNAMENTO UTENSILI</li>
+					<li class="menu_item active">ATTREZZI</li>
 				</c:when>
+				<c:otherwise>
+					<li class="menu_item"><a href="./home">HOME</a></li>
+					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
+							TODAY?</a></li>
+					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
+					<li class="menu_item"><a href="./brews">MISCELE</a></li>
+					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
+				</c:otherwise>
 			</c:choose>
 
 		</ul>
