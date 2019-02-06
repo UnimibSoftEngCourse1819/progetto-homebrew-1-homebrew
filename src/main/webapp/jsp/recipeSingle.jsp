@@ -20,7 +20,6 @@
 
 <body>
 	<jsp:include page="includer/alert.jsp" />
-
 	<div class="layout_left"></div>
 	<div class="layout_right"></div>
 	<div class="row page" class="container">

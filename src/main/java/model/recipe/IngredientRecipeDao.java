@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,8 @@ public class IngredientRecipeDao {
 	private ResultSet resultSet = null;
 
 	private static String findIngredientRecipe = "SELECT r.recipeID AS recipeID, r.ingredientID AS ingredientID, r.quantity AS quantity, r.measure AS measure, i.name AS ingredientName FROM Ingredient_Recipe as r JOIN Ingredient as i ON r.ingredientID=i.ingredientID WHERE recipeID=?";
-	private static String createIngredientRecipe = "INSERT INTO Ingredient_Recipe (recipeID, ingredientID, quantity) VALUES(?,?,?)";
+	private static String createIngredientRecipe = "INSERT INTO Ingredient_Recipe (recipeID, ingredientID, quantity, measure) VALUES(?,?,?,?)";
+	private static String deleteIngredientRecipe = "DELETE FROM Ingredient_Recipe WHERE recipeID=?";
 
 	public List<IngredientRecipe> findIngredientsRecipe(int recipeID) {
 		List<IngredientRecipe> ingredientsRecipe = new ArrayList<IngredientRecipe>();
@@ -43,7 +45,8 @@ public class IngredientRecipeDao {
 				String ingredientName = resultSet.getString("ingredientName");
 				int quantity = resultSet.getInt("quantity");
 				String measure = resultSet.getString("measure");
-				IngredientRecipe ingredientRecipe = new IngredientRecipe(recipeId, ingredientId, ingredientName, quantity, measure);
+				IngredientRecipe ingredientRecipe = new IngredientRecipe(recipeId, ingredientId, ingredientName,
+						quantity, measure);
 				ingredientsRecipe.add(ingredientRecipe);
 			}
 		} catch (SQLException e) {
@@ -54,7 +57,7 @@ public class IngredientRecipeDao {
 		return ingredientsRecipe;
 	}
 
-	public int updateEquipment(List<IngredientRecipe> ingredientsRecipes) {
+	public int createIngredientsRecipe(List<IngredientRecipe> ingredientsRecipes) {
 		int result = -1;
 		MySQLConnection mysql;
 		try {
@@ -62,20 +65,35 @@ public class IngredientRecipeDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(createIngredientRecipe);
-
-			// la Servlet passera un arrayList di Ingredient_Recipe dove il primo attributo
-			// sara' l'id della ricetta
-			// il secondo attributo sara' l'id dell'ingrediente
-			// il terzo attributo sara' la quantita'
-			for (int i = 0; i < ingredientsRecipes.size(); i++) {
-				IngredientRecipe ingredientRecipe = ingredientsRecipes.get(i);
-
+			Iterator<IngredientRecipe> iterator = ingredientsRecipes.iterator();
+			while (iterator.hasNext()) {
+				IngredientRecipe ingredientRecipe = iterator.next();
 				statement.setInt(1, ingredientRecipe.getRecipeId());
 				statement.setInt(2, ingredientRecipe.getIngredientId());
 				statement.setInt(3, ingredientRecipe.getQuantity());
+				statement.setString(4, ingredientRecipe.getMeasure());
 				result = statement.executeUpdate();
 			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
 
+		return result;
+	}
+
+	public int updateIngredientsRecipe(int recipeID, List<IngredientRecipe> ingredientsRecipes) {
+		int result = -1;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(deleteIngredientRecipe);
+			statement.setInt(1, recipeID);
+			result = statement.executeUpdate();
+			createIngredientsRecipe(ingredientsRecipes);
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {

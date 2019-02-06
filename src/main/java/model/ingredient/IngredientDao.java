@@ -52,6 +52,7 @@ public class IngredientDao {
 		return ingredients;
 	}
 
+
 	private void close() {
 		try {
 			if (resultSet != null)

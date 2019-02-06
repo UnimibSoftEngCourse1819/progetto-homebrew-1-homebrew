@@ -72,9 +72,9 @@
 														<c:set var="measureIngredient"
 															value="${itemRecipe.measure}"></c:set>
 													</c:if>
-												</c:forEach> <input type="number" name="value-${item.ingredientID}"
+												</c:forEach> <input type="number" name="valueIngr-${item.ingredientID}"
 												value="${valueIngredient}" min="0"> <input
-												type="text" name="measure-${item.ingredientID}"
+												type="text" name="measureIngr-${item.ingredientID}"
 												value="${measureIngredient}"></td>
 										</tr>
 									</c:forEach>
