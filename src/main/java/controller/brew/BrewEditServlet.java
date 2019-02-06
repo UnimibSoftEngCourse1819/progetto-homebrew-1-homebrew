@@ -23,8 +23,8 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-@WebServlet("/edit_recipe111")
-public class RecipeEditServlet extends HttpServlet {
+@WebServlet("/edit_brew")
+public class BrewEditServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");

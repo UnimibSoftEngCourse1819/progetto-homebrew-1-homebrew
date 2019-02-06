@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.recipe.Recipe;
-import model.recipe.RecipeDao;
-import model.user.User;
+import model.brew.Brew;
+import model.brew.BrewDao;
 
-@WebServlet("/recipes111")
-public class RecipeListServlet extends HttpServlet {
+@WebServlet("/brews")
+public class BrewsListServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
@@ -30,24 +29,16 @@ public class RecipeListServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				
-				User user = (User) session.getAttribute("user");				
-				RecipeDao recipeDao = new RecipeDao();
-				List <Recipe> recipes = recipeDao.findAllRecipesUser(user.getId());
+				BrewDao brewDao = new BrewDao();
+				List<Brew> brews = brewDao.findAllBrews();
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
-				request.setAttribute("recipes", recipes);
-				request.setAttribute("page", "recipes");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewList.jsp");
+				request.setAttribute("brews", brews);
+				request.setAttribute("page", "brews");
 				dispatcher.forward(request, response);
 
 			} else {
-				RecipeDao recipeDao = new RecipeDao();
-				List <Recipe> recipes = recipeDao.findAllRecipes();
-
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
-				request.setAttribute("recipes", recipes);
-				request.setAttribute("page", "recipes");
-				dispatcher.forward(request, response);
-
+				response.sendRedirect("/homebrew/recipes");
 			}
 
 		} catch (ServletException | IOException e) {
