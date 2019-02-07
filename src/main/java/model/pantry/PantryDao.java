@@ -27,9 +27,10 @@ public class PantryDao {
 	private ResultSet resultSet = null;
 
 	private static String createPantry = "INSERT INTO Pantry (userID, ingredientID, availability) VALUES(?,?,?)";
-	private static String updatePantry = "UPDATE Pantry SET  availability =? WHERE userID =? AND ingredientID, =?";
+	private static String updatePantry = "UPDATE Pantry SET  availability =? WHERE userID =? AND ingredientID =?";
 	private static String userPantry = "SELECT I.name, P.availability From Pantry as P "
-			+ "INNER JOIN Ingredient AS I ON I.ingredientID = P.ingredientID" + "WHERE P.userID = ?";
+			+ "INNER JOIN Ingredient AS I ON I.ingredientID = P.ingredientID " 
+			+ "WHERE P.userID = ?";
 	
 	public int createPantry(int userID) {
 		int result = -1;

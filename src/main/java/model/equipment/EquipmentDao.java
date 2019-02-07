@@ -25,7 +25,7 @@ public class EquipmentDao {
 	private ResultSet resultSet = null;
 
 	private static String createEquipment = "INSERT INTO Equipment (userID, batchSize) VALUES(?,?)";
-	private static String updateEquipment = "UPDATE Equipment SET  batchSize =? WHERE userID =? AND equipmentID, =?";
+	private static String updateEquipment = "UPDATE Equipment SET  batchSize =? WHERE userID =? AND equipmentID =?";
 	private static String userEquipment = "SELECT * From Equipment WHERE userID = ?";
 	
 	public int createEquipment(int userID) {

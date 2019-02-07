@@ -28,8 +28,10 @@ public class ToolEquipmentDao {
 	private static String createToolEquipment = "INSERT INTO Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
 	private static String updateToolEquipment = "UPDATE Equipment SET  capacity =? WHERE equipmentID =? AND toolID, =?";
 	private static String getBatchSize = "SELECT MIN(capacity) AS batchSize FROM Tool_Equipment WHERE toolID < 4 AND equipmentID = ?";
-	private static String userToolEquipment = "SELECT T.name, E.capacity, T.measure From Tool_Equipment as E "
-			+ "INNER JOIN Tool AS T ON T.toolID = E.toolID" + "WHERE E.equipmentID = ?";
+	private static String userToolEquipment = "SELECT T.name, TE.capacity, T.measure From Tool_Equipment as TE "
+			+ "INNER JOIN Tool AS T ON T.toolID = TE.toolID "
+			+ "INNER JOIN Equipment AS E ON TE.equipmentID = E.equipmentID "
+			+ "WHERE E.userID = ?";
 	
 	public int createToolEquipment(int equipmentID) {
 		int result = -1;
