@@ -32,7 +32,7 @@
 			</div>
 
 			<div class="image_home">
-				<img src="images/homepageBrew.jpg" alt="Image Home" />
+				<img src="images/top_home.jpg" alt="Image Home" />
 			</div>
 			<div class="home_desc">
 				<h6>BrewDay ti permette di tenere traccia delle tue birre

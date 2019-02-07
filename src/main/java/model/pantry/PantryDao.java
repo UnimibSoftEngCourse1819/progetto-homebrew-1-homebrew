@@ -97,10 +97,10 @@ public class PantryDao {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				String name = resultSet.getString("name");
-				int availability = resultSet.getInt("availability");				
-				Ingredient ingredient = new Ingredient( name, availability);
-				ingredients.add(ingredient);
+				//String name = resultSet.getString("name");
+				//int availability = resultSet.getInt("availability");				
+				//Ingredient ingredient = new Ingredient( name, availability);
+				//ingredients.add(ingredient);
 			}
 
 		} catch (SQLException e) {

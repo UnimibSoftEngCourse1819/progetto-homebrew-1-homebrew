@@ -32,7 +32,7 @@
 	<c:if test="${logged != null}">
 		<div class="logout">
 			<div class="log_user">
-				<img src="images/logo_account.svg" alt="Logo">
+				<img src="images/logos/account.svg" alt="Logo">
 				<h4 class="name_user">${user.name}&nbsp;${user.surname}</h4>
 			</div>
 			<a href="./account">ACCOUNT</a> <a href="./logout">ESCI</a>

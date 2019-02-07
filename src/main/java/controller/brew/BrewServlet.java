@@ -1,4 +1,4 @@
-package controller.recipe;
+package controller.brew;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,8 +19,8 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-@WebServlet("/recipe")
-public class RecipeServlet extends HttpServlet {
+@WebServlet("/brew")
+public class BrewServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");

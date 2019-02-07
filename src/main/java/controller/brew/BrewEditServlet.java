@@ -1,9 +1,7 @@
-package controller.recipe;
+package controller.brew;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,8 +23,8 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-@WebServlet("/edit_recipe")
-public class RecipeEditServlet extends HttpServlet {
+@WebServlet("/edit_brew")
+public class BrewEditServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
@@ -49,8 +47,10 @@ public class RecipeEditServlet extends HttpServlet {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 					IngredientDao ingredientDao = new IngredientDao();
 
+
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(recipeID);
 					List<Ingredient> ingredients = ingredientDao.findAllIngredient();
+
 
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeEdit.jsp");
 					request.setAttribute("recipe", recipe);
@@ -69,7 +69,6 @@ public class RecipeEditServlet extends HttpServlet {
 		}
 
 	}
-
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -80,51 +79,56 @@ public class RecipeEditServlet extends HttpServlet {
 			String visibility = request.getParameter("visibility");
 			String description = request.getParameter("description");
 
+
 			if (session != null && session.getAttribute("user") != null) {
-
+				
 				User user = (User) session.getAttribute("user");
-
+				
 				RecipeDao recipeDao = new RecipeDao();
 				Recipe recipe = recipeDao.findRecipeByID(recipeID);
+				
+				int step = 1;
+				String paramStep = "step-";
+				Map<Integer, String> steps = new HashMap<>();
+
+				
+				while(request.getParameter(paramStep + step) != null) {
+					String text = request.getParameter(paramStep + step);
+					steps.put(step, text);
+					step++;
+				}
+	
+		
+				recipe.setName(name);
+				recipe.setDescription(description);
+				recipe.setVisibility(visibility);
+				recipe.setSteps(steps);
+				
+				recipeDao.updateRecipe(recipe);
+				response.sendRedirect("/homebrew/recipe?n=" + recipeID);
+
+/*
 				if (user.getId() == recipe.getUserID()) {
-					int step = 1;
-					String paramStep = "step-";
-					Map<Integer, String> steps = new HashMap<>();
-					while (request.getParameter(paramStep + step) != null) {
-						String text = request.getParameter(paramStep + step);
-						steps.put(step, text);
-						step++;
-					}
-
-					recipe.setName(name);
-					recipe.setDescription(description);
-					recipe.setVisibility(visibility);
-					recipe.setSteps(steps);
-					recipeDao.updateRecipe(recipe);
-
+					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 					IngredientDao ingredientDao = new IngredientDao();
+
+
+					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(recipeID);
 					List<Ingredient> ingredients = ingredientDao.findAllIngredient();
 
-					List<IngredientRecipe> ingredientsRecipe = new ArrayList<IngredientRecipe>();
 
-					Iterator<Ingredient> iterator = ingredients.iterator();
-					while (iterator.hasNext()) {
-						Ingredient ingredient = iterator.next();
-						int quantity = Integer
-								.parseInt(request.getParameter("valueIngr-" + ingredient.getIngredientID()));
-						String measure = request.getParameter("measureIngr-" + ingredient.getIngredientID());
-						IngredientRecipe ingredientRecipe = new IngredientRecipe(recipe.getRecipeID(),
-								ingredient.getIngredientID(), ingredient.getName(), quantity, measure);
-						ingredientsRecipe.add(ingredientRecipe);
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeEdit.jsp");
+					request.setAttribute("recipe", recipe);
+					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+					request.setAttribute("ingredients", ingredients);
+					request.setAttribute("page", "edit_recipe");
+					dispatcher.forward(request, response);
+					
 
-					}
-					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-					ingredientRecipeDao.updateIngredientsRecipe(recipe.getRecipeID(), ingredientsRecipe);
-					session.setAttribute("alertMessage", "Ricetta modificata con successo");
-					session.setAttribute("alertType", "success");
-					response.sendRedirect("/homebrew/recipe?n=" + recipeID);
+				} else {
+					response.sendRedirect("/homebrew/recipes");
 				}
-
+				*/
 			} else {
 				response.sendRedirect("/homebrew/recipes");
 			}
