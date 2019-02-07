@@ -17,10 +17,10 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-//IN MENU -> SET SECTION IN SESSION
 
-@WebServlet("/recipes")
-public class RecipeListServlet extends HttpServlet {
+// IN MENU -> SET SECTION IN SESSION
+@WebServlet("/my_recipes")
+public class RecipeUserListServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
@@ -31,28 +31,21 @@ public class RecipeListServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				session.setAttribute("section", "general");
-				
+				session.setAttribute("section", "personal");
+
 				User user = (User) session.getAttribute("user");	
 				RecipeDao recipeDao = new RecipeDao();
-				List <Recipe> recipes = recipeDao.findAllRecipesUser(user.getId());
+				List <Recipe> recipes = recipeDao.findRecipesUser(user.getId());
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeUserList.jsp");
 				request.setAttribute("recipes", recipes);
-				request.setAttribute("page", "recipes");
-				request.setAttribute("section", "general");
+				request.setAttribute("page", "my_recipes");
 				dispatcher.forward(request, response);
 				session.removeAttribute("alertMessage");
 				session.removeAttribute("alertType");
 
 			} else {
-				RecipeDao recipeDao = new RecipeDao();
-				List <Recipe> recipes = recipeDao.findAllRecipes();
-
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
-				request.setAttribute("recipes", recipes);
-				request.setAttribute("page", "recipes");
-				dispatcher.forward(request, response);
+				response.sendRedirect("/homebrew/home");
 
 			}
 

@@ -20,6 +20,7 @@ import model.recipe.RecipeDao;
 import model.user.User;
 import model.user.UserDao;
 
+// NOT IN MENU GENERAL + PERSONAL -> GET SECTION IN SESSION
 @WebServlet("/recipe")
 public class RecipeServlet extends HttpServlet {
 
@@ -33,7 +34,7 @@ public class RecipeServlet extends HttpServlet {
 			int id = (int) Integer.parseInt((String) request.getParameter("n"));
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-
+				String section = (String) session.getAttribute("section");
 				User user = (User) session.getAttribute("user");
 				RecipeDao recipeDao = new RecipeDao();
 
@@ -56,6 +57,7 @@ public class RecipeServlet extends HttpServlet {
 					request.setAttribute("userRecipe", userRecipe);
 					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
 					request.setAttribute("page", "recipe");
+					request.setAttribute("section", section);
 					dispatcher.forward(request, response);
 				} else {
 					response.sendRedirect("/homebrew/recipes");

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import model.brew.Brew;
 import model.brew.BrewDao;
 
+//IN MENU -> SET SECTION IN SESSION
 @WebServlet("/brews")
 public class BrewsListServlet extends HttpServlet {
 
@@ -28,6 +29,7 @@ public class BrewsListServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
+				session.setAttribute("section", "general");
 				
 				BrewDao brewDao = new BrewDao();
 				List<Brew> brews = brewDao.findAllBrews();
@@ -35,6 +37,7 @@ public class BrewsListServlet extends HttpServlet {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewList.jsp");
 				request.setAttribute("brews", brews);
 				request.setAttribute("page", "brews");
+				request.setAttribute("section", "general");
 				dispatcher.forward(request, response);
 
 			} else {

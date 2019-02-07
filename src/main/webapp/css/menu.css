@@ -4,18 +4,31 @@
 }
 
 .title {
-	padding: 60px 20px;
-	font-size: 40px;
+	padding: 20px 20px 40px;
 	text-align: center;
 }
 
-.top_menu {
-	height: 200px;
-	margin-bottom: 50px;
+.title img {
+	display: inline-block;
+	width: 50px;
+	margin-top: -30px;
+}
+
+.title a {
+	display: inline-block;
+	margin: 0;
+	font-size: 55px;
+	font-weight: 500;
+	text-align: center;
+}
+
+.title a, .title a:focus, .title a:hover, .title a:visited {
+	color: #333333;
+	text-decoration: none;
 }
 
 .login {
-	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 .login_input {
@@ -33,46 +46,40 @@
 	border: solid 1px red;
 }
 
-.logout {
-	padding-top: 40px;
-	text-align: center;
-}
-.log_user {
-	width: 100%;
-	margin-bottom: 20px;
-	
-}
-.log_user img {
-	display: inline-block;
-	width: 40px;
-	margin-top: -12px;
+.account {
+	padding: 20px;
 }
 
-.log_user h4 {
-		display: inline-block;
-	margin: 0;
+.account a {
+	display: block;
 	color: #333333;
-	font-size: 30px;
-	font-weight: 500;
-}
-
-.logout a {
-	display: block; color : #333333;
 	font-size: 18px;
 	font-weight: 500;
 	text-decoration: none;
 	color: #333333;
 }
 
-.logout a:hover, .logout a:visited {
-	color: #444444;
-	text-decoration: none;
-}
-
-.logout input {
+.account input {
 	color: #444444;
 	font-size: 26px;
 	text-decoration: none;
+}
+
+.log_user {
+	width: 100%;
+	text-align: center;
+}
+
+.log_user:hover {
+	opacity: 0.7;
+}
+
+.log_user span {
+	display: inline-block;
+	margin: 0;
+	color: #333333;
+	font-size: 30px;
+	font-weight: 500;
 }
 
 #register_link {
@@ -99,7 +106,7 @@
 	position: relative;
 	text-align: center;
 	text-decoration: none;
-	font-weight: 700;
+	font-weight: 500;
 	color: #333333;
 }
 
@@ -112,14 +119,14 @@
 	display: block;
 	width: 100%;
 	height: 100%;
-	padding: 30px 20px;
+	padding: 20px 20px;
 	color: #333333;
 	text-decoration: none;
 	border-top: solid 1px #cecece;
 }
 
 .menu_list li.active, .menu_list li.active:hover {
-	padding: 30px 20px;
+	padding: 20px 20px;
 	background: #ffaf00;
 	color: #ffffff;
 }

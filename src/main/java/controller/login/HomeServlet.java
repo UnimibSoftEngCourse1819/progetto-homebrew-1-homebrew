@@ -16,6 +16,7 @@ import model.login.Login;
 import model.user.User;
 import model.user.UserDao;
 
+//IN MENU -> SET SECTION IN SESSION
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
@@ -30,6 +31,8 @@ public class HomeServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
 
 			if (session != null && session.getAttribute("user") != null) {
+				session.setAttribute("section", "general");
+
 				User user = (User) session.getAttribute("user");
 				request.setAttribute("user", user);
 				request.setAttribute("logged", true);

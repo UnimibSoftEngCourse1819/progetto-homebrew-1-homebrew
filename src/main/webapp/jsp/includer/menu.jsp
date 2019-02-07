@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 
 <!---------------------- LOGIN ---------------------->
+<div class="title">
+<img src="images/logos/account.svg" alt="Logo">
+<a href="./home">brewday</a>
+</div>
 
 <div class="top_menu">
 	<c:if test="${logged == null}">
@@ -30,18 +36,11 @@
 		</div>
 	</c:if>
 	<c:if test="${logged != null}">
-		<div class="logout">
+		<div class="account">
 			<div class="log_user">
-				<img src="images/logos/account.svg" alt="Logo">
-				<h4 class="name_user">${user.name}&nbsp;${user.surname}</h4>
+				<a href="./account"><span class="name_user">${user.name}&nbsp;${user.surname}</span>
+				</a>
 			</div>
-			<c:if test="${page == 'account' || page == 'myrecipe' || page == 'myBrews' || page == 'equipment' || page == 'pantry'}">
-				<a href="./home">HOME</a>
-			</c:if>
-			<c:if test="${page != 'account' && page != 'myrecipe' && page != 'myBrews' && page != 'equipment' && page != 'pantry'}">
-				<a href="./account">ACCOUNT</a>
-			</c:if>
-			 <a href="./logout">ESCI</a>
 		</div>
 	</c:if>
 </div>
@@ -99,64 +98,61 @@
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item active">MISCELE</li>
 				</c:when>
-
+./user
+				<c:when test="${page == 'my_recipes'}">
+					<li class="menu_item active">LE MIE RICETTE</li>
+					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+				</c:when>
+				<c:when test="${page == 'my_brews'}">
+					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item active">LE MIE MISCELE</li>
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+				</c:when>
 				<c:when test="${page == 'account'}">
+					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
 					<li class="menu_item active">ACCOUNT</li>
-					<li class="menu_item"><a href="./user">DATI ANAGRAFICI</a></li>
-					<li class="menu_item"><a href="./my_recipes">RICETTE
-							PERSONALI</a></li>
-					<li class="menu_item"><a href="./my_brews">MISCELE
-							PERSONALI</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
 					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
-					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
-				</c:when>
-				<c:when test="${page == 'myrecipe'}">
-					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
-					<li class="menu_item active">RICETTE PERSONALI</li>
-					<li class="menu_item"><a href="./my_brews">MISCELE
-							PERSONALI</a></li>
-					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
-					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
-				</c:when>
-				<c:when test="${page == 'myBrews'}">
-					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
-					<li class="menu_item"><a href="./my_recipes">RICETTE
-							PERSONALI</a></li>
-					<li class="menu_item active">MISCELE PERSONALI</li>
-					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
-					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
-				</c:when>
-				<c:when test="${page == 'equipment'}">
-					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
-					<li class="menu_item"><a href="./my_recipes">RICETTE
-							PERSONALI</a></li>
-					<li class="menu_item"><a href="./my_brews">MISCELE
-							PERSONALI</a></li>
-					<li class="menu_item active">EQUIPAGGIAMENTO</li>
-					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
 				</c:when>
 				<c:when test="${page == 'pantry'}">
+					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
 					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
-					<li class="menu_item"><a href="./my_recipes">RICETTE
-							PERSONALI</a></li>
-					<li class="menu_item"><a href="./my_brews">MISCELE
-							PERSONALI</a></li>
-					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
 					<li class="menu_item active">DISPENSA</li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+				</c:when>
+				<c:when test="${page == 'equipment'}">
+					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+					<li class="menu_item active">EQUIPAGGIAMENTO</li>
 				</c:when>
 
-
-
-				<c:otherwise>
+				<c:when test="${section == 'general'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
-					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
-							TODAY?</a></li>
+					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-				</c:otherwise>
+				</c:when>
+
+				<c:when test="${section == 'personal'}">
+					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+				</c:when>
 			</c:choose>
+			<li class="menu_item"><a href="./logout">ESCI</a></li>
 		</ul>
-	</c:if>
+	</c:if>	
 </div>
 
 
