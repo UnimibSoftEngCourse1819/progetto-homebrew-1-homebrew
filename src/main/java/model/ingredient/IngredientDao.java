@@ -40,7 +40,8 @@ public class IngredientDao {
 			while (resultSet.next()) {
 				int ingredientID = resultSet.getInt("ingredientID");
 				String name = resultSet.getString("name");
-				Ingredient ingredient = new Ingredient(ingredientID, name);
+				String measure = resultSet.getString("measure");
+				Ingredient ingredient = new Ingredient(ingredientID, name, measure);
 				ingredients.add(ingredient);
 			}
 

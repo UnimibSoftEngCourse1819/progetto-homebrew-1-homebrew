@@ -18,6 +18,7 @@ import model.recipe.IngredientRecipeDao;
 import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
+import model.user.UserDao;
 
 @WebServlet("/recipe")
 public class RecipeServlet extends HttpServlet {
@@ -37,6 +38,8 @@ public class RecipeServlet extends HttpServlet {
 				RecipeDao recipeDao = new RecipeDao();
 
 				Recipe recipe = recipeDao.findRecipeByID(id);
+				UserDao userDao = new UserDao();
+				User userRecipe = userDao.selectUserById(recipe.getUserID());
 
 				if (recipe.getVisibility().equals("public")
 						|| (recipe.getVisibility().equals("private") && user.getId() == recipe.getUserID())) {
@@ -50,6 +53,7 @@ public class RecipeServlet extends HttpServlet {
 						request.setAttribute("editable", true);
 					}
 					request.setAttribute("recipe", recipe);
+					request.setAttribute("userRecipe", userRecipe);
 					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
 					request.setAttribute("page", "recipe");
 					dispatcher.forward(request, response);

@@ -31,8 +31,10 @@ public class RecipeDao {
 	private static String findAllRecipes = "SELECT * FROM Recipe WHERE visibility='public'";
 	private static String findAllRecipesUser = "SELECT * FROM Recipe WHERE visibility='public' OR userID=?";
 	private static String findRecipeByID = "SELECT * FROM Recipe WHERE recipeID=?";
+	private static String findMaxID = "SELECT MAX(recipeID) AS max FROM Recipe";
 	private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
 	private static String updateRecipe = "UPDATE Recipe SET name=?, description=?, visibility=?, imagePath=? WHERE recipeID=?";
+	private static String deleteRecipe = "DELETE FROM Recipe WHERE recipeID=?";
 
 	private static String findStepsRecipeByID = "SELECT stepPos, text FROM Step_Recipe WHERE recipeID=?";
 	private static String createSteps = "INSERT INTO Step_Recipe (recipeID, stepPos, text) VALUES(?,?,?)";
@@ -138,15 +140,24 @@ public class RecipeDao {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(createRecipe);
-
-			statement.setInt(1, recipe.getRecipeID());
-			statement.setInt(2, recipe.getUserID());
-			statement.setString(3, recipe.getName());
-			statement.setString(4, recipe.getDescription());
-			statement.setString(5, recipe.getVisibility());
-			statement.setString(6, recipe.getImagePath());
-			result = statement.executeUpdate();
+			statement = connect.prepareStatement(findMaxID);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int recipeID = resultSet.getInt("max") + 1;
+				java.util.Date utilDate = new java.util.Date();
+				java.sql.Date date = new java.sql.Date(utilDate.getTime());
+				statement = connect.prepareStatement(createRecipe);
+				statement.setInt(1, recipeID);
+				statement.setInt(2, recipe.getUserID());
+				statement.setString(3, recipe.getName());
+				statement.setDate(4, date);
+				statement.setString(5, recipe.getDescription());
+				statement.setString(6, recipe.getVisibility());
+				statement.setString(7, recipe.getImagePath());
+				statement.executeUpdate();
+				createSteps(recipeID, recipe.getSteps());
+				result = recipeID;
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {
@@ -171,6 +182,25 @@ public class RecipeDao {
 			statement.setInt(5, recipe.getRecipeID());
 			result = statement.executeUpdate();
 			editSteps(recipe);
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+
+		return result;
+	}
+
+	public int removeRecipe(int recipeID) {
+		int result = -1;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(deleteRecipe);
+			statement.setInt(1, recipeID);
+			result = statement.executeUpdate();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {

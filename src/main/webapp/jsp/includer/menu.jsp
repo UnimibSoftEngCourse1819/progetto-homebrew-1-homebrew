@@ -72,14 +72,12 @@
 							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
 				<c:when test="${page == 'wsibt'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
 					<li class="menu_item active">WHAT SHOULD I BREW TODAY?</li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
 				<c:when test="${page == 'recipes'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
@@ -87,7 +85,6 @@
 							TODAY?</a></li>
 					<li class="menu_item active">RICETTE</li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:when>
 				<c:when test="${page == 'brews'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
@@ -95,15 +92,6 @@
 							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item active">MISCELE</li>
-					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
-				</c:when>
-				<c:when test="${page == 'tools'}">
-					<li class="menu_item"><a href="./home">HOME</a></li>
-					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
-							TODAY?</a></li>
-					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
-					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item active">ATTREZZI</li>
 				</c:when>
 				<c:otherwise>
 					<li class="menu_item"><a href="./home">HOME</a></li>
@@ -111,7 +99,6 @@
 							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
-					<li class="menu_item"><a href="./equipment">ATTREZZI</a></li>
 				</c:otherwise>
 			</c:choose>
 

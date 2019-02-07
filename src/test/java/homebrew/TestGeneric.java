@@ -1,11 +1,8 @@
 package homebrew;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import model.recipe.Recipe;
 import model.recipe.RecipeDao;
+
 //import controller.user.Login;
 
 public class TestGeneric {
@@ -18,17 +15,11 @@ public class TestGeneric {
 		// boolean resp = log.match("mail@prova.it", "password");
 		// System.out.println(resp);
 		RecipeDao recipeDao = new RecipeDao();
-		Recipe recipe = recipeDao.findRecipeByID(10000001);
-		Map<Integer, String> hashmapObject = recipe.getSteps();
 
+		Recipe recipe = new Recipe(0, 10000001, "Test", null, "sdiuasbufhb", "public",
+				"images/recipes/beer_1.jpg", null);
+		recipeDao.createRecipe(recipe);
 
-		// we will iterate using Iterator
-		Iterator<Map.Entry<Integer, String>> iterator = hashmapObject.entrySet().iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<Integer, String> entry = iterator.next();
-			System.out.println("Key is = " + entry.getKey() + ", Value is = " + entry.getValue());
-		}
 	}
 
 }
