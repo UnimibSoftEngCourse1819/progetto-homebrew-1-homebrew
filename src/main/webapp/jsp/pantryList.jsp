@@ -32,17 +32,18 @@
 			<div class="main_shadow">
 				<div></div>
 			</div>
-
-			<c:forEach items="${pantry}" var="item">
-				<div class="recipes_element">
-					<div class="row recipes_inner">
-						<div class="col-9">
-							<h3>${item.name} ${item.availability}</h3>	
+			<div class="content_main">
+				<c:forEach items="${pantry}" var="item">
+					<div class="recipes_element">
+						<div class="row recipes_inner">
+							<div class="col-9">
+								<h3>${item.name}${item.availability}</h3>
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
-			<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
+				</c:forEach>
+				<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
+			</div>
 		</div>
 	</div>
 </body>
