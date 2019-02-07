@@ -42,6 +42,7 @@
 					</div>
 				</div>
 			</c:forEach>
+			<a href="/jsp/equipment.jsp">AGGIORNA EQUIPAGGIAMENTO</a>
 		</div>
 	</div>
 </body>

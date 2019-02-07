@@ -39,7 +39,7 @@
 			</div>
 			<div id="featured">
 
-				<form method="post" name="pantry_form">
+				<form action="./updatePantry" method="post" name="pantry_form">
 					<table>
 						<tr>
 							<td><h3>MALTO:</h3></td>

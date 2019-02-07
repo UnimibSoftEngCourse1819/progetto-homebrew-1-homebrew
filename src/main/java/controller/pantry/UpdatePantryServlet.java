@@ -72,16 +72,16 @@ public class UpdatePantryServlet extends HttpServlet {
 					int update = pantryDao.updatePantry(pantry);
 					if (update > 0) {
 						request.setAttribute("success", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getPantry");
 						dispatcher.forward(request, response);
 					} else {
 						request.setAttribute("failure", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getPantry");
 						dispatcher.forward(request, response);
 					}
 				} else {
 					request.setAttribute("failure", true);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getPantry");
 					dispatcher.forward(request, response);
 				}
 				

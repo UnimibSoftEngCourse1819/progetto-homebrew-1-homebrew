@@ -110,16 +110,16 @@ public class UpdateEquipmentServlet extends HttpServlet {
 					equipmentDao.updateEquipment(equipment);
 					if (update > 0) {
 						request.setAttribute("success", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getEquipment");
 						dispatcher.forward(request, response);
 					} else {
 						request.setAttribute("failure", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
+						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getEquipment");
 						dispatcher.forward(request, response);
 					}
 				} else {
 					request.setAttribute("failure", true);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getEquipment");
 					dispatcher.forward(request, response);
 				}
 				

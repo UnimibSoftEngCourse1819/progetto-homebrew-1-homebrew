@@ -42,6 +42,7 @@
 					</div>
 				</div>
 			</c:forEach>
+			<a href="/jsp/pantry.jsp">AGGIORNA DISPENSA</a>
 		</div>
 	</div>
 </body>

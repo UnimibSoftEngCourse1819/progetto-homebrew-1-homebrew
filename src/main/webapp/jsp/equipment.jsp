@@ -44,7 +44,7 @@
 			</div>
 			<div id="featured">
 
-				<form method="post" name="equipment_form">
+				<form action="./updateEquipment" method="post" name="equipment_form">
 					<table>
 						<tr>
 							<td><h3>PENTOLA PER BOLLITURA:</h3></td>

@@ -35,7 +35,7 @@ public class GetPantryServlet extends HttpServlet {
 				pantry = pantryDao.userPantry(userID);
 					
 				request.setAttribute("pantry", pantry);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantryList.jsp");
 				dispatcher.forward(request, response);
 					
 			}
