@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Dispensa&nbsp;-&nbsp;HomeBrew</title>
+<title>Dati anagrafici&nbsp;-&nbsp;HomeBrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -33,16 +33,32 @@
 				<div></div>
 			</div>
 			<div class="content_main">
-				<c:forEach items="${pantry}" var="item">
+				<c:set var = "item" value = "${user}"/>
 					<div class="recipes_element">
 						<div class="row recipes_inner">
 							<div class="col-9">
-								<h3>${item.name} ${item.availability}</h3>
+								<table>
+									<tr>
+										<td><h3>NOME:</h3></td>
+										<td><h3>${item.name}</h3></td>
+									</tr>
+									<tr>
+										<td><h3>COGNOME:</h3></td>
+										<td><h3>${item.surname}</h3></td>
+									</tr>
+									<tr>
+										<td><h3>DATA DI NASCITA:</h3></td>
+										<td><h3>${item.dateOfBirth}</h3></td>
+									</tr>
+									<tr>
+										<td><h3>MAIL:</h3></td>
+										<td><h3>${item.email}</h3></td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>
-				</c:forEach>
-				<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
+				<a href="./formUpdateUser">AGGIORNA DATI ANAGRAFICI</a>
 			</div>
 		</div>
 	</div>

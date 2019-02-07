@@ -102,6 +102,7 @@
 
 				<c:when test="${page == 'account'}">
 					<li class="menu_item active">ACCOUNT</li>
+					<li class="menu_item"><a href="./user">DATI ANAGRAFICI</a></li>
 					<li class="menu_item"><a href="./my_recipes">RICETTE
 							PERSONALI</a></li>
 					<li class="menu_item"><a href="./my_brews">MISCELE
