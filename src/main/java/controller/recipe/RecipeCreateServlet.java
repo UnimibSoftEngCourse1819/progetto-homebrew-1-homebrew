@@ -72,9 +72,10 @@ public class RecipeCreateServlet extends HttpServlet {
 					steps.put(step, text);
 					step++;
 				}
+				String image = "images/recipes/beer_" + ((int) (Math.random()*4) + 1) + ".jpg";
 
 				Recipe recipe = new Recipe(0, user.getId(), name, null, description, visibility,
-						"images/recipes/beer_1.jpg", steps);
+						image, steps);
 
 				int recipeID = recipeDao.createRecipe(recipe);
 				if (recipeID > 0) {
