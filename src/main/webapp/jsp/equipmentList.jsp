@@ -32,17 +32,18 @@
 			<div class="main_shadow">
 				<div></div>
 			</div>
-
-			<c:forEach items="${equipment}" var="item">
-				<div class="recipes_element">
-					<div class="row recipes_inner">
-						<div class="col-9">
-							<h3>${item.name} ${item.capacity} ${item.measure}</h3>	
+			<div class="content_main">
+				<c:forEach items="${equipment}" var="item">
+					<div class="recipes_element">
+						<div class="row recipes_inner">
+							<div class="col-9">
+								<h3>${item.toolName} ${item.capacity} ${item.measure}</h3>	
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
-			<a href="/jsp/equipment.jsp">AGGIORNA EQUIPAGGIAMENTO</a>
+				</c:forEach>
+				<a href="./formUpdateEquipment">AGGIORNA EQUIPAGGIAMENTO</a>
+			</div>
 		</div>
 	</div>
 </body>

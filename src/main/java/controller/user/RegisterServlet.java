@@ -78,7 +78,7 @@ public class RegisterServlet extends HttpServlet {
 				equipDao.createEquipment(registeredUserId);
 				Equipment equipment = equipDao.selectEquipmentByUser(registeredUserId);
 				int equipmentID = equipment.getEquipmentID();
-				
+
 				ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
 				toolEquipmentDao.createToolEquipment(equipmentID);
 				

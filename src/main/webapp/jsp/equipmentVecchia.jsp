@@ -1,36 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>${recipe.name}&nbsp;-&nbsp;HomeBrew</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<link href="css/menu.css" rel="stylesheet" type="text/css" />
-<link href="css/recipes.css" rel="stylesheet" type="text/css" />
-<script src="js/jquery-3.3.1.js"></script>
-<script src="js/jquery.validate.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/main.js"></script>
+<title></title>
+<link href="css/default.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="js/form_control_equipment.js"></script>
 </head>
 
 <body>
-	<jsp:include page="includer/alert.jsp" />
+	<div id="page" class="container">
+		<div id="header">
+			<div id="logo">
 
-	<div class="layout_left"></div>
-	<div class="layout_right"></div>
-	<div class="row page" class="container">
-		<div class="header">
-			<h2 class="title">BrewDay</h2>
-			<jsp:include page="includer/menu.jsp" />
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item">Area Personale</li>
+					<li><a href="../recipe/GlobalRecipe.jsp"> Ricette </a></li>
+					<li><a href="../home/WhatIShould.html">What Should I Brew
+							today</a></li>
+					<li><a href="../recipe/YourRecipe.html">Le tue ricette
+							personali</a></li>
+					<li><a href="../brew/YourBrew.html">Le tue birre personali</a></li>
+					<li><a href="">Cerca Ricetta</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="row main">
-			
-			<form action="./updateEquipment" method="post" name="equipment_form">
+		<div id="main">
+			<div id="banner">
+				<img src="images/homepageBrew.jpg" alt="" class="image-full" />
+			</div>
+			<div id="welcome">
+				<div class="title">
+					<span class="byline"><marquee>Mantieni sempre
+							aggiornato il tuo equipaggiamento</marquee></span>
+				</div>
+			</div>
+			<div id="featured">
+
+				<form action="./updateEquipment" method="post" name="equipment_form">
 					<table>
 						<tr>
 							<td><h3>PENTOLA PER BOLLITURA:</h3></td>
@@ -115,11 +129,8 @@
 						onClick="return(controlForm());">
 
 				</form>
-			
-			
+			</div>
 		</div>
 	</div>
-
 </body>
 </html>
-

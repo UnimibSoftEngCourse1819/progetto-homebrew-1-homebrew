@@ -37,7 +37,7 @@
 					<div class="recipes_element">
 						<div class="row recipes_inner">
 							<div class="col-9">
-								<h3>${item.name}${item.availability}</h3>
+								<h3>${item.name} ${item.availability}</h3>
 							</div>
 						</div>
 					</div>
