@@ -40,8 +40,8 @@
 							<h3>${recipe.name}</h3>
 							<c:set var="splitdate" value="${fn:split(recipe.creation,'-')}" />
 							<p>${splitdate[2]}/${splitdate[1]}/${splitdate[0]}</p>
-							<p>${userRecipe.name} ${userRecipe.surname}</p>
-							
+							<p>${userRecipe.name}${userRecipe.surname}</p>
+
 							<c:if test="${editable != null}">
 								<form class="recipe_to_edit" action="./recipe" method="post">
 									<input type="hidden" name="recipeID" value="${recipe.recipeID}">
@@ -54,7 +54,9 @@
 					</div>
 				</div>
 				<div class="recipe_cont">
-					<jsp:include page="includer/recipe_menu.jsp" />
+					<div class="recipe_menu">
+						<a href="">CREA</a> <a href="">MISCELE</a>
+					</div>
 					<p class="recipe_description">${recipe.description}</p>
 					<h5 class="recipe_ingredient">Ingredienti</h5>
 					<table>

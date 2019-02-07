@@ -35,7 +35,13 @@
 				<img src="images/logos/account.svg" alt="Logo">
 				<h4 class="name_user">${user.name}&nbsp;${user.surname}</h4>
 			</div>
-			<a href="./account">ACCOUNT</a> <a href="./logout">ESCI</a>
+			<c:if test="${page == 'account' || page == 'myrecipe' || page == 'myBrews' || page == 'equipment' || page == 'pantry'}">
+				<a href="./home">HOME</a>
+			</c:if>
+			<c:if test="${page != 'account' && page != 'myrecipe' && page != 'myBrews' && page != 'equipment' && page != 'pantry'}">
+				<a href="./account">ACCOUNT</a>
+			</c:if>
+			 <a href="./logout">ESCI</a>
 		</div>
 	</c:if>
 </div>
@@ -93,6 +99,53 @@
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item active">MISCELE</li>
 				</c:when>
+
+				<c:when test="${page == 'account'}">
+					<li class="menu_item active">ACCOUNT</li>
+					<li class="menu_item"><a href="./my_recipes">RICETTE
+							PERSONALI</a></li>
+					<li class="menu_item"><a href="./my_brews">MISCELE
+							PERSONALI</a></li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+				</c:when>
+				<c:when test="${page == 'myrecipe'}">
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item active">RICETTE PERSONALI</li>
+					<li class="menu_item"><a href="./my_brews">MISCELE
+							PERSONALI</a></li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+				</c:when>
+				<c:when test="${page == 'myBrews'}">
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./my_recipes">RICETTE
+							PERSONALI</a></li>
+					<li class="menu_item active">MISCELE PERSONALI</li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+				</c:when>
+				<c:when test="${page == 'equipment'}">
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./my_recipes">RICETTE
+							PERSONALI</a></li>
+					<li class="menu_item"><a href="./my_brews">MISCELE
+							PERSONALI</a></li>
+					<li class="menu_item active">EQUIPAGGIAMENTO</li>
+					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
+				</c:when>
+				<c:when test="${page == 'pantry'}">
+					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
+					<li class="menu_item"><a href="./my_recipes">RICETTE
+							PERSONALI</a></li>
+					<li class="menu_item"><a href="./my_brews">MISCELE
+							PERSONALI</a></li>
+					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
+					<li class="menu_item active">DISPENSA</li>
+				</c:when>
+
+
+
 				<c:otherwise>
 					<li class="menu_item"><a href="./home">HOME</a></li>
 					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
@@ -101,7 +154,6 @@
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
 				</c:otherwise>
 			</c:choose>
-
 		</ul>
 	</c:if>
 </div>

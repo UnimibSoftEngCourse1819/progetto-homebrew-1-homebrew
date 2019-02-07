@@ -28,12 +28,18 @@ public class LoginServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
+
 			if (session != null) {
-				request.setAttribute("page", "login");
-				dispatcher.forward(request, response);
-				session.removeAttribute("alertMessage");
-				session.removeAttribute("alertType");
-				session.invalidate();
+				if (session.getAttribute("user") != null) {
+					response.sendRedirect("/homebrew/home");
+				} else {
+					request.setAttribute("page", "login");
+					dispatcher.forward(request, response);
+					session.removeAttribute("alertMessage");
+					session.removeAttribute("alertType");
+					session.invalidate();
+				}
+
 			} else {
 				request.setAttribute("page", "login");
 				dispatcher.forward(request, response);
