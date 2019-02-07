@@ -68,22 +68,32 @@ public class RegisterServlet extends HttpServlet {
 
 				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				user = new User(name, surname, dateOfBirth, email, hash);
-				userDao.createUser(user);
-
 				User registeredUser = userDao.selectUserByEmail(email);
-
-				int registeredUserId = registeredUser.getId();
-
-				EquipmentDao equipDao = new EquipmentDao();
-				equipDao.createEquipment(registeredUserId);
-				Equipment equipment = equipDao.selectEquipmentByUser(registeredUserId);
-				int equipmentID = equipment.getEquipmentID();
-
-				ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
-				toolEquipmentDao.createToolEquipment(equipmentID);
 				
-				PantryDao pantryDao = new PantryDao();
-				pantryDao.createPantry(registeredUserId);
+				if(registeredUser == null) {
+					userDao.createUser(user);
+					
+					registeredUser = userDao.selectUserByEmail(email);
+
+					int registeredUserId = registeredUser.getId();
+
+					EquipmentDao equipDao = new EquipmentDao();
+					equipDao.createEquipment(registeredUserId);
+					Equipment equipment = equipDao.selectEquipmentByUser(registeredUserId);
+					int equipmentID = equipment.getEquipmentID();
+
+					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
+					toolEquipmentDao.createToolEquipment(equipmentID);
+					
+					PantryDao pantryDao = new PantryDao();
+					pantryDao.createPantry(registeredUserId);
+					
+				}else {
+					HttpSession session = request.getSession(true);
+					session.setAttribute("alertMessage", "Esiste già un utente con questa mail");
+					session.setAttribute("alertType", "error");
+					response.sendRedirect("./login");
+				}
 
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
