@@ -30,7 +30,7 @@ public class RecipeListServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				
-				User user = (User) session.getAttribute("user");				
+				User user = (User) session.getAttribute("user");	
 				RecipeDao recipeDao = new RecipeDao();
 				List <Recipe> recipes = recipeDao.findAllRecipesUser(user.getId());
 
@@ -38,6 +38,8 @@ public class RecipeListServlet extends HttpServlet {
 				request.setAttribute("recipes", recipes);
 				request.setAttribute("page", "recipes");
 				dispatcher.forward(request, response);
+				session.removeAttribute("alertMessage");
+				session.removeAttribute("alertType");
 
 			} else {
 				RecipeDao recipeDao = new RecipeDao();

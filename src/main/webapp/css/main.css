@@ -369,6 +369,7 @@ body {
 	box-shadow: inset 0px 0px 20px 0px #00000066;
 }
 .content_main {
+	width: 100%;
 	z-index: 20;
 }
 

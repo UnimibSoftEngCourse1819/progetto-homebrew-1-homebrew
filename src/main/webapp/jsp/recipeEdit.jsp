@@ -35,6 +35,10 @@
 
 			<div class="content_main recipe_cont">
 				<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">ANNULLA</a>
+				<form action="./remove_recipe" method="post">
+					<input type="hidden" name="recipeID" value="${recipe.recipeID}">
+					<button name="deleteRecipe" type="submit">INVIA</button>
+				</form>
 
 				<form action="./edit_recipe" method="post" class="recipe_edit_form">
 					<input type="hidden" name="recipeID" value="${recipe.recipeID}">

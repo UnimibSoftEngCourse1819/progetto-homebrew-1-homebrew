@@ -33,8 +33,8 @@ public class RegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeEdit.jsp");
-			request.setAttribute("page", "recipe_edit");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/register.jsp");
+			request.setAttribute("page", "register");
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
@@ -84,7 +84,7 @@ public class RegisterServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
 				session.setAttribute("alertType", "success");
-				response.sendRedirect("./home");
+				response.sendRedirect("./login");
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Servlet error", e);
 			}

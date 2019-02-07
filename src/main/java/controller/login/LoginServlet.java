@@ -29,14 +29,16 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 			if (session != null) {
-				String message = (String) session.getAttribute("alertMessage");
-				String type = (String) session.getAttribute("alertType");
-				request.setAttribute("alertMessage", message);
-				request.setAttribute("alertType", type);
+				request.setAttribute("page", "login");
+				dispatcher.forward(request, response);
+				session.removeAttribute("alertMessage");
+				session.removeAttribute("alertType");
 				session.invalidate();
+			} else {
+				request.setAttribute("page", "login");
+				dispatcher.forward(request, response);
 			}
-			request.setAttribute("page", "login");
-			dispatcher.forward(request, response);
+
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}

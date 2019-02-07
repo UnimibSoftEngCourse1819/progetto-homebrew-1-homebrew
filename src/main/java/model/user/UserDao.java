@@ -24,11 +24,14 @@ public class UserDao {
 	private ResultSet resultSet = null;
 
 	private static String findAllUsers = "SELECT * FROM User";
-	private static String createUser = "INSERT INTO User (name, surname, dateOfBirth, email, password) VALUES(?,?,?,?,?)";
-	private static String deleteUser = "DELETE FROM User WHERE userID=?";
 	private static String seletUserById = "SELECT * FROM User WHERE userId=?";
 	private static String seletUserByEmail = "SELECT * FROM User WHERE email=?";
 	private static String checkUserEmail = "SELECT * FROM User WHERE email=?";
+	private static String findMaxID = "SELECT MAX(userID) AS max FROM User";
+
+	private static String createUser = "INSERT INTO User (userID, name, surname, dateOfBirth, email, password) VALUES(?,?,?,?,?,?)";
+	private static String deleteUser = "DELETE FROM User WHERE userID=?";
+
 	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, password=? WHERE userID=?";
 
 	public List<User> findAllUsers() {
@@ -128,16 +131,22 @@ public class UserDao {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(createUser);
-			statement.setString(1, user.getName());
-			statement.setString(2, user.getSurname());
-			java.sql.Date castDate = new java.sql.Date(user.getDateOfBirth().getTime());
-			DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-			String reportDate = dateformat.format(castDate);
-			statement.setString(3, reportDate);
-			statement.setString(4, user.getEmail());
-			statement.setString(5, user.getPassword());
-			result = statement.executeUpdate();
+			statement = connect.prepareStatement(findMaxID);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int userID = resultSet.getInt("max") + 1;
+				statement = connect.prepareStatement(createUser);
+				statement.setInt(1, userID);
+				statement.setString(2, user.getName());
+				statement.setString(3, user.getSurname());
+				java.sql.Date castDate = new java.sql.Date(user.getDateOfBirth().getTime());
+				DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+				String reportDate = dateformat.format(castDate);
+				statement.setString(4, reportDate);
+				statement.setString(5, user.getEmail());
+				statement.setString(6, user.getPassword());
+				result = statement.executeUpdate();
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {
@@ -203,7 +212,7 @@ public class UserDao {
 			statement = connect.prepareStatement(checkUserEmail);
 			statement.setString(1, email);
 			resultSet = statement.executeQuery();
-			if(!resultSet.next()) {
+			if (!resultSet.next()) {
 				result = true;
 			}
 

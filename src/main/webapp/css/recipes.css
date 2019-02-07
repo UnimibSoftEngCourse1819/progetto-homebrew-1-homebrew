@@ -101,6 +101,8 @@
 }
 
 .recipe_title p {
+	float: left;
+	margin-right: 20px;
 	font-size: 14px;
 }
 
@@ -176,3 +178,9 @@
 	height: 100px;
 	resize: none;
 }
+
+/* ------------------- CREATE RECIPE ------------------- */
+#create_recipe_form .valid {
+	border: solid 1px green;
+}
+

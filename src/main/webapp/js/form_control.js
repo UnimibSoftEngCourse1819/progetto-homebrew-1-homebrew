@@ -1,17 +1,21 @@
 $(document).ready(function() {
-	controlForm();
-	if ($('#dateOfBirth')[0].type != 'date')
-		$('#dateOfBirth').datepicker();
+	if ($('#registration_form').length != 0) {
+		registrationForm();
+	}
+	if ($('#create_recipe_form').length != 0) {
+		createRecipeForm();
+	}
+
 });
-function controlForm() {
+function registrationForm() {
 	$.validator.addMethod("person", function(value, element) {
 		return this.optional(element) || /^[A-Za-z\s]+$/.test(value);
 	}, 'Not a name');
-	$.validator.addMethod("dateValid",function(value, element) {
-		return this.optional(element)
+	$.validator.addMethod("dateValid", function(value, element) {
+		return this.optional(element) 
 		|| /^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/
-				.test(value);
-		}, 'Not a date');
+		.test(value);
+	}, 'Not a date');
 
 	$('input').on('blur keyup change', function() {
 		if ($("#registration_form").valid()) {
@@ -60,3 +64,35 @@ function controlForm() {
 						}
 					});
 }
+
+function createRecipeForm() {
+	var rules = new Object();
+
+	$('input').on('blur keyup change', function() {
+		if ($("#create_recipe_form").valid()) {
+			$('#addRecipe').prop('disabled', false);
+			$('#addRecipe').addClass('boo');
+		} else {
+			$('#addRecipe').prop('disabled', true);
+			$('#addRecipe').removeClass('boo');
+		}
+	});
+	$('#create_recipe_form').validate({
+		rules : rules,
+		errorPlacement : function() {
+			return false;
+		}
+	});
+	$('input[name=name]').rules("add", "required");
+	$('textarea[name=description]').rules("add", "required");
+	$('input[name^=valueIngr-]').each(function() {
+		$(this).rules("add", "required");
+	});
+	$('input[name^=measureIngr-]').each(function() {
+		$(this).rules("add", "required");
+	});
+	$('input[name^=step-]').each(function() {
+		$(this).rules("add", "required");
+	});
+}
+
