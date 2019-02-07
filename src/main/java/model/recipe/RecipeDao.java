@@ -39,6 +39,16 @@ public class RecipeDao {
 	private static String findStepsRecipeByID = "SELECT stepPos, text FROM Step_Recipe WHERE recipeID=?";
 	private static String createSteps = "INSERT INTO Step_Recipe (recipeID, stepPos, text) VALUES(?,?,?)";
 	private static String deleteStepsByRecipeID = "DELETE FROM Step_Recipe WHERE recipeID=?";
+	
+	private static String wisbt ="SELECT R.* FROM Recipe AS R WHERE R.capacity = max( "
+			+ "SELECT R1.capacity FROM Recipe AS R1 JOIN Ingredient_Recipe AS IR ON R1.recipeID = IR.recipeID"
+			+ "HAVING IR.quantity * ? <= (SELECT availability FROM Pantry WHERE userID = ?))";
+	/*
+	SELECT R.*
+	FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID
+	HAVING IR.quantity <= (SELECT availability FROM Pantry WHERE userID = ?)
+	ORDER BY R.capacity
+	*/
 
 	public Recipe findRecipeByID(int recipeID) {
 		Recipe recipe = null;
