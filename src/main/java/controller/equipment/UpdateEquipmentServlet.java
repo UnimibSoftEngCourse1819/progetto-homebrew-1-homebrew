@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.equipment.Equipment;
+import model.equipment.EquipmentDao;
+import model.equipment.ToolEquipment;
 import model.equipment.ToolEquipmentDao;
 import model.user.User;
 
@@ -29,47 +31,83 @@ public class UpdateEquipmentServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getId();
-				ArrayList<Equipment> equipment = new ArrayList<>();
+				EquipmentDao equipmentDao = new EquipmentDao();
+				Equipment equipment = equipmentDao.selectEquipmentByUser(userID);
+				int equipmentID = equipment.getEquipmentID();
+				ArrayList<ToolEquipment> toolEquipment = new ArrayList<>();
 				
-				if (request.getParameter("weightScale") != null) {
-					int weightScale = Integer.parseInt((String) request.getParameter("weightScale"));
-					Equipment equipmentWeightScale = new Equipment(userID, 1 ,weightScale );
-					equipment.add(equipmentWeightScale);
+				if (request.getParameter("boilingCauldron") != null) {
+					int boilingCauldron = Integer.parseInt((String) request.getParameter("boilingCauldron"));
+					ToolEquipment equipmentBoilingCauldron = new ToolEquipment(equipmentID, 1 ,boilingCauldron );
+					toolEquipment.add(equipmentBoilingCauldron);
 				}
 				
-				if (request.getParameter("cauldron") != null) {
-					int cauldron = Integer.parseInt((String) request.getParameter("cauldron"));
-					Equipment equipmentCauldron = new Equipment(userID, 2 ,cauldron );
-					equipment.add(equipmentCauldron);
+				if (request.getParameter("mashingCauldron") != null) {
+					int mashingCauldron = Integer.parseInt((String) request.getParameter("mashingCauldron"));
+					ToolEquipment equipmentMashingCauldron = new ToolEquipment(equipmentID, 2 ,mashingCauldron );
+					toolEquipment.add(equipmentMashingCauldron);
+				}
+				
+				if (request.getParameter("hotLiquidsCauldron") != null) {
+					int hotLiquidsCauldron = Integer.parseInt((String) request.getParameter("hotLiquidsCauldron"));
+					ToolEquipment equipmentHotLiquidsCauldron = new ToolEquipment(equipmentID, 3 ,hotLiquidsCauldron );
+					toolEquipment.add(equipmentHotLiquidsCauldron);
+				}
+				
+				if (request.getParameter("kettle") != null) {
+					int kettle = Integer.parseInt((String) request.getParameter("kettle"));
+					ToolEquipment equipmentKettle = new ToolEquipment(equipmentID, 4 ,kettle );
+					toolEquipment.add(equipmentKettle);
 				}
 				
 				if (request.getParameter("fermenter") != null) {
 					int fermenter = Integer.parseInt((String) request.getParameter("fermenter"));
-					Equipment equipmentFermenter = new Equipment(userID, 3 ,fermenter );
-					equipment.add(equipmentFermenter);
+					ToolEquipment equipmentFermenter = new ToolEquipment(equipmentID, 5 ,fermenter );
+					toolEquipment.add(equipmentFermenter);
 				}
 				
-				if (request.getParameter("ladles") != null) {
-					int ladles = Integer.parseInt((String) request.getParameter("ladles"));
-					Equipment equipmentLadles = new Equipment(userID, 4 ,ladles );
-					equipment.add(equipmentLadles);
+				if (request.getParameter("filter") != null) {
+					int filter = Integer.parseInt((String) request.getParameter("filter"));
+					ToolEquipment equipmentFilter = new ToolEquipment(equipmentID, 6 ,filter );
+					toolEquipment.add(equipmentFilter);
+				}
+				
+				if (request.getParameter("weightScale") != null) {
+					int weightScale = Integer.parseInt((String) request.getParameter("weightScale"));
+					ToolEquipment equipmentWeightScale = new ToolEquipment(equipmentID, 7 ,weightScale );
+					toolEquipment.add(equipmentWeightScale);
 				}
 				
 				if (request.getParameter("thermometers") != null) {
 					int thermometers = Integer.parseInt((String) request.getParameter("thermometers"));
-					Equipment equipmentThermometers = new Equipment(userID, 5 ,thermometers );
-					equipment.add(equipmentThermometers);
+					ToolEquipment equipmentThermometers = new ToolEquipment(equipmentID, 8 ,thermometers );
+					toolEquipment.add(equipmentThermometers);
+				}
+				
+				if (request.getParameter("densimetro") != null) {
+					int densimetro = Integer.parseInt((String) request.getParameter("densimetro"));
+					ToolEquipment equipmentDensimetro = new ToolEquipment(equipmentID, 9 ,densimetro );
+					toolEquipment.add(equipmentDensimetro);
+				}
+				
+				if (request.getParameter("ladles") != null) {
+					int ladles = Integer.parseInt((String) request.getParameter("ladles"));
+					ToolEquipment equipmentLadles = new ToolEquipment(equipmentID, 10 ,ladles );
+					toolEquipment.add(equipmentLadles);
 				}
 				
 				if (request.getParameter("tube") != null) {
 					int tube = Integer.parseInt((String) request.getParameter("tube"));
-					Equipment equipmentTube = new Equipment(userID, 6 ,tube );
-					equipment.add(equipmentTube);
+					ToolEquipment equipmentTube = new ToolEquipment(equipmentID, 11 ,tube );
+					toolEquipment.add(equipmentTube);
 				}
 				
-				if(equipment.size() > 0) {
-					ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
-					int update = equipmentDao.updateEquipment(equipment);
+				if(toolEquipment.size() > 0) {
+					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
+					int update = toolEquipmentDao.updateToolEquipment(toolEquipment);
+					int batchSize = toolEquipmentDao.getBatchSize(equipmentID);
+					equipment = new Equipment(equipmentID, userID, batchSize);
+					equipmentDao.updateEquipment(equipment);
 					if (update > 0) {
 						request.setAttribute("success", true);
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");

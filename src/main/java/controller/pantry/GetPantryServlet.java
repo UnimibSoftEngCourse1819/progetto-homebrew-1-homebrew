@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ingredient.Ingredient;
+import model.ingredient.SelectIngredient;
 import model.pantry.PantryDao;
 import model.user.User;
 
@@ -30,7 +30,7 @@ public class GetPantryServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getId();
-				List<Ingredient> pantry = new ArrayList<>();
+				List<SelectIngredient> pantry = new ArrayList<>();
 				PantryDao pantryDao = new PantryDao();
 				pantry = pantryDao.userPantry(userID);
 					

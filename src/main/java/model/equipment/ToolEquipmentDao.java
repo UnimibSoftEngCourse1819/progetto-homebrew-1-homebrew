@@ -27,6 +27,7 @@ public class ToolEquipmentDao {
 
 	private static String createToolEquipment = "INSERT INTO Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
 	private static String updateToolEquipment = "UPDATE Equipment SET  capacity =? WHERE equipmentID =? AND toolID, =?";
+	private static String getBatchSize = "SELECT MIN(capacity) AS batchSize FROM Tool_Equipment WHERE toolID < 4 AND equipmentID = ?";
 	private static String userToolEquipment = "SELECT T.name, E.capacity, T.measure From Tool_Equipment as E "
 			+ "INNER JOIN Tool AS T ON T.toolID = E.toolID" + "WHERE E.equipmentID = ?";
 	
@@ -97,7 +98,7 @@ public class ToolEquipmentDao {
 
 			while (resultSet.next()) {
 				String name = resultSet.getString("name");
-				int capacity = resultSet.getInt("batchSize");
+				int capacity = resultSet.getInt("capacity");
 				String measure = resultSet.getString("measure");
 				Tool tool = new Tool( name, capacity, measure);
 				tools.add(tool);
@@ -109,6 +110,30 @@ public class ToolEquipmentDao {
 			close();
 		}
 		return tools;
+	}
+	
+	public int getBatchSize(int equipmentID) {
+		int capacity = 0;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(getBatchSize);
+			statement.setInt(1, equipmentID);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				capacity = resultSet.getInt("batchSize");
+				return capacity;
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return capacity;
 	}
 
 	private void close() {

@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
-import model.ingredient.Ingredient;
+import model.ingredient.SelectIngredient;
 
 public class PantryDao {
 	final Logger logger = Logger.getLogger("MyLog");
@@ -85,8 +85,8 @@ public class PantryDao {
 		return result;
 	}
 	
-	public List<Ingredient> userPantry(int userID) {
-		List<Ingredient> ingredients = new ArrayList<>();
+	public List<SelectIngredient> userPantry(int userID) {
+		List<SelectIngredient> ingredients = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
@@ -97,10 +97,10 @@ public class PantryDao {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				//String name = resultSet.getString("name");
-				//int availability = resultSet.getInt("availability");				
-				//Ingredient ingredient = new Ingredient( name, availability);
-				//ingredients.add(ingredient);
+				String name = resultSet.getString("name");
+				int availability = resultSet.getInt("availability");				
+				SelectIngredient ingredient = new SelectIngredient( name, availability);
+				ingredients.add(ingredient);
 			}
 
 		} catch (SQLException e) {

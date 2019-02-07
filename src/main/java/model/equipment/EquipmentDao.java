@@ -62,8 +62,9 @@ public class EquipmentDao {
 			statement = connect.prepareStatement(updateEquipment);
 
 				statement.setInt(1, equipment.getBatchSize());
-				statement.setInt(2, equipment.getEquipmentID());
-				statement.setInt(3, equipment.getUserID());
+				statement.setInt(2, equipment.getUserID());
+				statement.setInt(3, equipment.getEquipmentID());
+				
 				result = statement.executeUpdate();
 			
 

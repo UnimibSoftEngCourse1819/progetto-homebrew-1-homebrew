@@ -130,16 +130,6 @@
 
 				</form>
 			</div>
-			<c:if test="${success}">
-				<div class="success">
-					<p>L'aggiornamento è avvenuto con successo</p>
-				</div>
-			</c:if>
-			<c:if test="${failure}">
-				<div class="failure">
-					<p>L'aggiornamento non è avvenuto con successo</p>
-				</div>
-			</c:if>
 		</div>
 	</div>
 </body>
