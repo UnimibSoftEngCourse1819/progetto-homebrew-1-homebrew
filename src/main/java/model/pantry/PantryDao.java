@@ -72,8 +72,9 @@ public class PantryDao {
 				Pantry ingredient = ingredients.get(i);
 
 				statement.setInt(1, ingredient.getAvailability());
-				statement.setInt(2, ingredient.getIngredientId());
-				statement.setInt(3, ingredient.getUserID());
+				statement.setInt(2, ingredient.getUserID());
+				statement.setInt(3, ingredient.getIngredientId());
+				
 				result = statement.executeUpdate();
 			}
 

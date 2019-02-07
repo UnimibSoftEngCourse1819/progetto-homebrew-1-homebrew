@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +22,7 @@ public class UpdatePantryServlet extends HttpServlet {
 	final Logger logger = Logger.getLogger("MyLog");
 	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
@@ -66,28 +65,23 @@ public class UpdatePantryServlet extends HttpServlet {
 					Pantry pantryWater = new Pantry(userID, 6 ,water );
 					pantry.add(pantryWater);
 				}
-				
+
 				if(pantry.size() > 0) {
 					PantryDao pantryDao = new PantryDao();
 					int update = pantryDao.updatePantry(pantry);
+
 					if (update > 0) {
-						request.setAttribute("success", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getPantry");
-						dispatcher.forward(request, response);
+						response.sendRedirect("./pantry");
 					} else {
-						request.setAttribute("failure", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getPantry");
-						dispatcher.forward(request, response);
+						response.sendRedirect("./pantry");
 					}
 				} else {
-					request.setAttribute("failure", true);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getPantry");
-					dispatcher.forward(request, response);
+					response.sendRedirect("./pantry");
 				}
 				
 			}
 
-		} catch (ServletException | IOException e) {
+		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 

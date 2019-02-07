@@ -1,8 +1,7 @@
-package controller.equipment;
+package controller.user;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,12 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.equipment.ToolEquipmentDao;
-import model.tool.Tool;
-import model.user.User;
 
-@WebServlet("/equipment")
-public class GetEquipmentServlet extends HttpServlet {
+import model.user.User;
+import model.user.UserDao;
+
+
+@WebServlet("/user")
+public class GetUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 	
@@ -30,12 +30,11 @@ public class GetEquipmentServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getId();
-				List<Tool> equipment = new ArrayList<>();
-				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
-				equipment = equipmentDao.userToolEquipment(userID);
-
-				request.setAttribute("equipment", equipment);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipmentList.jsp");
+				UserDao userDao = new UserDao();
+				User getUser = userDao.selectUserById(userID);
+				
+				request.setAttribute("user", getUser);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userData.jsp");
 				dispatcher.forward(request, response);
 					
 			}

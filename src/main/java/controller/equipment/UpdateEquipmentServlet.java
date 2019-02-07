@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +24,7 @@ public class UpdateEquipmentServlet extends HttpServlet {
 	final Logger logger = Logger.getLogger("MyLog");
 	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
@@ -109,23 +108,17 @@ public class UpdateEquipmentServlet extends HttpServlet {
 					equipment = new Equipment(equipmentID, userID, batchSize);
 					equipmentDao.updateEquipment(equipment);
 					if (update > 0) {
-						request.setAttribute("success", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getEquipment");
-						dispatcher.forward(request, response);
+						response.sendRedirect("./equipment");
 					} else {
-						request.setAttribute("failure", true);
-						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getEquipment");
-						dispatcher.forward(request, response);
+						response.sendRedirect("./equipment");
 					}
 				} else {
-					request.setAttribute("failure", true);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("./getEquipment");
-					dispatcher.forward(request, response);
+					response.sendRedirect("./equipment");
 				}
 				
 			}
 
-		} catch (ServletException | IOException e) {
+		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 

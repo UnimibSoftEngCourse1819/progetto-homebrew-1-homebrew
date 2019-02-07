@@ -25,8 +25,8 @@ public class ToolEquipmentDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String createToolEquipment = "INSERT INTO Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
-	private static String updateToolEquipment = "UPDATE Equipment SET  capacity =? WHERE equipmentID =? AND toolID, =?";
+	private static String createToolEquipment = "INSERT INTO Tool_Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
+	private static String updateToolEquipment = "UPDATE Tool_Equipment SET  capacity =? WHERE equipmentID =? AND toolID =?";
 	private static String getBatchSize = "SELECT MIN(capacity) AS batchSize FROM Tool_Equipment WHERE toolID < 4 AND equipmentID = ?";
 	private static String userToolEquipment = "SELECT T.name, TE.capacity, T.measure From Tool_Equipment as TE "
 			+ "INNER JOIN Tool AS T ON T.toolID = TE.toolID "
@@ -43,7 +43,7 @@ public class ToolEquipmentDao {
 					mysql.getPassword());
 			statement = connect.prepareStatement(createToolEquipment);
 
-			for (int i = 1; i <= 9; i++) {
+			for (int i = 1; i <= 11; i++) {
 				statement.setInt(1, equipmentID);
 				statement.setInt(2, i);
 				statement.setInt(3, 1);

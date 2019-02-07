@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Equipaggiamento&nbsp;-&nbsp;HomeBrew</title>
+<title>Dispensa&nbsp;-&nbsp;HomeBrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -32,17 +32,18 @@
 			<div class="main_shadow">
 				<div></div>
 			</div>
-
-			<c:forEach items="${pantry}" var="item">
-				<div class="recipes_element">
-					<div class="row recipes_inner">
-						<div class="col-9">
-							<h3>${item.name} ${item.availability}</h3>	
+			<div class="content_main">
+				<c:forEach items="${pantry}" var="item">
+					<div class="recipes_element">
+						<div class="row recipes_inner">
+							<div class="col-9">
+								<h3>${item.name} ${item.availability}</h3>
+							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
-			<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
+				</c:forEach>
+				<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
+			</div>
 		</div>
 	</div>
 </body>

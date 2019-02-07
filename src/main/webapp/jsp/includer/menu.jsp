@@ -98,7 +98,7 @@
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item active">MISCELE</li>
 				</c:when>
-
+./user
 				<c:when test="${page == 'my_recipes'}">
 					<li class="menu_item active">LE MIE RICETTE</li>
 					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>

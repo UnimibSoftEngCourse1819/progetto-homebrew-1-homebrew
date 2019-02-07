@@ -18,7 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
+import model.equipment.Equipment;
 import model.equipment.EquipmentDao;
+import model.equipment.ToolEquipmentDao;
 import model.pantry.PantryDao;
 //import model.equipment.EquipmentDao;
 //import model.pantry.PantryDao;
@@ -66,17 +68,32 @@ public class RegisterServlet extends HttpServlet {
 
 				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				user = new User(name, surname, dateOfBirth, email, hash);
-				userDao.createUser(user);
-
 				User registeredUser = userDao.selectUserByEmail(email);
+				
+				if(registeredUser == null) {
+					userDao.createUser(user);
+					
+					registeredUser = userDao.selectUserByEmail(email);
 
-				int registeredUserId = registeredUser.getId();
+					int registeredUserId = registeredUser.getId();
 
-				EquipmentDao equipDao = new EquipmentDao();
-				equipDao.createEquipment(registeredUserId);
+					EquipmentDao equipDao = new EquipmentDao();
+					equipDao.createEquipment(registeredUserId);
+					Equipment equipment = equipDao.selectEquipmentByUser(registeredUserId);
+					int equipmentID = equipment.getEquipmentID();
 
-				PantryDao pantryDao = new PantryDao();
-				pantryDao.createPantry(registeredUserId);
+					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
+					toolEquipmentDao.createToolEquipment(equipmentID);
+					
+					PantryDao pantryDao = new PantryDao();
+					pantryDao.createPantry(registeredUserId);
+					
+				}else {
+					HttpSession session = request.getSession(true);
+					session.setAttribute("alertMessage", "Esiste già un utente con questa mail");
+					session.setAttribute("alertType", "error");
+					response.sendRedirect("./login");
+				}
 
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
