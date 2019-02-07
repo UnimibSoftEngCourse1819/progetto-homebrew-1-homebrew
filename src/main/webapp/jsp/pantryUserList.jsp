@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Miscele&nbsp;-&nbsp;HomeBrew</title>
+<title>Equipaggiamento&nbsp;-&nbsp;HomeBrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -25,6 +25,7 @@
 	<div class="layout_right"></div>
 	<div class="row page" class="container">
 		<div class="header">
+			<h2 class="title">BrewDay</h2>
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="row main">
@@ -32,30 +33,17 @@
 				<div></div>
 			</div>
 
-			<c:forEach items="${brews}" var="item">
+			<c:forEach items="${pantry}" var="item">
 				<div class="recipes_element">
 					<div class="row recipes_inner">
-						<a href="./brew?n=${item.recipeID}"></a>
-
 						<div class="col-9">
-							<c:if test="${(fn:length(item.description)) > 300}">
-								<c:set var="text"
-									value="${fn:substring(item.description, 0, 300)}" />
-								<c:set var="splittext" value="${fn:split(text,' ')}" />
-								<c:set var="index"
-									value="${fn:indexOf(text, splittext[fn:length(splittext)-2])}" />
-								<p>${fn:substring(text, 0, index-1)}...</p>
-							</c:if>
-							<c:if test="${(fn:length(item.description)) <= 300}">
-								<p>${item.description}</p>
-							</c:if>
+							<h3>${item.name} ${item.availability}</h3>	
 						</div>
 					</div>
 				</div>
 			</c:forEach>
+			<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
 		</div>
 	</div>
 </body>
 </html>
-
-

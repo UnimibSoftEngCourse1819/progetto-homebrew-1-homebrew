@@ -24,7 +24,6 @@
 	<div class="layout_right"></div>
 	<div class="row page" class="container">
 		<div class="header">
-			<h2 class="title">BrewDay</h2>
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="row main">
@@ -32,7 +31,14 @@
 				<div></div>
 			</div>
 			<div class="content_main">
-				<a class="back_recipes" href="./recipes">&larr;RICETTE</a>
+				<c:if test="${section == 'general'}">
+					<a class="back_recipes" href="./recipes">&larr;RICETTE</a>
+				</c:if>
+				<c:if test="${section == 'personal'}">
+					<a class="back_recipes" href="./my_recipes">&larr;RICETTE</a>
+				</c:if>
+
+
 				<div class="row recipe_img"
 					style="background-image: url(${recipe.imagePath})">
 					<div class="recipe_titCont">
