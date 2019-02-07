@@ -103,6 +103,7 @@ public class ToolEquipmentDao {
 				int capacity = resultSet.getInt("capacity");
 				String measure = resultSet.getString("measure");
 				Tool tool = new Tool( name, capacity, measure);
+				System.out.println(tool);
 				tools.add(tool);
 			}
 

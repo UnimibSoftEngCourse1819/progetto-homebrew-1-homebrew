@@ -18,7 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
+import model.equipment.Equipment;
 import model.equipment.EquipmentDao;
+import model.equipment.ToolEquipmentDao;
 import model.pantry.PantryDao;
 //import model.equipment.EquipmentDao;
 //import model.pantry.PantryDao;
@@ -74,7 +76,12 @@ public class RegisterServlet extends HttpServlet {
 
 				EquipmentDao equipDao = new EquipmentDao();
 				equipDao.createEquipment(registeredUserId);
-
+				Equipment equipment = equipDao.selectEquipmentByUser(registeredUserId);
+				int equipmentID = equipment.getEquipmentID();
+				
+				ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
+				toolEquipmentDao.createToolEquipment(equipmentID);
+				
 				PantryDao pantryDao = new PantryDao();
 				pantryDao.createPantry(registeredUserId);
 

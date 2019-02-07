@@ -33,7 +33,7 @@ public class GetEquipmentServlet extends HttpServlet {
 				List<Tool> equipment = new ArrayList<>();
 				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
 				equipment = equipmentDao.userToolEquipment(userID);
-					
+				System.out.println(equipment);
 				request.setAttribute("equipment", equipment);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipmentList.jsp");
 				dispatcher.forward(request, response);
