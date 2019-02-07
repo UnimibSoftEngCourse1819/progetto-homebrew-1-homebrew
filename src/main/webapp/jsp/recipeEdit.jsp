@@ -34,12 +34,12 @@
 			</div>
 
 			<div class="content_main recipe_cont">
-				<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">ANNULLA</a>
+				<h4>Modifica la ricetta</h4>
+				<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">INDIETRO</a>
 				<form action="./remove_recipe" method="post">
 					<input type="hidden" name="recipeID" value="${recipe.recipeID}">
-					<button name="deleteRecipe" type="submit">INVIA</button>
+					<button name="deleteRecipe" type="submit">ELIMINA</button>
 				</form>
-
 				<form action="./edit_recipe" method="post" class="recipe_edit_form">
 					<input type="hidden" name="recipeID" value="${recipe.recipeID}">
 					<div class="row">
@@ -104,8 +104,9 @@
 						</div>
 					</div>
 
-					<button name="editRecipe" type="submit">INVIA</button>
+					<button name="editRecipe" type="submit">MODIFICA</button>
 				</form>
+
 			</div>
 		</div>
 	</div>

@@ -18,7 +18,7 @@ import model.ingredient.SelectIngredient;
 import model.pantry.PantryDao;
 import model.user.User;
 
-@WebServlet("/getPantry")
+@WebServlet("/my_pantry")
 public class GetPantryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");

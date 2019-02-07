@@ -55,7 +55,7 @@
 				</div>
 				<div class="recipe_cont">
 					<div class="recipe_menu">
-						<a href="">CREA</a> <a href="">MISCELE</a>
+						<a href="./">CREA</a> <a href="">MISCELE</a>
 					</div>
 					<p class="recipe_description">${recipe.description}</p>
 					<h5 class="recipe_ingredient">Ingredienti</h5>
