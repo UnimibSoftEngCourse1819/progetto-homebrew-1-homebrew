@@ -3,19 +3,26 @@ package model.brew;
 import java.util.Date;
 
 public class Brew {
-	
+
 	private int brewID;
+	private String name;
 	private int userID;
+	private String userName;
+	private String userSurname;
 	private int recipeID;
 	private Date brewDate;
 	private String description;
 	private int quantity;
 	private String tasteNote;
-	public Brew(int brewID, int userID, int recipeID, Date brewDate, String description, int quantity,
-			String tasteNote) {
+	
+	public Brew(int brewID, String name, int userID, String userName, String userSurname, int recipeID, Date brewDate,
+			String description, int quantity, String tasteNote) {
 		super();
 		this.brewID = brewID;
+		this.name = name;
 		this.userID = userID;
+		this.userName = userName;
+		this.userSurname = userSurname;
 		this.recipeID = recipeID;
 		this.brewDate = brewDate;
 		this.description = description;
@@ -28,11 +35,29 @@ public class Brew {
 	public void setBrewID(int brewID) {
 		this.brewID = brewID;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getUserID() {
 		return userID;
 	}
 	public void setUserID(int userID) {
 		this.userID = userID;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserSurname() {
+		return userSurname;
+	}
+	public void setUserSurname(String userSurname) {
+		this.userSurname = userSurname;
 	}
 	public int getRecipeID() {
 		return recipeID;
@@ -67,4 +92,5 @@ public class Brew {
 
 	
 	
+
 }

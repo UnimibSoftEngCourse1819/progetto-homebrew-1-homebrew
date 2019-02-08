@@ -45,7 +45,7 @@ public class RecipeEditServlet extends HttpServlet {
 
 				Recipe recipe = recipeDao.findRecipeByID(recipeID);
 
-				if (user.getId() == recipe.getUserID()) {
+				if (user.getUserID() == recipe.getUserID()) {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 					IngredientDao ingredientDao = new IngredientDao();
 
@@ -86,7 +86,7 @@ public class RecipeEditServlet extends HttpServlet {
 
 				RecipeDao recipeDao = new RecipeDao();
 				Recipe recipe = recipeDao.findRecipeByID(recipeID);
-				if (user.getId() == recipe.getUserID()) {
+				if (user.getUserID() == recipe.getUserID()) {
 					int step = 1;
 					String paramStep = "step-";
 					Map<Integer, String> steps = new HashMap<>();

@@ -27,6 +27,8 @@ public class EquipmentDao {
 	private static String createEquipment = "INSERT INTO Equipment (userID, batchSize) VALUES(?,?)";
 	private static String updateEquipment = "UPDATE Equipment SET  batchSize =? WHERE userID =? AND equipmentID =?";
 	private static String userEquipment = "SELECT * From Equipment WHERE userID = ?";
+	private static String userBatchSize = "SELECT batchSize From Equipment WHERE userID = ?";
+
 	
 	public int createEquipment(int userID) {
 		int result = -1;
@@ -77,7 +79,7 @@ public class EquipmentDao {
 		return result;
 	}
 	
-	public Equipment selectEquipmentByUser(int userID) {
+	public Equipment findEquipmentByUser(int userID) {
 		Equipment equipment= null;
 		MySQLConnection mysql;
 		try {
@@ -102,6 +104,28 @@ public class EquipmentDao {
 			close();
 		}
 		return equipment;
+	}
+	public int findBatchSize(int userID) {
+		int batchSize = 0;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(userBatchSize);
+			statement.setInt(1, userID);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				batchSize = resultSet.getInt("batchSize");
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return batchSize;
 	}
 
 	private void close() {

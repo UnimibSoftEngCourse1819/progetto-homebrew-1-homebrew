@@ -1,29 +1,44 @@
 package model.pantry;
 
 public class Pantry {
-	
+
 	private int userID;
-	private int ingredientId;
+	private int ingredientID;
+	private String ingredientName;
 	private int availability;
-	
-	public Pantry(int userID, int ingredientId, int availability) {
+	private String measure;
+
+	public Pantry(int userID, int ingredientID, String ingredientName, int availability, String measure) {
 		super();
 		this.userID = userID;
-		this.ingredientId = ingredientId;
+		this.ingredientID = ingredientID;
+		this.ingredientName = ingredientName;
 		this.availability = availability;
+		this.measure = measure;
 	}
-	
+
 	public int getUserID() {
 		return userID;
 	}
+
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-	public int getIngredientId() {
-		return ingredientId;
+
+	public int getIngredientID() {
+		return ingredientID;
 	}
-	public void setIngredientId(int ingredientId) {
-		this.ingredientId = ingredientId;
+
+	public void setIngredientID(int ingredientID) {
+		this.ingredientID = ingredientID;
+	}
+
+	public String getIngredientName() {
+		return ingredientName;
+	}
+
+	public void setIngredientName(String ingredientName) {
+		this.ingredientName = ingredientName;
 	}
 
 	public int getAvailability() {
@@ -33,6 +48,13 @@ public class Pantry {
 	public void setAvailability(int availability) {
 		this.availability = availability;
 	}
-	
+
+	public String getMeasure() {
+		return measure;
+	}
+
+	public void setMeasure(String measure) {
+		this.measure = measure;
+	}
 
 }

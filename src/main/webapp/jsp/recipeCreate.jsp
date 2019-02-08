@@ -36,7 +36,12 @@
 			</div>
 
 			<div class="content_main recipe_cont">
-				<a class="back_recipes" href="./recipes">ANNULLA</a>
+				<c:if test="${section == 'general'}">
+					<a class="back_recipes" href="./recipes">ANNULLA</a>
+				</c:if>
+				<c:if test="${section == 'personal'}">
+					<a class="back_recipes" href="./my_recipes">ANNULLA</a>
+				</c:if>
 
 				<form action="./new_recipe" method="post" id="create_recipe_form"
 					class="recipe_edit_form">

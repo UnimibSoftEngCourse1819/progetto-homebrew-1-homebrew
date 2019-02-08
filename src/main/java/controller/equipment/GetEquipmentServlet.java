@@ -29,7 +29,7 @@ public class GetEquipmentServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
-				int userID = user.getId();
+				int userID = user.getUserID();
 				List<Tool> equipment = new ArrayList<>();
 				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
 				equipment = equipmentDao.userToolEquipment(userID);

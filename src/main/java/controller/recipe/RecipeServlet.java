@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.brew.Brew;
+import model.brew.BrewDao;
 import model.recipe.IngredientRecipe;
 import model.recipe.IngredientRecipeDao;
 import model.recipe.Recipe;
@@ -43,19 +45,24 @@ public class RecipeServlet extends HttpServlet {
 				User userRecipe = userDao.selectUserById(recipe.getUserID());
 
 				if (recipe.getVisibility().equals("public")
-						|| (recipe.getVisibility().equals("private") && user.getId() == recipe.getUserID())) {
+						|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
+					
+					BrewDao brewDao = new BrewDao();
+					List<Brew> brews = brewDao.findBrewByRecipeID(id);
 
-					if (user.getId() == recipe.getUserID()) {
+					if (user.getUserID() == recipe.getUserID()) {
 						request.setAttribute("editable", true);
 					}
+					session.setAttribute("recipe", recipe);
 					request.setAttribute("recipe", recipe);
 					request.setAttribute("userRecipe", userRecipe);
 					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+					request.setAttribute("brews", brews);
 					request.setAttribute("page", "recipe");
 					request.setAttribute("section", section);
 					dispatcher.forward(request, response);

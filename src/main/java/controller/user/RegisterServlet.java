@@ -67,7 +67,7 @@ public class RegisterServlet extends HttpServlet {
 			try {
 
 				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-				user = new User(name, surname, dateOfBirth, email, hash);
+				user = new User(0, name, surname, dateOfBirth, email, hash);
 				User registeredUser = userDao.selectUserByEmail(email);
 				
 				if(registeredUser == null) {
@@ -75,11 +75,11 @@ public class RegisterServlet extends HttpServlet {
 					
 					registeredUser = userDao.selectUserByEmail(email);
 
-					int registeredUserId = registeredUser.getId();
+					int registeredUserId = registeredUser.getUserID();
 
 					EquipmentDao equipDao = new EquipmentDao();
 					equipDao.createEquipment(registeredUserId);
-					Equipment equipment = equipDao.selectEquipmentByUser(registeredUserId);
+					Equipment equipment = equipDao.findEquipmentByUser(registeredUserId);
 					int equipmentID = equipment.getEquipmentID();
 
 					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
@@ -90,7 +90,7 @@ public class RegisterServlet extends HttpServlet {
 					
 				}else {
 					HttpSession session = request.getSession(true);
-					session.setAttribute("alertMessage", "Esiste già un utente con questa mail");
+					session.setAttribute("alertMessage", "Esiste giï¿½ un utente con questa mail");
 					session.setAttribute("alertType", "error");
 					response.sendRedirect("./login");
 				}

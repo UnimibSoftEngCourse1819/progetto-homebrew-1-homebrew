@@ -72,10 +72,9 @@ public class RecipeCreateServlet extends HttpServlet {
 					steps.put(step, text);
 					step++;
 				}
-				String image = "images/recipes/beer_" + ((int) (Math.random()*4) + 1) + ".jpg";
+				String image = "images/recipes/beer_" + ((int) (Math.random() * 4) + 1) + ".jpg";
 
-				Recipe recipe = new Recipe(0, user.getId(), name, null, description, visibility,
-						image, steps);
+				Recipe recipe = new Recipe(0, user.getUserID(), name, null, description, visibility, image, steps);
 
 				int recipeID = recipeDao.createRecipe(recipe);
 				if (recipeID > 0) {
@@ -99,13 +98,21 @@ public class RecipeCreateServlet extends HttpServlet {
 					ingredientRecipeDao.createIngredientsRecipe(ingredientsRecipe);
 					session.setAttribute("alertMessage", "Ricetta creata con successo");
 					session.setAttribute("alertType", "success");
-					response.sendRedirect("/homebrew/recipes");
+					if (((String) session.getAttribute("section")).equals("personal")) {
+						response.sendRedirect("/homebrew/my_recipes");
+					} else {
+						response.sendRedirect("/homebrew/recipes");
+					}
 				}
 
 			} else {
 				session.setAttribute("alertMessage", "Ricetta non creata");
 				session.setAttribute("alertType", "error");
-				response.sendRedirect("/homebrew/recipes");
+				if (((String) session.getAttribute("section")).equals("personal")) {
+					response.sendRedirect("/homebrew/my_recipes");
+				} else {
+					response.sendRedirect("/homebrew/recipes");
+				}
 			}
 
 		} catch (IOException e) {

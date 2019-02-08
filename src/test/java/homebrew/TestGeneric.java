@@ -1,5 +1,14 @@
 package homebrew;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import model.equipment.EquipmentDao;
+import model.pantry.Pantry;
+import model.pantry.PantryDao;
+import model.recipe.IngredientRecipe;
+import model.recipe.IngredientRecipeDao;
 import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 
@@ -15,7 +24,8 @@ public class TestGeneric {
 		// boolean resp = log.match("mail@prova.it", "password");
 		// System.out.println(resp);
 
-
 	}
+
+
 
 }

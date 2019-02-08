@@ -1,35 +1,43 @@
 package model.recipe;
 
 public class IngredientRecipe {
-	private int recipeId;
-	private int ingredientId;
+	private int recipeID;
+	private int ingredientID;
 	private String ingredientName;
 	private int quantity;
 	private String measure;
 
-	public IngredientRecipe(int recipeId, int ingredientId, String ingredientName, int quantity, String measure) {
+	public IngredientRecipe(int recipeID, int ingredientID, String ingredientName, int quantity, String measure) {
 		super();
-		this.recipeId = recipeId;
-		this.ingredientId = ingredientId;
+		this.recipeID = recipeID;
+		this.ingredientID = ingredientID;
 		this.ingredientName = ingredientName;
 		this.quantity = quantity;
 		this.measure = measure;
 	}
 
-	public int getRecipeId() {
-		return recipeId;
+	public int getRecipeID() {
+		return recipeID;
 	}
 
-	public void setRecipeId(int recipeId) {
-		this.recipeId = recipeId;
+	public void setRecipeID(int recipeID) {
+		this.recipeID = recipeID;
 	}
 
-	public int getIngredientId() {
-		return ingredientId;
+	public int getIngredientID() {
+		return ingredientID;
 	}
 
-	public void setIngredientId(int ingredientId) {
-		this.ingredientId = ingredientId;
+	public void setIngredientID(int ingredientID) {
+		this.ingredientID = ingredientID;
+	}
+
+	public String getIngredientName() {
+		return ingredientName;
+	}
+
+	public void setIngredientName(String ingredientName) {
+		this.ingredientName = ingredientName;
 	}
 
 	public int getQuantity() {
@@ -46,14 +54,6 @@ public class IngredientRecipe {
 
 	public void setMeasure(String measure) {
 		this.measure = measure;
-	}
-
-	public String getIngredientName() {
-		return ingredientName;
-	}
-
-	public void setIngredientName(String ingredientName) {
-		this.ingredientName = ingredientName;
 	}
 
 }

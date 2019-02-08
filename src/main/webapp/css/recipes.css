@@ -106,22 +106,40 @@
 	font-size: 14px;
 }
 
-.recipe_to_edit {
+.recipe_action {
 	position: absolute;
-	right: 20px;
 	bottom: 20px;
 	width: 30px;
 }
 
-.recipe_to_edit button {
+.recipe_action.rec_brew {
+	right: 20px;
+}
+
+.recipe_action.rec_edit {
+	right: 60px;
+}
+
+.recipe_action button {
 	background-color: transparent;
 	border: none;
 	padding: 0;
 	cursor: pointer;
 }
 
-.recipe_to_edit button img {
+.recipe_action button img {
 	width: 100%;
+}
+.recipe_menu {
+	
+}
+.recipe_menu button {
+	border: solid 1px #ececec;
+	background-color: #ececec;
+}
+.recipe_menu button.active {
+	border: solid 1px #333333;
+	background-color: #ffffff;
 }
 
 .recipe_cont table {
@@ -183,4 +201,3 @@
 #create_recipe_form .valid {
 	border: solid 1px green;
 }
-

@@ -43,7 +43,7 @@ public class BrewEditServlet extends HttpServlet {
 
 				Recipe recipe = recipeDao.findRecipeByID(recipeID);
 
-				if (user.getId() == recipe.getUserID()) {
+				if (user.getUserID() == recipe.getUserID()) {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 					IngredientDao ingredientDao = new IngredientDao();
 

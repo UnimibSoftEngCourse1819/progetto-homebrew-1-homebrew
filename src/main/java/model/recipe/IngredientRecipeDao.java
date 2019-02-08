@@ -68,8 +68,8 @@ public class IngredientRecipeDao {
 			Iterator<IngredientRecipe> iterator = ingredientsRecipes.iterator();
 			while (iterator.hasNext()) {
 				IngredientRecipe ingredientRecipe = iterator.next();
-				statement.setInt(1, ingredientRecipe.getRecipeId());
-				statement.setInt(2, ingredientRecipe.getIngredientId());
+				statement.setInt(1, ingredientRecipe.getRecipeID());
+				statement.setInt(2, ingredientRecipe.getIngredientID());
 				statement.setInt(3, ingredientRecipe.getQuantity());
 				statement.setString(4, ingredientRecipe.getMeasure());
 				result = statement.executeUpdate();

@@ -26,12 +26,79 @@ public class BrewDao {
 	private ResultSet resultSet = null;
 
 	private static String createBrew = "INSERT INTO Brew (userID, recipeID, brewDate, description, quantity, tasteNote) VALUES(?,?,?,?,?,?)";
-	private static String findAllBrew = "SELECT * FROM Brew";
+	private static String findAllBrew = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID";
+	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
+
 	//private static String findAllBrewRecipe = "SELECT * FROM Brew WHERE recipeID=?";
 	//private static String findRecipeByID = "SELECT * FROM Recipe WHERE recipeID=?";
 	//private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
 	//private static String updateRecipe = "UPDATE Recipe SET name=?, description=?, visibility=?, imagePath=? WHERE recipeID=?";
 
+	public List<Brew> findAllBrews() {
+		List<Brew> brews = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(findAllBrew);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				int brewID = resultSet.getInt("b.brewID");
+				int userID = resultSet.getInt("b.userID");
+				int recipeID = resultSet.getInt("b.recipeID");
+				String name = resultSet.getString("b.name");
+				Date brewDate = resultSet.getDate("b.brewDate");
+				String description = resultSet.getString("b.description");
+				int quantity = resultSet.getInt("b.quantity");
+				String tasteNote = resultSet.getString("b.tasteNote");
+				String userName = resultSet.getString("u.name");
+				String userSurname = resultSet.getString("u.surname");
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description, quantity, tasteNote);
+				brews.add(brew);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+
+		return brews;
+	}
+	
+	public List<Brew> findBrewByRecipeID(int recipeID) {
+		List<Brew> brews = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(findBrewByRecipeID);
+			statement.setInt(1, recipeID);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				int brewID = resultSet.getInt("b.brewID");
+				String name = resultSet.getString("b.name");
+				int userID = resultSet.getInt("b.userID");
+				Date brewDate = resultSet.getDate("b.brewDate");
+				String description = resultSet.getString("b.description");
+				int quantity = resultSet.getInt("b.quantity");
+				String tasteNote = resultSet.getString("b.tasteNote");
+				String userName = resultSet.getString("u.name");
+				String userSurname = resultSet.getString("u.surname");
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description, quantity, tasteNote);
+				brews.add(brew);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+
+		return brews;
+	}
+	
+	
 	public int createBrew(Brew brew) {
 		int result = -1;
 		MySQLConnection mysql;
@@ -57,34 +124,7 @@ public class BrewDao {
 		return result;
 	}
 
-	public List<Brew> findAllBrews() {
-		List<Brew> brews = new ArrayList<>();
-		MySQLConnection mysql;
-		try {
-			mysql = new MySQLConnection();
-			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(findAllBrew);
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				int brewID = resultSet.getInt("brewID");
-				int userID = resultSet.getInt("userID");
-				int recipeID = resultSet.getInt("recipeID");
-				Date brewDate = resultSet.getDate("brewDate");
-				String description = resultSet.getString("description");
-				int quantity = resultSet.getInt("quantity");
-				String tasteNote = resultSet.getString("tasteNote");
-				Brew brew = new Brew(brewID, userID, recipeID, brewDate, description, quantity, tasteNote);
-				brews.add(brew);
-			}
-		} catch (SQLException e) {
-			logger.log(Level.SEVERE, sqlError, e);
-		} finally {
-			close();
-		}
 
-		return brews;
-	}
 
 	private void close() {
 		try {

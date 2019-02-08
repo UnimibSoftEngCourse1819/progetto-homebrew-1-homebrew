@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ingredient.SelectIngredient;
+import model.pantry.Pantry;
 import model.pantry.PantryDao;
 import model.user.User;
 
@@ -30,10 +30,10 @@ public class GetPantryServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
-				int userID = user.getId();
-				List<SelectIngredient> pantry = new ArrayList<>();
+				int userID = user.getUserID();
+				List<Pantry> pantry = new ArrayList<>();
 				PantryDao pantryDao = new PantryDao();
-				pantry = pantryDao.userPantry(userID);
+				pantry = pantryDao.findUserPantry(userID);
 					
 				request.setAttribute("pantry", pantry);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantryList.jsp");

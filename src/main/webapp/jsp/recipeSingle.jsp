@@ -16,6 +16,8 @@
 <script src="js/jquery.validate.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/main.js"></script>
+<script src="js/recipes.js"></script>
+
 </head>
 
 <body>
@@ -44,45 +46,70 @@
 					<div class="recipe_titCont">
 						<div class="recipe_title">
 							<h3>${recipe.name}</h3>
-							<c:set var="splitdate" value="${fn:split(recipe.creation,'-')}" />
-							<p>${splitdate[2]}/${splitdate[1]}/${splitdate[0]}</p>
+							<c:set var="date_recipe" value="${fn:split(recipe.creation,'-')}" />
+							<p>${date_recipe[2]}/${date_recipe[1]}/${date_recipe[0]}</p>
 							<p>${userRecipe.name}${userRecipe.surname}</p>
-
 							<c:if test="${editable != null}">
-								<form class="recipe_to_edit" action="./recipe" method="post">
+								<form class="recipe_action rec_edit" action="./recipe"
+									method="post">
 									<input type="hidden" name="recipeID" value="${recipe.recipeID}">
 									<button name="editRecipe" type="submit">
 										<img alt="editable" src="images/logos/edit.svg">
 									</button>
 								</form>
 							</c:if>
+							<form class="recipe_action rec_brew" action="./new_brew"
+								method="get">
+								<button name="editRecipe" type="submit">
+									<img alt="editable" src="images/logos/new_brew.svg">
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
 				<div class="recipe_cont">
 					<div class="recipe_menu">
-						<a href="./">CREA</a> <a href="">MISCELE</a>
+						<button class="active" name="recipe_desc" type="button">RICETTA</button>
+						<button name="recipe_brews" type="button">MISCELE</button>
 					</div>
-					<p class="recipe_description">${recipe.description}</p>
-					<h5 class="recipe_ingredient">Ingredienti</h5>
-					<table>
-						<tbody>
-							<c:forEach items="${ingredientsRecipe}" var="item">
-								<tr>
-									<td class="leftIngr">${item.ingredientName}</td>
-									<td class="rightIngr">${item.quantity}${item.measure}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+					<div class="recipe_sect" id="recipe_desc">
+						<p class="recipe_description">${recipe.description}</p>
+						<h5 class="recipe_ingredient">Ingredienti</h5>
+						<table>
+							<tbody>
+								<c:forEach items="${ingredientsRecipe}" var="item">
+									<tr>
+										<td class="leftIngr">${item.ingredientName}</td>
+										<td class="rightIngr">${item.quantity}${item.measure}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 
-					<div class="recipe_steps">
-						<h5>Procedimento</h5>
-						<ul>
-							<c:forEach items="${recipe.steps}" var="item">
-								<li>${item.key}.&nbsp;${item.value}</li>
-							</c:forEach>
-						</ul>
+						<div class="recipe_steps">
+							<h5>Procedimento</h5>
+							<ul>
+								<c:forEach items="${recipe.steps}" var="item">
+									<li>${item.key}.&nbsp;${item.value}</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
+					<div class="row recipe_sect" id="recipe_brews"
+						style="display: none;">
+						<c:forEach items="${brews}" var="item">
+
+							<div class="col-4">
+								<p>${item.name}</p>
+
+								<p>${item.userName}&nbsp;${item.userSurname}</p>
+								<c:set var="date_brew" value="${fn:split(item.brewDate,'-')}" />
+								<p>${date_brew[2]}/${date_brew[1]}/${date_brew[0]}</p>
+								<p>${item.quantity}l</p>
+
+
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

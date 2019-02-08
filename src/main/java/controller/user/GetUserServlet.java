@@ -17,8 +17,8 @@ import javax.servlet.http.HttpSession;
 import model.user.User;
 import model.user.UserDao;
 
-
-@WebServlet("/user")
+//IN MENU -> SET SECTION IN SESSION
+@WebServlet("/account")
 public class GetUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
@@ -28,12 +28,14 @@ public class GetUserServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
+				session.setAttribute("section", "personal");
 				User user = (User) session.getAttribute("user");
-				int userID = user.getId();
+				int userID = user.getUserID();
 				UserDao userDao = new UserDao();
 				User getUser = userDao.selectUserById(userID);
 				
 				request.setAttribute("user", getUser);
+				request.setAttribute("page", "account");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userData.jsp");
 				dispatcher.forward(request, response);
 					

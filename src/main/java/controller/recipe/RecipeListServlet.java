@@ -35,7 +35,7 @@ public class RecipeListServlet extends HttpServlet {
 				
 				User user = (User) session.getAttribute("user");	
 				RecipeDao recipeDao = new RecipeDao();
-				List <Recipe> recipes = recipeDao.findAllRecipesUser(user.getId());
+				List <Recipe> recipes = recipeDao.findAllRecipesUser(user.getUserID());
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
 				request.setAttribute("recipes", recipes);

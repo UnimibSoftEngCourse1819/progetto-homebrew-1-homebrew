@@ -29,9 +29,9 @@ public class UpdateEquipmentServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
-				int userID = user.getId();
+				int userID = user.getUserID();
 				EquipmentDao equipmentDao = new EquipmentDao();
-				Equipment equipment = equipmentDao.selectEquipmentByUser(userID);
+				Equipment equipment = equipmentDao.findEquipmentByUser(userID);
 				int equipmentID = equipment.getEquipmentID();
 				ArrayList<ToolEquipment> toolEquipment = new ArrayList<>();
 				

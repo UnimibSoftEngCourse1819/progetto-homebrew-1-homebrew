@@ -25,7 +25,6 @@
 	<div class="layout_right"></div>
 	<div class="row page" class="container">
 		<div class="header">
-			<h2 class="title">BrewDay</h2>
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="row main">

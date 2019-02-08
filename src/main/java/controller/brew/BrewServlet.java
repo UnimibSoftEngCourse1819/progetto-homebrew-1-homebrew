@@ -39,14 +39,14 @@ public class BrewServlet extends HttpServlet {
 				Recipe recipe = recipeDao.findRecipeByID(id);
 
 				if (recipe.getVisibility().equals("public")
-						|| (recipe.getVisibility().equals("private") && user.getId() == recipe.getUserID())) {
+						|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
 
-					if (user.getId() == recipe.getUserID()) {
+					if (user.getUserID() == recipe.getUserID()) {
 						request.setAttribute("editable", true);
 					}
 					request.setAttribute("recipe", recipe);
