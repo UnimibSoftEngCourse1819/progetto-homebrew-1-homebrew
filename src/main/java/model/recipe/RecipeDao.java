@@ -47,12 +47,7 @@ public class RecipeDao {
 	private static String wisbt ="SELECT R.* FROM Recipe AS R WHERE R.capacity = max( "
 			+ "SELECT R1.capacity FROM Recipe AS R1 JOIN Ingredient_Recipe AS IR ON R1.recipeID = IR.recipeID"
 			+ "HAVING IR.quantity * ? <= (SELECT availability FROM Pantry WHERE userID = ?))";
-	/*
-	SELECT R.*
-	FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID
-	HAVING IR.quantity <= (SELECT availability FROM Pantry WHERE userID = ?)
-	ORDER BY R.capacity
-	*/
+
 
 	public Recipe findRecipeByID(int recipeID) {
 		Recipe recipe = null;
@@ -322,7 +317,45 @@ public class RecipeDao {
 		}
 		return result;
 	}
+	
+	public List<Recipe> search(String searchName, List<IngredientRecipe> searchIngredients ) {
+		List<Recipe> recipes = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			
+			String search = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
+					+ " WHERE R.name LIKE %?%";
+					for(int i=0; i< searchIngredients.size(); i++) {
+						search = search +" OR ";
+						
+					};
+			
+			statement = connect.prepareStatement(search);
+			resultSet = statement.executeQuery();
 
+			while (resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("userID");
+				String name = resultSet.getString("name");
+				Date creation = resultSet.getDate("creation");
+				String description = resultSet.getString("description");
+				String visibility = resultSet.getString("visibility");
+				String imagePath = resultSet.getString("imagePath");
+				Recipe recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, null);
+				recipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return recipes;
+	}
+	
 	private void close() {
 		try {
 			if (resultSet != null)

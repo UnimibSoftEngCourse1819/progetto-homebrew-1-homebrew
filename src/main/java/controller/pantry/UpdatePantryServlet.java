@@ -32,7 +32,6 @@ public class UpdatePantryServlet extends HttpServlet {
 				ArrayList<Pantry> pantrys = new ArrayList<>();
 				Pantry pantry = null;
 				for (int i = 10000001; i <= 10000018; i++) {
-					System.out.println(request.getParameter(i + ""));
 					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
 						int avaliability = Integer.parseInt((String) request.getParameter(i + ""));
 						if (avaliability > 0) {
