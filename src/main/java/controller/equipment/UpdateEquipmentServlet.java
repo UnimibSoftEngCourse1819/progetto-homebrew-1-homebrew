@@ -36,7 +36,6 @@ public class UpdateEquipmentServlet extends HttpServlet {
 				ArrayList<ToolEquipment> toolEquipments = new ArrayList<>();
 				ToolEquipment toolEquipment = null;
 				for (int i = 10000001; i <= 10000011; i++) {
-					System.out.println(request.getParameter(i + ""));
 					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
 						int capacity = Integer.parseInt((String) request.getParameter(i + ""));
 						if (capacity > 0) {

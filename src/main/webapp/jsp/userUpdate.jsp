@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Registrazione&nbsp;-&nbsp;Homebrew</title>
+<title>Aggiornamento dati anagrafici&nbsp;-&nbsp;Homebrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -70,8 +70,7 @@
 						</div>
 					</c:if>
 
-					<button name="userUpdateButton" type="submit" id="updateUser"
-						disabled>AGGIORNA</button>
+					<button name="userUpdateButton" type="submit" id="updateUser">AGGIORNA</button>
 				</form>
 			</div>
 

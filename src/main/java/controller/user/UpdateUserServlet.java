@@ -24,9 +24,10 @@ import model.user.UserDao;
 public class UpdateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
-	
+
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
@@ -40,36 +41,45 @@ public class UpdateUserServlet extends HttpServlet {
 				String checkPassword = request.getParameter("confirm_password");
 				String email = request.getParameter("email");
 				UserDao userDao = new UserDao();
-				
-				
-				if (user.getPassword().equals(oldPassword) && password.equals(checkPassword) && userDao.usableEmail(email)) {
 
-					SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
-					byte[] passwordToHash = digestSHA3.digest(password.getBytes());
-					String hash = Hex.toHexString(passwordToHash);
-					Date dateOfBirth;
-					User updateUser;
+				if (oldPassword != null && user.getPassword().equals(oldPassword)) {
+					if (password.equals(checkPassword) && userDao.usableEmail(email)) {
 
-					try {
+						SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+						byte[] passwordToHash = digestSHA3.digest(password.getBytes());
+						String hash = Hex.toHexString(passwordToHash);
+						Date dateOfBirth;
+						User updateUser;
 
-						dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-						//updateUser = new User(name, surname, dateOfBirth, email, hash);
-						
-						
-							//userDao.updateUser(userID, updateUser);
-					
-							response.sendRedirect("./user");
-						
+						try {
 
-					} catch (ParseException e) {
-						logger.log(Level.SEVERE, "Parser error", e);
+							dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+							updateUser = new User(-1, name, surname, dateOfBirth, email, hash);
+
+							System.out.println(updateUser);
+							userDao.updateUser(userID, updateUser);
+							session.setAttribute("alertMessage", "Dati anagrafici modificati con successo");
+							session.setAttribute("alertType", "success");
+							response.sendRedirect("./account");
+
+						} catch (ParseException e) {
+							logger.log(Level.SEVERE, "Parser error", e);
+						}
+					} else {
+						session.setAttribute("alertMessage", "Nuova password non inserta correttamente o mail già in uso");
+						session.setAttribute("alertType", "error");
+						response.sendRedirect("./account");
 					}
-			}
+				} else {
+					session.setAttribute("alertMessage", "Password attuale non inserta correttamente");
+					session.setAttribute("alertType", "error");
+					response.sendRedirect("./account");
+				}
 			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 
 	}
-	
+
 }
