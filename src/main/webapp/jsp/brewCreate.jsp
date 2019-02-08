@@ -95,8 +95,15 @@
 							</table>
 						</div>
 					</div>
+					<c:choose>
+						<c:when test="${brewable == true}">
+							<button name="addRecipe" type="submit">INVIA</button>
+						</c:when>
+						<c:otherwise>
+							<span>INGREDIENTI INSUFFICIENTI</span>
+						</c:otherwise>
+					</c:choose>
 
-					<button name="addRecipe" type="submit">INVIA</button>
 				</form>
 			</div>
 		</div>

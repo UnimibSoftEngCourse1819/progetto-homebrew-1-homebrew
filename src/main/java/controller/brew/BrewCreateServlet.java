@@ -50,15 +50,21 @@ public class BrewCreateServlet extends HttpServlet {
 				PantryDao pnDao = new PantryDao();
 				List<Pantry> pantries = pnDao.findUserPantry(user.getUserID());
 
+				boolean brewable = canBrew(user.getUserID(), recipe.getRecipeID());
+
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewCreate.jsp");
 				request.setAttribute("recipe", recipe);
 				request.setAttribute("batchSize", batchSize);
 				request.setAttribute("ingredientsRecipe", ingredientsRecipe);
 				request.setAttribute("pantries", pantries);
+				request.setAttribute("brewable", brewable);
 				request.setAttribute("page", "createBrew");
 				dispatcher.forward(request, response);
 
+			} else {
+				response.sendRedirect("/homebrew/recipes");
 			}
+
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
@@ -103,6 +109,38 @@ public class BrewCreateServlet extends HttpServlet {
 
 	}
 
+	private boolean canBrew(int user, int recipe) {
+		boolean resp = true;
+		EquipmentDao eqDao = new EquipmentDao();
+		int batchSize = eqDao.findBatchSize(user);
+		IngredientRecipeDao irDao = new IngredientRecipeDao();
+		List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe);
+		PantryDao pnDao = new PantryDao();
+		List<Pantry> pantries = pnDao.findUserPantry(user);
+
+		Iterator<IngredientRecipe> recipeIT = ingredientsRecipe.iterator();
+		Iterator<Pantry> pantryIT = null;
+		while (resp && recipeIT.hasNext()) {
+			IngredientRecipe ingr = recipeIT.next();
+			int ingrID = ingr.getIngredientID();
+			int ingrQuantity = ingr.getQuantity() * batchSize;
+			pantryIT = pantries.iterator();
+			while (resp && pantryIT.hasNext()) {
+				Pantry pant = pantryIT.next();
+				if (ingrID == pant.getIngredientID()) {
+					int availability = pant.getAvailability();
+					if (ingrQuantity <= availability) {
+						resp = true;
+					} else {
+						resp = false;
+					}
+				}
+			}
+
+		}
+		return resp;
+	}
+
 	private List<Pantry> newPantry(int user, int recipe) {
 		boolean resp = true;
 		EquipmentDao eqDao = new EquipmentDao();
@@ -111,7 +149,6 @@ public class BrewCreateServlet extends HttpServlet {
 		List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe);
 		PantryDao pnDao = new PantryDao();
 		List<Pantry> pantries = pnDao.findUserPantry(user);
-		System.out.println("batchSize " + batchSize);
 
 		List<Pantry> pantriesNew = new ArrayList<Pantry>();
 		Iterator<IngredientRecipe> recipeIT = ingredientsRecipe.iterator();

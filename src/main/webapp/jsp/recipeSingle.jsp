@@ -48,7 +48,7 @@
 							<h3>${recipe.name}</h3>
 							<c:set var="date_recipe" value="${fn:split(recipe.creation,'-')}" />
 							<p>${date_recipe[2]}/${date_recipe[1]}/${date_recipe[0]}</p>
-							<p>${userRecipe.name}${userRecipe.surname}</p>
+							<p>${userRecipe.name}&nbsp;${userRecipe.surname}</p>
 							<c:if test="${editable != null}">
 								<form class="recipe_action rec_edit" action="./recipe"
 									method="post">
@@ -58,12 +58,11 @@
 									</button>
 								</form>
 							</c:if>
-							<form class="recipe_action rec_brew" action="./new_brew"
-								method="get">
-								<button name="editRecipe" type="submit">
-									<img alt="editable" src="images/logos/new_brew.svg">
+							<a class="recipe_action rec_brew" href="./new_brew">
+								<button name="newBrew" type="submit">
+									<img alt="new_brew" src="images/logos/new_brew.svg">
 								</button>
-							</form>
+							</a>
 						</div>
 					</div>
 				</div>

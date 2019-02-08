@@ -27,6 +27,8 @@ public class BrewDao {
 
 	private static String createBrew = "INSERT INTO Brew (userID, recipeID, brewDate, description, quantity, tasteNote) VALUES(?,?,?,?,?,?)";
 	private static String findAllBrew = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID";
+	private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
+
 	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
 
 	//private static String findAllBrewRecipe = "SELECT * FROM Brew WHERE recipeID=?";
@@ -62,7 +64,36 @@ public class BrewDao {
 		} finally {
 			close();
 		}
-
+		return brews;
+	}
+	public List<Brew> findAllBrewsUser(int userID) {
+		List<Brew> brews = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(findAllBrewsUser);
+			statement.setInt(1, userID);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				int brewID = resultSet.getInt("b.brewID");
+				int recipeID = resultSet.getInt("b.recipeID");
+				String name = resultSet.getString("b.name");
+				Date brewDate = resultSet.getDate("b.brewDate");
+				String description = resultSet.getString("b.description");
+				int quantity = resultSet.getInt("b.quantity");
+				String tasteNote = resultSet.getString("b.tasteNote");
+				String userName = resultSet.getString("u.name");
+				String userSurname = resultSet.getString("u.surname");
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description, quantity, tasteNote);
+				brews.add(brew);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
 		return brews;
 	}
 	
