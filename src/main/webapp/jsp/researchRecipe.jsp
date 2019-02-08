@@ -32,13 +32,6 @@
 
 			<form action="./updatePantry" method="post" name="pantry_form">
 				<table>
-					<tr>
-						<td><h3>NOME RICETTA:</h3></td>
-						<td><h3>
-								<input type="text" name="nameRecipe"
-									id="testoformdue" placeholder="nome ricetta" min="0">
-							</h3></td>
-					</tr>
 					<c:forEach items="${ingredient}" var="item">
 						<tr>
 							<td><h3>${item.name}:</h3></td>

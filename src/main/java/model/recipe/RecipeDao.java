@@ -42,7 +42,9 @@ public class RecipeDao {
 	private static String deleteStepsByRecipeID = "DELETE FROM Step_Recipe WHERE recipeID=?";
 	
 	private static String findRecipesUser = "SELECT * FROM Recipe WHERE userID=?";
-
+	
+	private static String searchByName = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
+			+ " WHERE R.name LIKE %?% AND R.visibility='public'";
 	
 	private static String wisbt ="SELECT R.* FROM Recipe AS R WHERE R.capacity = max( "
 			+ "SELECT R1.capacity FROM Recipe AS R1 JOIN Ingredient_Recipe AS IR ON R1.recipeID = IR.recipeID"
@@ -318,22 +320,15 @@ public class RecipeDao {
 		return result;
 	}
 	
-	public List<Recipe> search(String searchName, List<IngredientRecipe> searchIngredients ) {
+	public List<Recipe> searchByName(String searchName) {
 		List<Recipe> recipes = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			
-			String search = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
-					+ " WHERE R.name LIKE %?%";
-					for(int i=0; i< searchIngredients.size(); i++) {
-						search = search +" OR ";
-						
-					};
-			
-			statement = connect.prepareStatement(search);
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());			
+			statement = connect.prepareStatement(searchByName);
+			statement.setString(1, searchName);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
