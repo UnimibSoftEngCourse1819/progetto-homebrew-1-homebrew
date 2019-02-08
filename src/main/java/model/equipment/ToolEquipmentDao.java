@@ -28,7 +28,7 @@ public class ToolEquipmentDao {
 	private static String createToolEquipment = "INSERT INTO Tool_Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
 	private static String updateToolEquipment = "UPDATE Tool_Equipment SET  capacity =? WHERE equipmentID =? AND toolID =?";
 	private static String getBatchSize = "SELECT MIN(capacity) AS batchSize FROM Tool_Equipment WHERE toolID < 4 AND equipmentID = ?";
-	private static String userToolEquipment = "SELECT T.name, TE.capacity, T.measure From Tool_Equipment as TE "
+	private static String userToolEquipment = "SELECT T.*, TE.capacity From Tool_Equipment as TE "
 			+ "INNER JOIN Tool AS T ON T.toolID = TE.toolID "
 			+ "INNER JOIN Equipment AS E ON TE.equipmentID = E.equipmentID "
 			+ "WHERE E.userID = ?";
@@ -43,10 +43,10 @@ public class ToolEquipmentDao {
 					mysql.getPassword());
 			statement = connect.prepareStatement(createToolEquipment);
 
-			for (int i = 1; i <= 11; i++) {
+			for (int i = 10000001; i <= 10000011; i++) {
 				statement.setInt(1, equipmentID);
 				statement.setInt(2, i);
-				statement.setInt(3, 1);
+				statement.setInt(3, 0);
 				result = statement.executeUpdate();
 			}
 
@@ -99,10 +99,11 @@ public class ToolEquipmentDao {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				String name = resultSet.getString("name");
-				int capacity = resultSet.getInt("capacity");
-				String measure = resultSet.getString("measure");
-				Tool tool = new Tool( name, capacity, measure);
+				int toolID = resultSet.getInt("T.toolID");
+				String name = resultSet.getString("T.name");
+				int capacity = resultSet.getInt("TE.capacity");
+				String measure = resultSet.getString("T.measure");
+				Tool tool = new Tool(toolID, name, capacity, measure);
 				tools.add(tool);
 			}
 

@@ -33,77 +33,24 @@ public class UpdateEquipmentServlet extends HttpServlet {
 				EquipmentDao equipmentDao = new EquipmentDao();
 				Equipment equipment = equipmentDao.findEquipmentByUser(userID);
 				int equipmentID = equipment.getEquipmentID();
-				ArrayList<ToolEquipment> toolEquipment = new ArrayList<>();
-				
-				if (request.getParameter("boilingCauldron") != null) {
-					int boilingCauldron = Integer.parseInt((String) request.getParameter("boilingCauldron"));
-					ToolEquipment equipmentBoilingCauldron = new ToolEquipment(equipmentID, 1 ,boilingCauldron );
-					toolEquipment.add(equipmentBoilingCauldron);
+				ArrayList<ToolEquipment> toolEquipments = new ArrayList<>();
+				ToolEquipment toolEquipment = null;
+				for (int i = 10000001; i <= 10000011; i++) {
+					System.out.println(request.getParameter(i + ""));
+					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
+						int capacity = Integer.parseInt((String) request.getParameter(i + ""));
+						if (capacity > 0) {
+							toolEquipment = new ToolEquipment(equipmentID, i , capacity );
+						}
+						toolEquipments.add(toolEquipment);
+					}
 				}
 				
-				if (request.getParameter("mashingCauldron") != null) {
-					int mashingCauldron = Integer.parseInt((String) request.getParameter("mashingCauldron"));
-					ToolEquipment equipmentMashingCauldron = new ToolEquipment(equipmentID, 2 ,mashingCauldron );
-					toolEquipment.add(equipmentMashingCauldron);
-				}
 				
-				if (request.getParameter("hotLiquidsCauldron") != null) {
-					int hotLiquidsCauldron = Integer.parseInt((String) request.getParameter("hotLiquidsCauldron"));
-					ToolEquipment equipmentHotLiquidsCauldron = new ToolEquipment(equipmentID, 3 ,hotLiquidsCauldron );
-					toolEquipment.add(equipmentHotLiquidsCauldron);
-				}
 				
-				if (request.getParameter("kettle") != null) {
-					int kettle = Integer.parseInt((String) request.getParameter("kettle"));
-					ToolEquipment equipmentKettle = new ToolEquipment(equipmentID, 4 ,kettle );
-					toolEquipment.add(equipmentKettle);
-				}
-				
-				if (request.getParameter("fermenter") != null) {
-					int fermenter = Integer.parseInt((String) request.getParameter("fermenter"));
-					ToolEquipment equipmentFermenter = new ToolEquipment(equipmentID, 5 ,fermenter );
-					toolEquipment.add(equipmentFermenter);
-				}
-				
-				if (request.getParameter("filter") != null) {
-					int filter = Integer.parseInt((String) request.getParameter("filter"));
-					ToolEquipment equipmentFilter = new ToolEquipment(equipmentID, 6 ,filter );
-					toolEquipment.add(equipmentFilter);
-				}
-				
-				if (request.getParameter("weightScale") != null) {
-					int weightScale = Integer.parseInt((String) request.getParameter("weightScale"));
-					ToolEquipment equipmentWeightScale = new ToolEquipment(equipmentID, 7 ,weightScale );
-					toolEquipment.add(equipmentWeightScale);
-				}
-				
-				if (request.getParameter("thermometers") != null) {
-					int thermometers = Integer.parseInt((String) request.getParameter("thermometers"));
-					ToolEquipment equipmentThermometers = new ToolEquipment(equipmentID, 8 ,thermometers );
-					toolEquipment.add(equipmentThermometers);
-				}
-				
-				if (request.getParameter("densimetro") != null) {
-					int densimetro = Integer.parseInt((String) request.getParameter("densimetro"));
-					ToolEquipment equipmentDensimetro = new ToolEquipment(equipmentID, 9 ,densimetro );
-					toolEquipment.add(equipmentDensimetro);
-				}
-				
-				if (request.getParameter("ladles") != null) {
-					int ladles = Integer.parseInt((String) request.getParameter("ladles"));
-					ToolEquipment equipmentLadles = new ToolEquipment(equipmentID, 10 ,ladles );
-					toolEquipment.add(equipmentLadles);
-				}
-				
-				if (request.getParameter("tube") != null) {
-					int tube = Integer.parseInt((String) request.getParameter("tube"));
-					ToolEquipment equipmentTube = new ToolEquipment(equipmentID, 11 ,tube );
-					toolEquipment.add(equipmentTube);
-				}
-				
-				if(toolEquipment.size() > 0) {
+				if(toolEquipments.size() > 0) {
 					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
-					int update = toolEquipmentDao.updateToolEquipment(toolEquipment);
+					int update = toolEquipmentDao.updateToolEquipment(toolEquipments);
 					int batchSize = toolEquipmentDao.getBatchSize(equipmentID);
 					equipment = new Equipment(equipmentID, userID, batchSize);
 					equipmentDao.updateEquipment(equipment);

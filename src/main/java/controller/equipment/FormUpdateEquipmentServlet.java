@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ingredient.Ingredient;
-import model.ingredient.IngredientDao;
+import model.tool.Tool;
+import model.tool.ToolDao;
 
 @WebServlet("/formUpdateEquipment")
 public class FormUpdateEquipmentServlet extends HttpServlet {
@@ -28,11 +28,11 @@ public class FormUpdateEquipmentServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				List<Ingredient> ingredient = new ArrayList<>();
-				IngredientDao ingredientDao = new IngredientDao();
-				ingredient = ingredientDao.findAllIngredient();
+				List<Tool> tool = new ArrayList<>();
+				ToolDao toolDao = new ToolDao();
+				tool = toolDao.findAllTool();
 
-				request.setAttribute("ingredient", ingredient);
+				request.setAttribute("tool", tool);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 				dispatcher.forward(request, response);
 				

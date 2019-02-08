@@ -2,17 +2,26 @@ package model.tool;
 
 public class Tool {
 	
+	private int toolID;
 	private String toolName;
 	private int capacity;
 	private String measure;
 	
-	public Tool(String toolName, int capacity, String measure) {
+	
+	public Tool(int toolID, String toolName, int capacity, String measure) {
 		super();
+		this.toolID = toolID;
 		this.toolName = toolName;
 		this.capacity = capacity;
 		this.measure = measure;
 	}
 	
+	public int getToolID() {
+		return toolID;
+	}
+	public void setToolID(int toolID) {
+		this.toolID = toolID;
+	}
 	public String getToolName() {
 		return toolName;
 	}
@@ -32,6 +41,7 @@ public class Tool {
 		this.measure = measure;
 	}
 	
+
 	
 
 	
