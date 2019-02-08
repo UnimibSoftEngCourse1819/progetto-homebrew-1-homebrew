@@ -30,7 +30,7 @@ public class UpdatePantryServlet extends HttpServlet {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getUserID();
 				ArrayList<Pantry> pantry = new ArrayList<>();
-
+				/*
 				if (request.getParameter("malt") != null) {
 					int malt = Integer.parseInt((String) request.getParameter("malt"));
 					Pantry pantryMalt = new Pantry(userID, 1, malt);
@@ -66,6 +66,7 @@ public class UpdatePantryServlet extends HttpServlet {
 					Pantry pantryWater = new Pantry(userID, 6, water);
 					pantry.add(pantryWater);
 				}
+				*/
 
 				if (pantry.size() > 0) {
 					PantryDao pantryDao = new PantryDao();

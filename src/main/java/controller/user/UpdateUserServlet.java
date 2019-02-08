@@ -31,7 +31,7 @@ public class UpdateUserServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
-				int userID = user.getId();
+				int userID = user.getUserID();
 				String name = request.getParameter("name");
 				String surname = request.getParameter("surname");
 				String date = request.getParameter("dateOfBirth");
@@ -53,10 +53,10 @@ public class UpdateUserServlet extends HttpServlet {
 					try {
 
 						dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-						updateUser = new User(name, surname, dateOfBirth, email, hash);
+						//updateUser = new User(name, surname, dateOfBirth, email, hash);
 						
 						
-							userDao.updateUser(userID, updateUser);
+							//userDao.updateUser(userID, updateUser);
 					
 							response.sendRedirect("./user");
 						
