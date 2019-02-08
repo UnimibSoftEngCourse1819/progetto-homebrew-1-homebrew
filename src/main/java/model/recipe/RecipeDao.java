@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
+import model.equipment.ToolEquipment;
 import model.recipe.Recipe;
 
 public class RecipeDao {
@@ -329,6 +330,48 @@ public class RecipeDao {
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());			
 			statement = connect.prepareStatement(searchByName);
 			statement.setString(1, searchName);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("userID");
+				String name = resultSet.getString("name");
+				Date creation = resultSet.getDate("creation");
+				String description = resultSet.getString("description");
+				String visibility = resultSet.getString("visibility");
+				String imagePath = resultSet.getString("imagePath");
+				Recipe recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, null);
+				recipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return recipes;
+	}
+	
+	public List<Recipe> searchByIngredients(List<IngredientRecipe> ingRecipes) {
+		List<Recipe> recipes = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());	
+			
+			String searchByIngredients = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
+					+ " WHERE R.visibility='public' AND (";
+			for (int i = 1; i < ingRecipes.size(); i++) {
+				if(i > 1) searchByIngredients = searchByIngredients + " OR ";
+				IngredientRecipe ingRecipe = ingRecipes.get(i);
+				searchByIngredients = searchByIngredients + " (IR.ingredientID = " + ingRecipe.getIngredientID() +
+					" AND IR.auantity = " + ingRecipe.getQuantity() + " ) ";
+				statement.setInt(i, ingRecipe.getQuantity());
+				if(i == ingRecipes.size()-1) searchByIngredients = searchByIngredients + " )";
+			}
+			System.out.println(searchByIngredients);
+			statement = connect.prepareStatement(searchByIngredients);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
