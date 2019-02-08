@@ -382,3 +382,7 @@ body {
 	background-color: #daffd7;
     border: 1px solid #58b351;
 }
+.modal-content.error {
+	background-color: #ff9797;
+    border: solid 1px #ff0202;
+}

@@ -29,24 +29,24 @@
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="row main">
-			
+
 			<form action="./updatePantry" method="post" name="pantry_form">
-					<table>
+				<table>
 					<c:forEach items="${ingredient}" var="item">
 						<tr>
 							<td><h3>${item.name}:</h3></td>
 							<td><h3>
-									<input type="number" name="${item.ingredientID}"
-										id="testoformdue" placeholder="${item.measure}" min = "0">
+									<input type="number" name="ingrName-${item.ingredientID}"
+										id="testoformdue" placeholder="g/l" min="0">
 								</h3></td>
 						</tr>
 					</c:forEach>
 				</table>
-					<input type="submit" name="action" value="AGGIORNA" id="submitdue"
-						onClick="return(controlForm ());">
-				</form>
-			
-			
+				<input type="submit" name="action" value="CERCA" id="submitdue"
+					onClick="return(controlForm ());">
+			</form>
+
+
 		</div>
 	</div>
 

@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
+import model.equipment.ToolEquipment;
 import model.recipe.Recipe;
 
 public class RecipeDao {
@@ -40,19 +41,15 @@ public class RecipeDao {
 	private static String findStepsRecipeByID = "SELECT stepPos, text FROM Step_Recipe WHERE recipeID=?";
 	private static String createSteps = "INSERT INTO Step_Recipe (recipeID, stepPos, text) VALUES(?,?,?)";
 	private static String deleteStepsByRecipeID = "DELETE FROM Step_Recipe WHERE recipeID=?";
-	
+
 	private static String findRecipesUser = "SELECT * FROM Recipe WHERE userID=?";
 
-	
-	private static String wisbt ="SELECT R.* FROM Recipe AS R WHERE R.capacity = max( "
+	private static String searchByName = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
+			+ " WHERE R.name LIKE %?% AND R.visibility='public'";
+
+	private static String wisbt = "SELECT R.* FROM Recipe AS R WHERE R.capacity = max( "
 			+ "SELECT R1.capacity FROM Recipe AS R1 JOIN Ingredient_Recipe AS IR ON R1.recipeID = IR.recipeID"
 			+ "HAVING IR.quantity * ? <= (SELECT availability FROM Pantry WHERE userID = ?))";
-	/*
-	SELECT R.*
-	FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID
-	HAVING IR.quantity <= (SELECT availability FROM Pantry WHERE userID = ?)
-	ORDER BY R.capacity
-	*/
 
 	public Recipe findRecipeByID(int recipeID) {
 		Recipe recipe = null;
@@ -146,7 +143,7 @@ public class RecipeDao {
 		}
 		return recipes;
 	}
-	
+
 	public List<Recipe> findRecipesUser(int userRequest) {
 		List<Recipe> recipes = new ArrayList<>();
 		MySQLConnection mysql;
@@ -321,6 +318,80 @@ public class RecipeDao {
 			close();
 		}
 		return result;
+	}
+
+	public List<Recipe> searchByName(String searchName) {
+		List<Recipe> recipes = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(searchByName);
+			statement.setString(1, searchName);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("userID");
+				String name = resultSet.getString("name");
+				Date creation = resultSet.getDate("creation");
+				String description = resultSet.getString("description");
+				String visibility = resultSet.getString("visibility");
+				String imagePath = resultSet.getString("imagePath");
+				Recipe recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, null);
+				recipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return recipes;
+	}
+
+	public List<Recipe> searchByIngredients(List<IngredientRecipe> ingRecipes) {
+		List<Recipe> recipes = new ArrayList<>();
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+
+			String searchByIngredients = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
+					+ " WHERE R.visibility='public' AND (";
+			for (int i = 1; i < ingRecipes.size(); i++) {
+				if (i > 1 && i < ingRecipes.size() - 1)
+					searchByIngredients = searchByIngredients + " OR ";
+				
+				IngredientRecipe ingRecipe = ingRecipes.get(i);
+				searchByIngredients = searchByIngredients + " (IR.ingredientID = " + ingRecipe.getIngredientID()
+						+ " AND IR.quantity = " + ingRecipe.getQuantity() + " ) ";
+			}
+			searchByIngredients = searchByIngredients + " )";
+			System.out.println(searchByIngredients);
+			statement = connect.prepareStatement(searchByIngredients);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("userID");
+				String name = resultSet.getString("name");
+				Date creation = resultSet.getDate("creation");
+				String description = resultSet.getString("description");
+				String visibility = resultSet.getString("visibility");
+				String imagePath = resultSet.getString("imagePath");
+				Recipe recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, null);
+				recipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return recipes;
 	}
 
 	private void close() {

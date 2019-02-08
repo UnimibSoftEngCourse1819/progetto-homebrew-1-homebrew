@@ -29,55 +29,34 @@ public class UpdatePantryServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getUserID();
-				ArrayList<Pantry> pantry = new ArrayList<>();
-				/*
-				if (request.getParameter("malt") != null) {
-					int malt = Integer.parseInt((String) request.getParameter("malt"));
-					Pantry pantryMalt = new Pantry(userID, 1, malt);
-					pantry.add(pantryMalt);
+				ArrayList<Pantry> pantrys = new ArrayList<>();
+				Pantry pantry = null;
+				for (int i = 10000001; i <= 10000018; i++) {
+					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
+						int avaliability = Integer.parseInt((String) request.getParameter(i + ""));
+						if (avaliability > 0) {
+							pantry = new Pantry(userID, i, null, avaliability, null);
+						}
+						pantrys.add(pantry);
+					}
 				}
 
-				if (request.getParameter("sugar") != null) {
-					int sugar = Integer.parseInt((String) request.getParameter("sugar"));
-					Pantry pantrySugar = new Pantry(userID, 2, sugar);
-					pantry.add(pantrySugar);
-				}
-
-				if (request.getParameter("yeast") != null) {
-					int yeast = Integer.parseInt((String) request.getParameter("yeast"));
-					Pantry pantryYeast = new Pantry(userID, 3, yeast);
-					pantry.add(pantryYeast);
-				}
-
-				if (request.getParameter("additives") != null) {
-					int additives = Integer.parseInt((String) request.getParameter("additives"));
-					Pantry pantryAdditives = new Pantry(userID, 4, additives);
-					pantry.add(pantryAdditives);
-				}
-
-				if (request.getParameter("hop") != null) {
-					int hop = Integer.parseInt((String) request.getParameter("hop"));
-					Pantry pantryHop = new Pantry(userID, 5, hop);
-					pantry.add(pantryHop);
-				}
-
-				if (request.getParameter("water") != null) {
-					int water = Integer.parseInt((String) request.getParameter("water"));
-					Pantry pantryWater = new Pantry(userID, 6, water);
-					pantry.add(pantryWater);
-				}
-				*/
-
-				if (pantry.size() > 0) {
+				if (pantrys.size() > 0) {
 					PantryDao pantryDao = new PantryDao();
-					int update = pantryDao.updatePantry(pantry);
+					int update = pantryDao.updatePantry(pantrys);
 
 					if (update > 0) {
+						session.setAttribute("alertMessage", "Dispensa modificata con successo");
+						session.setAttribute("alertType", "success");
 						response.sendRedirect("./pantry");
 					} else {
+						session.setAttribute("alertMessage", "Dispensa non modificata");
+						session.setAttribute("alertType", "error");
 						response.sendRedirect("./pantry");
 					}
 				} else {
+					session.setAttribute("alertMessage", "Dispensa non modificata");
+					session.setAttribute("alertType", "error");
 					response.sendRedirect("./pantry");
 				}
 

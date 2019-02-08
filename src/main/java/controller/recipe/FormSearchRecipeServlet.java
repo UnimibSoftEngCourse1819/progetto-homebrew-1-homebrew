@@ -1,4 +1,4 @@
-package controller.pantry;
+package controller.recipe;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpSession;
 import model.ingredient.Ingredient;
 import model.ingredient.IngredientDao;
 
-@WebServlet("/formUpdatePantry")
-public class FormUpdatePantryServlet extends HttpServlet {
+@WebServlet("/formSearchRecipe")
+public class FormSearchRecipeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 	
@@ -32,7 +32,7 @@ public class FormUpdatePantryServlet extends HttpServlet {
 				ingredient = ingredientDao.findAllIngredient();
 
 				request.setAttribute("ingredient", ingredient);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/resarchRecipe.jsp");
 					dispatcher.forward(request, response);
 					
 			}
