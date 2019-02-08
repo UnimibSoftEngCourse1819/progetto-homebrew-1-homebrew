@@ -32,16 +32,49 @@
 			
 			<form action="./updatePantry" method="post" name="pantry_form">
 					<table>
-					<c:forEach items="${ingredient}" var="item">
 						<tr>
-							<td><h3>${item.name}:</h3></td>
+							<td><h3>MALTO:</h3></td>
 							<td><h3>
-									<input type="number" name="${item.ingredientID}"
-										id="testoformdue" placeholder="${item.measure}" min = "0">
-								</h3></td>
+									<input type="number" name="malt" id="testoformdue"
+										placeholder=" grammi" required>
+								</h3>
 						</tr>
-					</c:forEach>
-				</table>
+						<tr>
+							<td><h3>ZUCCHERO:</h3></td>
+							<td><h3>
+									<input type="number" name="sugar" id="testoformdue"
+										placeholder=" grammi" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>LIEVITO:</h3></td>
+							<td><h3>
+									<input type="number" name="yeast" id="testoformdue"
+										placeholder=" grammi" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>ADDITIVI:</h3></td>
+							<td><h3>
+									<input type="number" name="additives" id="testoformdue"
+										placeholder=" grammi" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>LUPPOLO:</h3></td>
+							<td><h3>
+									<input type="number" name="hop" id="testoformdue"
+										placeholder=" grammi" required>
+								</h3>
+						</tr>
+						<tr>
+							<td><h3>ACQUA:</h3></td>
+							<td><h3>
+									<input type="number" name="water" id="testoformdue"
+										placeholder="litri" required>
+								</h3>
+						</tr>
+					</table>
 					<input type="submit" name="action" value="AGGIORNA" id="submitdue"
 						onClick="return(controlForm ());">
 				</form>
