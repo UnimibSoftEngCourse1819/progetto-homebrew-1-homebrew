@@ -55,11 +55,17 @@ public class UpdateEquipmentServlet extends HttpServlet {
 					equipment = new Equipment(equipmentID, userID, batchSize);
 					equipmentDao.updateEquipment(equipment);
 					if (update > 0) {
+						session.setAttribute("alertMessage", "Equipaggiamento modificato con successo");
+						session.setAttribute("alertType", "success");
 						response.sendRedirect("./equipment");
 					} else {
+						session.setAttribute("alertMessage", "Equipaggiamento non modificato");
+						session.setAttribute("alertType", "error");
 						response.sendRedirect("./equipment");
 					}
 				} else {
+					session.setAttribute("alertMessage", "Equipaggiamento non modificato");
+					session.setAttribute("alertType", "error");
 					response.sendRedirect("./equipment");
 				}
 				

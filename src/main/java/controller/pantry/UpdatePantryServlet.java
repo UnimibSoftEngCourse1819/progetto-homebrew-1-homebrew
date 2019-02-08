@@ -46,11 +46,17 @@ public class UpdatePantryServlet extends HttpServlet {
 					int update = pantryDao.updatePantry(pantrys);
 
 					if (update > 0) {
+						session.setAttribute("alertMessage", "Dispensa modificata con successo");
+						session.setAttribute("alertType", "success");
 						response.sendRedirect("./pantry");
 					} else {
+						session.setAttribute("alertMessage", "Dispensa non modificata");
+						session.setAttribute("alertType", "error");
 						response.sendRedirect("./pantry");
 					}
 				} else {
+					session.setAttribute("alertMessage", "Dispensa non modificata");
+					session.setAttribute("alertType", "error");
 					response.sendRedirect("./pantry");
 				}
 
