@@ -173,7 +173,6 @@ public class UserDao {
 			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
 			statement.setInt(6, id);
-			System.out.println(statement);
 			result = statement.executeUpdate();
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);

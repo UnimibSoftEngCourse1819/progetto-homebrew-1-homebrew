@@ -42,12 +42,17 @@ public class UpdateUserServlet extends HttpServlet {
 				String email = request.getParameter("email");
 				UserDao userDao = new UserDao();
 
-				if (oldPassword != null && user.getPassword().equals(oldPassword)) {
-					if (password.equals(checkPassword) && userDao.usableEmail(email)) {
+				SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+				byte[] passwordToHash = digestSHA3.digest(oldPassword.getBytes());
+				String hash = Hex.toHexString(passwordToHash);
 
-						SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
-						byte[] passwordToHash = digestSHA3.digest(password.getBytes());
-						String hash = Hex.toHexString(passwordToHash);
+				if (oldPassword != null && user.getPassword().equals(hash)) {
+					if (password.equals(checkPassword)
+							&& (userDao.usableEmail(email) || email.equals(user.getEmail()))) {
+
+						digestSHA3 = new SHA3.Digest512();
+						passwordToHash = digestSHA3.digest(password.getBytes());
+						hash = Hex.toHexString(passwordToHash);
 						Date dateOfBirth;
 						User updateUser;
 
@@ -56,7 +61,6 @@ public class UpdateUserServlet extends HttpServlet {
 							dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 							updateUser = new User(-1, name, surname, dateOfBirth, email, hash);
 
-							System.out.println(updateUser);
 							userDao.updateUser(userID, updateUser);
 							session.setAttribute("alertMessage", "Dati anagrafici modificati con successo");
 							session.setAttribute("alertType", "success");
@@ -66,7 +70,8 @@ public class UpdateUserServlet extends HttpServlet {
 							logger.log(Level.SEVERE, "Parser error", e);
 						}
 					} else {
-						session.setAttribute("alertMessage", "Nuova password non inserta correttamente o mail già in uso");
+						session.setAttribute("alertMessage",
+								"Nuova password non inserta correttamente o mail già in uso");
 						session.setAttribute("alertType", "error");
 						response.sendRedirect("./account");
 					}
