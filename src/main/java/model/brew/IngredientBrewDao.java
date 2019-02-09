@@ -6,14 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
-import model.recipe.IngredientRecipe;
 
 public class IngredientBrewDao {
 	final Logger logger = Logger.getLogger("MyLog");
@@ -29,9 +27,9 @@ public class IngredientBrewDao {
 
 	private static String createIngredientBrew = "INSERT INTO Ingredient_Brew (ingredientID, brewID, quantity, measure) VALUES(?,?,?,?)";
 	private static String findAllIngredientBrew = "SELECT i.* FROM Brew AS b JOIN Ingredient_Brew AS i ON b.brewID=i.brewID WHERE b.brewID=?";
-	private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
+	//private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
 
-	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
+	//private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
 
 	public List<IngredientBrew> findAllIngredientBrew(int brewID) {
 		List<IngredientBrew> ingredientBrews = new ArrayList<>();
@@ -65,7 +63,7 @@ public class IngredientBrewDao {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(findAllIngredientBrew);
+			statement = connect.prepareStatement(createIngredientBrew);
 			Iterator<IngredientBrew> iterator = ingredientsBrew.iterator();
 			while (iterator.hasNext()) {
 				IngredientBrew ingredientBrew = iterator.next();

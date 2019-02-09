@@ -2,7 +2,6 @@ package controller.brew;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,8 +20,6 @@ import model.brew.BrewDao;
 import model.brew.IngredientBrew;
 import model.brew.IngredientBrewDao;
 import model.equipment.EquipmentDao;
-import model.ingredient.Ingredient;
-import model.ingredient.IngredientDao;
 import model.pantry.Pantry;
 import model.pantry.PantryDao;
 import model.recipe.IngredientRecipe;

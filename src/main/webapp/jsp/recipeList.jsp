@@ -33,8 +33,11 @@
 			<div class="content_main">
 				<div class="recipes_menu">
 					<c:if test="${logged != null}">
-						<a href="./new_recipe">CREA NUOVA RICETTA</a>
+						<a href="./new_recipe">CREA NUOVA</a>
 					</c:if>
+					<button type="submit" name="action" value="CERCA" id="">
+						<img alt="" src=""> cer
+					</button>
 					<div id="open_search">
 						<a href="./recipes">MOSTRA TUTTE</a>
 

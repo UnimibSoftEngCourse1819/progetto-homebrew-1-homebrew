@@ -64,7 +64,7 @@ public class WSIBTServlet extends HttpServlet {
 					request.setAttribute("userRecipe", userRecipe);
 					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
 					request.setAttribute("brews", brews);
-					request.setAttribute("page", "recipe");
+					request.setAttribute("page", "wsibt");
 					request.setAttribute("section", section);
 					dispatcher.forward(request, response);
 				} else {
