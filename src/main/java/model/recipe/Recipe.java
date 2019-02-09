@@ -1,10 +1,12 @@
 package model.recipe;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-public class Recipe {
+public class Recipe implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int recipeID;
 	private int userID;
 	private String name;

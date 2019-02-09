@@ -82,7 +82,11 @@ public class WSIBTServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("./home");
+		try {
+			response.sendRedirect("./home");
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
 	}
 
 }

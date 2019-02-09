@@ -25,9 +25,9 @@ public class PantryUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
-	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
@@ -36,18 +36,18 @@ public class PantryUpdateServlet extends HttpServlet {
 				ingredient = ingredientDao.findAllIngredient();
 
 				request.setAttribute("ingredient", ingredient);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
-					dispatcher.forward(request, response);
-					
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
+				dispatcher.forward(request, response);
+
 			} else {
 				response.sendRedirect("./");
 			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-		
 
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -60,7 +60,12 @@ public class PantryUpdateServlet extends HttpServlet {
 				Pantry pantry = null;
 				for (int i = 10000001; i <= 10000018; i++) {
 					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
-						int avaliability = Integer.parseInt((String) request.getParameter(i + ""));
+						int avaliability = 0;
+						try {
+							avaliability = Integer.parseInt((String) request.getParameter(i + ""));
+						} catch (NumberFormatException e) {
+							logger.log(Level.SEVERE, "Parser error", e);
+						}
 						if (avaliability > 0) {
 							pantry = new Pantry(userID, i, null, avaliability, null);
 						}

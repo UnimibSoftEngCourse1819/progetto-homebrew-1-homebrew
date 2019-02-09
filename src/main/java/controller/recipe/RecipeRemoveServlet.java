@@ -22,9 +22,11 @@ public class RecipeRemoveServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		response.sendRedirect("./recipes");
-
+		try {
+			response.sendRedirect("./recipes");
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
 	}
 
 	@Override
@@ -35,14 +37,19 @@ public class RecipeRemoveServlet extends HttpServlet {
 
 			if (session != null && session.getAttribute("user") != null) {
 				String redirect = "";
-				
+
 				if (((String) session.getAttribute("section")).equals("general")) {
 					redirect = "./recipes";
 				} else {
 					redirect = "./my_recipes";
 				}
 				int recipeID = (int) session.getAttribute("recipeID");
-				int recipePOST = Integer.parseInt(request.getParameter("recipeID"));
+				int recipePOST = 0;
+				try {
+					recipePOST = Integer.parseInt(request.getParameter("recipeID"));
+				} catch (NumberFormatException e) {
+					logger.log(Level.SEVERE, "Parser error", e);
+				}
 				int sqlResp = -1;
 				if (recipeID == recipePOST) {
 					RecipeDao recipeDao = new RecipeDao();

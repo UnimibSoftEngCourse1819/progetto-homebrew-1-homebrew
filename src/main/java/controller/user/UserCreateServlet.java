@@ -90,9 +90,14 @@ public class UserCreateServlet extends HttpServlet {
 
 				} else {
 					HttpSession session = request.getSession(true);
-					session.setAttribute("alertMessage", "Email già usata");
-					session.setAttribute("alertType", "error");
-					response.sendRedirect("./login");
+
+					try {
+						session.setAttribute("alertMessage", "Email già usata");
+						session.setAttribute("alertType", "error");
+						response.sendRedirect("./login");
+					} catch (IOException e) {
+						logger.log(Level.SEVERE, "Servlet error", e);
+					}
 				}
 
 			} catch (ParseException e) {

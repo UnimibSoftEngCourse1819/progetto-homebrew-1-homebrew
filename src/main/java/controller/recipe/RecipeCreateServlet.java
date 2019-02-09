@@ -88,8 +88,13 @@ public class RecipeCreateServlet extends HttpServlet {
 					Iterator<Ingredient> iterator = ingredients.iterator();
 					while (iterator.hasNext()) {
 						Ingredient ingredient = iterator.next();
-						int quantity = Integer
-								.parseInt(request.getParameter("valueIngr-" + ingredient.getIngredientID()));
+						int quantity = 0;
+						try {
+							quantity = Integer
+									.parseInt(request.getParameter("valueIngr-" + ingredient.getIngredientID()));;
+						} catch (NumberFormatException e) {
+							logger.log(Level.SEVERE, "Parser error", e);
+						}
 						String measure = request.getParameter("measureIngr-" + ingredient.getIngredientID());
 						IngredientRecipe ingredientRecipe = new IngredientRecipe(recipeID, ingredient.getIngredientID(),
 								ingredient.getName(), quantity, measure);
@@ -108,12 +113,16 @@ public class RecipeCreateServlet extends HttpServlet {
 				}
 
 			} else {
-				session.setAttribute("alertMessage", "Ricetta non creata");
-				session.setAttribute("alertType", "error");
-				if (((String) session.getAttribute("section")).equals("personal")) {
-					response.sendRedirect("/homebrew/my_recipes");
+				if (session != null) {
+					session.setAttribute("alertMessage", "Ricetta non creata");
+					session.setAttribute("alertType", "error");
+					if (((String) session.getAttribute("section")).equals("personal")) {
+						response.sendRedirect("./my_recipes");
+					} else {
+						response.sendRedirect("./recipes");
+					}
 				} else {
-					response.sendRedirect("/homebrew/recipes");
+					response.sendRedirect("./recipes");
 				}
 			}
 

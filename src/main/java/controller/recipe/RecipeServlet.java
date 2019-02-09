@@ -103,7 +103,12 @@ public class RecipeServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				int recipeID = (int) Integer.parseInt((String) request.getParameter("recipeID"));
+				int recipeID = 0;
+				try {
+					recipeID = (int) Integer.parseInt((String) request.getParameter("recipeID"));
+				} catch (NumberFormatException e) {
+					logger.log(Level.SEVERE, "Parser error", e);
+				}
 
 				session.setAttribute("recipeID", recipeID);
 				response.sendRedirect("./edit_recipe");

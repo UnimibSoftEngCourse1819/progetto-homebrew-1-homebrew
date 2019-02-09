@@ -27,7 +27,8 @@ public class UserUpdateServlet extends HttpServlet {
 	final Logger logger = Logger.getLogger("MyLog");
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
@@ -35,17 +36,17 @@ public class UserUpdateServlet extends HttpServlet {
 				int userID = user.getUserID();
 				UserDao userDao = new UserDao();
 				User getUser = userDao.selectUserById(userID);
-				
+
 				request.setAttribute("user", getUser);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userUpdate.jsp");
-				dispatcher.forward(request, response);		
+				dispatcher.forward(request, response);
 			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-		
 
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -91,15 +92,24 @@ public class UserUpdateServlet extends HttpServlet {
 							logger.log(Level.SEVERE, "Parser error", e);
 						}
 					} else {
-						session.setAttribute("alertMessage",
-								"Nuova password non inserta correttamente o mail gi� in uso");
-						session.setAttribute("alertType", "error");
-						response.sendRedirect("./account");
+
+						try {
+							session.setAttribute("alertMessage", "Email o password non corretti");
+							session.setAttribute("alertType", "error");
+							response.sendRedirect("./account");
+						} catch (IOException e) {
+							logger.log(Level.SEVERE, "Servlet error", e);
+						}
 					}
 				} else {
-					session.setAttribute("alertMessage", "Password attuale non inserta correttamente");
-					session.setAttribute("alertType", "error");
-					response.sendRedirect("./account");
+
+					try {
+						session.setAttribute("alertMessage", "Password attuale errata");
+						session.setAttribute("alertType", "error");
+						response.sendRedirect("./account");
+					} catch (IOException e) {
+						logger.log(Level.SEVERE, "Servlet error", e);
+					}
 				}
 			}
 		} catch (IOException e) {

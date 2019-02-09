@@ -91,10 +91,13 @@ public class BrewServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				int recipeID = (int) Integer.parseInt((String) request.getParameter("recipeID"));
-
-				session.setAttribute("recipeID", recipeID);
-				response.sendRedirect("./edit_recipe");
+				try {
+					int recipeID = (int) Integer.parseInt((String) request.getParameter("recipeID"));
+					session.setAttribute("recipeID", recipeID);
+					response.sendRedirect("./edit_recipe");
+				} catch (NumberFormatException e) {
+					logger.log(Level.SEVERE, "Parser error", e);
+				}
 			} else {
 				response.sendRedirect("./");
 			}

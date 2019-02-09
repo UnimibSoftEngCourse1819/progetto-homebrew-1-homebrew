@@ -36,7 +36,7 @@ public class EquipmentUpdateServlet extends HttpServlet {
 				List<Tool> tool = new ArrayList<>();
 				ToolDao toolDao = new ToolDao();
 				tool = toolDao.findAllTool();
-				
+
 				request.setAttribute("tool", tool);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 				dispatcher.forward(request, response);
@@ -63,7 +63,12 @@ public class EquipmentUpdateServlet extends HttpServlet {
 				ToolEquipment toolEquipment = null;
 				for (int i = 10000001; i <= 10000011; i++) {
 					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
-						int capacity = Integer.parseInt((String) request.getParameter(i + ""));
+						int capacity = 0;
+						try {
+							capacity = Integer.parseInt((String) request.getParameter(i + ""));
+						} catch (NumberFormatException e) {
+							logger.log(Level.SEVERE, "Parser error", e);
+						}
 						if (capacity > 0) {
 							toolEquipment = new ToolEquipment(equipmentID, i, capacity);
 						}

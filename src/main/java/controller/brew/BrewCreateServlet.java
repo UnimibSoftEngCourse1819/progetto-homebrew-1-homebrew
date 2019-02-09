@@ -88,47 +88,54 @@ public class BrewCreateServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
 			String tasteNote = request.getParameter("tasteNote");
-			int quantity = Integer.parseInt((String) request.getParameter("quantity"));
+			try {
+				int quantity = Integer.parseInt((String) request.getParameter("quantity"));
+				if (session != null && session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
 
-			if (session != null && session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
+					User user = (User) session.getAttribute("user");
+					Recipe recipe = (Recipe) session.getAttribute("recipe");
 
-				User user = (User) session.getAttribute("user");
-				Recipe recipe = (Recipe) session.getAttribute("recipe");
+					BrewDao brewDao = new BrewDao();
+					Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
+							quantity, tasteNote);
+					int brewID = brewDao.createBrew(brew);
+					EquipmentDao equipmentDao = new EquipmentDao();
+					int batchSize = equipmentDao.findBatchSize(user.getUserID());
 
-				BrewDao brewDao = new BrewDao();
-				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
-						quantity, tasteNote);
-				int brewID = brewDao.createBrew(brew);
-				EquipmentDao equipmentDao = new EquipmentDao();
-				int batchSize = equipmentDao.findBatchSize(user.getUserID());
+					List<Pantry> pantryNew = newPantry(user.getUserID(), recipe.getRecipeID());
+					PantryDao pantryDao = new PantryDao();
+					pantryDao.updatePantry(pantryNew);
 
-				List<Pantry> pantryNew = newPantry(user.getUserID(), recipe.getRecipeID());
-				PantryDao pantryDao = new PantryDao();
-				pantryDao.updatePantry(pantryNew);
+					IngredientRecipeDao irDao = new IngredientRecipeDao();
 
-				IngredientRecipeDao irDao = new IngredientRecipeDao();
+					List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
+					List<IngredientBrew> ingredientsBrew = new ArrayList<>();
+					Iterator<IngredientRecipe> iterator = ingredientsRecipe.iterator();
+					while (iterator.hasNext()) {
+						IngredientRecipe ingredientRecipe = iterator.next();
+						IngredientBrew ingredientBrew = new IngredientBrew(ingredientRecipe.getIngredientID(), brewID,
+								ingredientRecipe.getQuantity() * batchSize, ingredientRecipe.getMeasure());
+						ingredientsBrew.add(ingredientBrew);
 
-				List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
-				List<IngredientBrew> ingredientsBrew = new ArrayList<>();
-				Iterator<IngredientRecipe> iterator = ingredientsRecipe.iterator();
-				while (iterator.hasNext()) {
-					IngredientRecipe ingredientRecipe = iterator.next();
-					IngredientBrew ingredientBrew = new IngredientBrew(ingredientRecipe.getIngredientID(), brewID,
-							ingredientRecipe.getQuantity() * batchSize, ingredientRecipe.getMeasure());
-					ingredientsBrew.add(ingredientBrew);
+					}
+					IngredientBrewDao ibDao = new IngredientBrewDao();
+					ibDao.createIngredientBrew(ingredientsBrew);
 
-				}
-				IngredientBrewDao ibDao = new IngredientBrewDao();
-				ibDao.createIngredientBrew(ingredientsBrew);
-
-			} else {
-				session.setAttribute("alertMessage", "Ricetta non creata");
-				session.setAttribute("alertType", "error");
-				if (((String) session.getAttribute("section")).equals("personal")) {
-					response.sendRedirect("/homebrew/my_recipes");
 				} else {
-					response.sendRedirect("/homebrew/recipes");
+					if (session != null) {
+						session.setAttribute("alertMessage", "Ricetta non creata");
+						session.setAttribute("alertType", "error");
+						if (((String) session.getAttribute("section")).equals("personal")) {
+							response.sendRedirect("./my_recipes");
+						} else {
+							response.sendRedirect("./recipes");
+						}
+					} else {
+						response.sendRedirect("./recipes");
+					}
 				}
+			} catch (NumberFormatException e) {
+				logger.log(Level.SEVERE, "Parser error", e);
 			}
 
 		} catch (IOException e) {

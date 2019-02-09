@@ -32,7 +32,7 @@ public class UserDao {
 	private static String createUser = "INSERT INTO User (userID, name, surname, dateOfBirth, email, password) VALUES(?,?,?,?,?,?)";
 	private static String deleteUser = "DELETE FROM User WHERE userID=?";
 
-	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, password=? WHERE userID=?";
+	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, hash=? WHERE userID=?";
 
 	public List<User> findAllUsers() {
 		List<User> users = new ArrayList<>();
@@ -111,8 +111,8 @@ public class UserDao {
 				String surname = resultSet.getString("surname");
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String email = resultSet.getString("email");
-				String password = resultSet.getString("password");
-				user = new User(id, name, surname, dateOfBirth, email, password);
+				String hash = resultSet.getString("hash");
+				user = new User(id, name, surname, dateOfBirth, email, hash);
 				return user;
 			}
 
