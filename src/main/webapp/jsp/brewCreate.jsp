@@ -51,7 +51,7 @@
 					</div>
 					<div>
 						<h6>Note di degustazione</h6>
-						<textarea name="tateNote" placeholder="Note di degustazione"></textarea>
+						<textarea name="tasteNote" placeholder="Note di degustazione"></textarea>
 					</div>
 					<div class="">
 						<h6>Quantita' prodotta:</h6>

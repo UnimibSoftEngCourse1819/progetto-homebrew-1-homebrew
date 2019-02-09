@@ -2,6 +2,7 @@ package controller.brew;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.brew.Brew;
+import model.brew.BrewDao;
+import model.brew.IngredientBrew;
+import model.brew.IngredientBrewDao;
 import model.equipment.EquipmentDao;
 import model.ingredient.Ingredient;
 import model.ingredient.IngredientDao;
@@ -84,21 +89,40 @@ public class BrewCreateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			String name = request.getParameter("name");
-			String visibility = request.getParameter("visibility");
 			String description = request.getParameter("description");
+			String tasteNote = request.getParameter("tasteNote");
+			int quantity = Integer.parseInt((String) request.getParameter("quantity"));
 
 			if (session != null && session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
 
 				User user = (User) session.getAttribute("user");
 				Recipe recipe = (Recipe) session.getAttribute("recipe");
 
+				BrewDao brewDao = new BrewDao();
+				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
+						quantity, tasteNote);
+				int brewID = brewDao.createBrew(brew);
+				EquipmentDao equipmentDao = new EquipmentDao();
+				int batchSize = equipmentDao.findBatchSize(user.getUserID());
+
 				List<Pantry> pantryNew = newPantry(user.getUserID(), recipe.getRecipeID());
 				PantryDao pantryDao = new PantryDao();
 				pantryDao.updatePantry(pantryNew);
 
-				IngredientDao ingredientDao = new IngredientDao();
+				IngredientRecipeDao irDao = new IngredientRecipeDao();
 
-				List<Ingredient> ingredients = ingredientDao.findAllIngredient();
+				List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
+				List<IngredientBrew> ingredientsBrew = new ArrayList<>();
+				Iterator<IngredientRecipe> iterator = ingredientsRecipe.iterator();
+				while (iterator.hasNext()) {
+					IngredientRecipe ingredientRecipe = iterator.next();
+					IngredientBrew ingredientBrew = new IngredientBrew(ingredientRecipe.getIngredientID(), brewID,
+							ingredientRecipe.getQuantity() * batchSize, ingredientRecipe.getMeasure());
+					ingredientsBrew.add(ingredientBrew);
+
+				}
+				IngredientBrewDao ibDao = new IngredientBrewDao();
+				ibDao.createIngredientBrew(ingredientsBrew);
 
 			} else {
 				session.setAttribute("alertMessage", "Ricetta non creata");

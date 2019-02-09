@@ -28,6 +28,7 @@ public class BrewDao {
 	private static String createBrew = "INSERT INTO Brew (userID, recipeID, brewDate, description, quantity, tasteNote) VALUES(?,?,?,?,?,?)";
 	private static String findAllBrew = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID";
 	private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
+	private static String findMaxID = "SELECT MAX(brewID) AS max FROM Brew";
 
 	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
 
@@ -137,15 +138,21 @@ public class BrewDao {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(createBrew);
-			statement.setInt(1, brew.getUserID());
-			statement.setInt(2, brew.getRecipeID());
-			statement.setDate(3, (java.sql.Date) brew.getBrewDate());
-			statement.setString(4, brew.getDescription());
-			statement.setInt(5, brew.getQuantity());
-			statement.setString(6, brew.getTasteNote());
-
-			result = statement.executeUpdate();
+			statement = connect.prepareStatement(findMaxID);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int brewID = resultSet.getInt("max") + 1;
+				java.util.Date utilDate = new java.util.Date();
+				java.sql.Date date = new java.sql.Date(utilDate.getTime());
+				statement = connect.prepareStatement(createBrew);
+				statement.setInt(1, brewID);
+				statement.setInt(2, brew.getRecipeID());
+				statement.setDate(3, date);
+				statement.setString(4, brew.getDescription());
+				statement.setInt(5, brew.getQuantity());
+				statement.setString(6, brew.getTasteNote());
+				result = brewID;
+			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {
