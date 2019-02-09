@@ -33,11 +33,7 @@
 			</div>
 			<div class="content_main">
 				<div class="recipes_menu">
-					<a href="./new_recipe">CREA NUOVA</a>
-					<form action="./recipes" method="post">
-						<input type="text" name="nameRecipe" placeholder="Nome">
-
-					</form>
+					<a href="./new_recipe">CREA NUOVA RICETTA</a>
 				</div>
 				<c:forEach items="${recipes}" var="item">
 					<div class="recipes_element">
