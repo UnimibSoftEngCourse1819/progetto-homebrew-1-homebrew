@@ -46,22 +46,67 @@ public class RecipeDao {
 
 	private static String findRecipesByName = "SELECT * FROM Recipe WHERE name LIKE ? AND visibility='public'";
 
-	private static String wisbt = "SELECT r.recipeID AS recipe FROM (SELECT SUM(ir.quantity) AS qTot, ir.recipeID AS recipeIDS "
-			+ "FROM (SELECT cm.recipeIDM AS recipeIDMax FROM A_countMatch AS cm JOIN (SELECT COUNT(countM) AS countR, "
-			+ "c.recipeIDM AS recipeIDR FROM Ingredient_Recipe AS ir JOIN (SELECT COUNT(i.recipeID) AS countM, "
-			+ "i.recipeID AS recipeIDM FROM Ingredient_Recipe AS i JOIN Pantry AS p ON i.ingredientID = p.ingredientID "
-			+ "WHERE p.userID=10000001 AND p.availability >= (i.quantity* (SELECT e.batchSize FROM User AS u JOIN Equipment AS e"
-			+ " ON u.userID=e.userID WHERE u.userID=10000001))GROUP BY i.recipeID) AS c ON ir.recipeID=c.recipeIDM"
-			+ " GROUP BY c.recipeIDM) AS ci ON cm.recipeIDM=ci.recipeIDR WHERE cm.countM = ci.countR) AS v3 JOIN "
-			+ "Ingredient_Recipe AS ir ON v3.recipeIDMax=ir.recipeID GROUP BY ir.recipeID) AS v4 JOIN Recipe AS r "
-			+ "ON v4.recipeIDS=r.recipeID WHERE v4.qTot = (SELECT MAX(v5.qTot) FROM (SELECT SUM(ir.quantity) AS qTot, "
-			+ "ir.recipeID AS recipeIDS FROM (SELECT cm.recipeIDM AS recipeIDMax FROM A_countMatch AS cm JOIN "
-			+ "(SELECT COUNT(countM) AS countR, c.recipeIDM AS recipeIDR FROM Ingredient_Recipe AS ir JOIN "
-			+ "(SELECT COUNT(i.recipeID) AS countM, i.recipeID AS recipeIDM FROM Ingredient_Recipe AS i JOIN Pantry AS p "
-			+ "ON i.ingredientID = p.ingredientID WHERE p.userID=10000001 AND p.availability >= (i.quantity* (SELECT e.batchSize "
-			+ "FROM User AS u JOIN Equipment AS e ON u.userID=e.userID WHERE u.userID=10000001))GROUP BY i.recipeID) AS c "
-			+ "ON ir.recipeID=c.recipeIDM GROUP BY c.recipeIDM) AS ci ON cm.recipeIDM=ci.recipeIDR WHERE cm.countM = ci.countR) "
-			+ "AS v3 JOIN Ingredient_Recipe AS ir ON v3.recipeIDMax=ir.recipeID GROUP BY ir.recipeID) AS v5);";
+	private static String wisbt = "SELECT * FROM Recipe WHERE recipeID=(SELECT r.recipeID AS recipe FROM (SELECT SUM(ir.quantity)AS qTot, ir.recipeID AS recipeIDS "
+			+ "FROM (SELECT cm.recipeIDM AS recipeIDMax FROM (SELECT COUNT(i.recipeID) AS countM, i.recipeID AS recipeIDM "
+			+ "FROM Recipe AS r JOIN Ingredient_Recipe AS i ON r.recipeID=i.RecipeID JOIN Pantry AS p "
+			+ "ON i.ingredientID = p.ingredientID JOIN User AS u ON p.userID=u.userID WHERE u.userID=? AND "
+			+ "(r.visibility='public' OR (r.visibility='private' AND u.userID=?)) AND p.availability >= (i.quantity* "
+			+ "(SELECT e.batchSize FROM User AS u JOIN Equipment AS e ON u.userID=e.userID WHERE u.userID=?)) "
+			+ "GROUP BY i.recipeID) AS cm JOIN (SELECT COUNT(countM) AS countR, c.recipeIDM AS recipeIDR FROM Ingredient_Recipe "
+			+ "AS ir JOIN (SELECT COUNT(i.recipeID) AS countM, i.recipeID AS recipeIDM FROM Recipe AS r JOIN Ingredient_Recipe "
+			+ "AS i ON r.recipeID=i.RecipeID JOIN Pantry AS p ON i.ingredientID = p.ingredientID JOIN User AS u "
+			+ "ON p.userID=u.userID WHERE u.userID=? AND (r.visibility='public' OR (r.visibility='private' "
+			+ "AND u.userID=?)) AND p.availability >= (i.quantity* (SELECT e.batchSize FROM User AS u JOIN Equipment "
+			+ "AS e ON u.userID=e.userID WHERE u.userID=?)) GROUP BY i.recipeID) AS c ON ir.recipeID=c.recipeIDM "
+			+ "GROUP BY c.recipeIDM) AS ci ON cm.recipeIDM=ci.recipeIDR WHERE cm.countM = ci.countR) AS v3 JOIN Ingredient_Recipe "
+			+ "AS ir ON v3.recipeIDMax=ir.recipeID GROUP BY ir.recipeID) AS v4 JOIN Recipe AS r ON v4.recipeIDS=r.recipeID "
+			+ "WHERE v4.qTot = (SELECT MAX(v5.qTot) FROM (SELECT SUM(ir.quantity) AS qTot, ir.recipeID AS recipeIDS "
+			+ "FROM (SELECT cm.recipeIDM AS recipeIDMax FROM (SELECT COUNT(i.recipeID) AS countM, i.recipeID AS recipeIDM "
+			+ "FROM Recipe AS r JOIN Ingredient_Recipe AS i ON r.recipeID=i.RecipeID JOIN Pantry AS p "
+			+ "ON i.ingredientID = p.ingredientID JOIN User AS u ON p.userID=u.userID WHERE u.userID=? AND "
+			+ "(r.visibility='public' OR (r.visibility='private' AND u.userID=?)) AND p.availability >= (i.quantity* "
+			+ "(SELECT e.batchSize FROM User AS u JOIN Equipment AS e ON u.userID=e.userID WHERE u.userID=?)) "
+			+ "GROUP BY i.recipeID) AS cm JOIN (SELECT COUNT(countM) AS countR, c.recipeIDM AS recipeIDR FROM Ingredient_Recipe "
+			+ "AS ir JOIN (SELECT COUNT(i.recipeID) AS countM, i.recipeID AS recipeIDM FROM Recipe AS r JOIN Ingredient_Recipe "
+			+ "AS i ON r.recipeID=i.RecipeID JOIN Pantry AS p ON i.ingredientID = p.ingredientID JOIN User AS u "
+			+ "ON p.userID=u.userID WHERE u.userID=? AND (r.visibility='public' OR (r.visibility='private' "
+			+ "AND u.userID=?)) AND p.availability >= (i.quantity* (SELECT e.batchSize FROM User AS u JOIN Equipment "
+			+ "AS e ON u.userID=e.userID WHERE u.userID=?)) GROUP BY i.recipeID) AS c ON ir.recipeID=c.recipeIDM "
+			+ "GROUP BY c.recipeIDM) AS ci ON cm.recipeIDM=ci.recipeIDR WHERE cm.countM = ci.countR) AS v3 JOIN Ingredient_Recipe"
+			+ " AS ir ON v3.recipeIDMax=ir.recipeID GROUP BY ir.recipeID) AS v5))";
+
+	public Recipe wsibt(int recipeID) {
+		Recipe recipe = null;
+		Map<Integer, String> steps = null;
+		MySQLConnection mysql;
+		try {
+			mysql = new MySQLConnection();
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
+			statement = connect.prepareStatement(wisbt);
+			for (int i = 1; i <= 12; i++) {
+				statement.setInt(i, recipeID);
+			}
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int id = resultSet.getInt("recipeID");
+				int userID = resultSet.getInt("userID");
+				String name = resultSet.getString("name");
+				Date creation = resultSet.getDate("creation");
+				String description = resultSet.getString("description");
+				String visibility = resultSet.getString("visibility");
+				String imagePath = resultSet.getString("imagePath");
+				steps = getSteps(recipeID);
+				recipe = new Recipe(id, userID, name, creation, description, visibility, imagePath, steps);
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.SEVERE, sqlError, e);
+		} finally {
+			close();
+		}
+		return recipe;
+	}
 
 	public Recipe findRecipeByID(int recipeID) {
 		Recipe recipe = null;
