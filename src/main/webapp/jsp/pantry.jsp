@@ -29,7 +29,7 @@
 		</div>
 		<div class="row main">
 			
-			<form action="./updatePantry" method="post" name="pantry_form">
+			<form action="./edit_pantry" method="post" name="pantry_form">
 					<table>
 					<c:forEach items="${ingredient}" var="item">
 						<tr>

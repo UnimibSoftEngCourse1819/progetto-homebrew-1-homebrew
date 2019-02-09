@@ -36,7 +36,7 @@ public class PantryUpdateServlet extends HttpServlet {
 				ingredient = ingredientDao.findAllIngredient();
 
 				request.setAttribute("ingredient", ingredient);
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantryList.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
 					dispatcher.forward(request, response);
 					
 			} else {

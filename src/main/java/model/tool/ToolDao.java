@@ -24,9 +24,7 @@ public class ToolDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String findAllTool = "SELECT T.*, TE.capacity From Tool_Equipment as TE "
-			+ "INNER JOIN Tool AS T ON T.toolID = TE.toolID "
-			+ "INNER JOIN Equipment AS E ON TE.equipmentID = E.equipmentID ";
+	private static String findAllTool = "SELECT * From Tool ";
 
 	public List<Tool> findAllTool() {
 		List<Tool> tools = new ArrayList<>();
@@ -40,11 +38,11 @@ public class ToolDao {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				int toolID = resultSet.getInt("T.toolID");
-				String name = resultSet.getString("T.name");
-				int capacity = resultSet.getInt("TE.capacity");
-				String measure = resultSet.getString("T.measure");
-				Tool tool = new Tool(toolID, name, capacity, measure);
+				int toolID = resultSet.getInt("toolID");
+				String name = resultSet.getString("name");
+				String measure = resultSet.getString("measure");
+				Tool tool = new Tool(toolID, name, -1, measure);
+				System.out.println(tool.getToolName());
 				tools.add(tool);
 			}
 
