@@ -40,7 +40,7 @@ public class HomeServlet extends HttpServlet {
 
 				dispatcher.forward(request, response);
 			} else {
-				response.sendRedirect("/homebrew/");
+				response.sendRedirect("./");
 
 			}
 
@@ -72,7 +72,7 @@ public class HomeServlet extends HttpServlet {
 				session.setAttribute("user", user);
 				session.setAttribute("logged", true);
 
-				response.sendRedirect("/homebrew/home");
+				response.sendRedirect("./home");
 
 			} else {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");

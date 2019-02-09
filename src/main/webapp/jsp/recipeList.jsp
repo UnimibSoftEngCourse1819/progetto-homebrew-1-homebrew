@@ -20,7 +20,6 @@
 
 <body>
 	<jsp:include page="includer/alert.jsp" />
-
 	<div class="layout_left"></div>
 	<div class="layout_right"></div>
 	<div class="row page" class="container">
@@ -33,11 +32,38 @@
 			</div>
 			<div class="content_main">
 				<div class="recipes_menu">
-					<a href="./new_recipe">CREA NUOVA</a>
-					<form action="./recipes" method="post">
-						<input type="text" name="nameRecipe" placeholder="Nome">
+					<c:if test="${logged != null}">
+						<a href="./new_recipe">CREA NUOVA</a>
+					</c:if>
+					<button type="submit" name="action" value="CERCA" id="">
+						<img alt="" src=""> cer
+					</button>
+					<div id="open_search">
+						<a href="./recipes">MOSTRA TUTTE</a>
 
-					</form>
+						<form action="./recipes" method="post" name="recipes_search_form">
+							<input type="hidden" name="typeSearch" value="searchName">
+							<p>NOME RICETTA:</p>
+							<input type="text" name="nameRecipe" placeholder="Nome">
+							<button type="submit" name="action">CERCA</button>
+						</form>
+
+						<form action="./recipes" method="post" name="recipes_search_form">
+							<input type="hidden" name="typeSearch" value="searchIngredients">
+
+							<table>
+								<c:forEach items="${ingredient}" var="item">
+									<tr>
+										<td>${item.name}:</td>
+										<td><input type="number"
+											name="ingrName-${item.ingredientID}" placeholder="0" min="0">${item.measure}
+										</td>
+									</tr>
+								</c:forEach>
+							</table>
+							<button type="submit" name="action">CERCA</button>
+						</form>
+					</div>
 				</div>
 				<c:forEach items="${recipes}" var="item">
 					<div class="recipes_element">

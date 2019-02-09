@@ -15,29 +15,10 @@ import javax.servlet.http.HttpSession;
 import model.user.User;
 import model.user.UserDao;
 
-@WebServlet("/formUpdateUser")
+@WebServlet("/account1")
 public class FormUpdateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			HttpSession session = request.getSession(false);
-			if (session != null && session.getAttribute("user") != null) {
-				User user = (User) session.getAttribute("user");
-				int userID = user.getUserID();
-				UserDao userDao = new UserDao();
-				User getUser = userDao.selectUserById(userID);
-				
-				request.setAttribute("user", getUser);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userUpdate.jsp");
-				dispatcher.forward(request, response);		
-			}
-		} catch (ServletException | IOException e) {
-			logger.log(Level.SEVERE, "Servlet error", e);
-		}
-		
 
-	}
 }

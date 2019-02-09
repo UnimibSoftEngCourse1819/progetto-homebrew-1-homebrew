@@ -41,7 +41,7 @@ public class BrewsListServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 
 			} else {
-				response.sendRedirect("/homebrew/recipes");
+				response.sendRedirect("./");
 			}
 
 		} catch (ServletException | IOException e) {

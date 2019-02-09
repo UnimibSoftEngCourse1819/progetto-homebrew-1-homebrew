@@ -17,6 +17,8 @@
 </head>
 
 <body>
+	<jsp:include page="includer/alert.jsp" />
+
 	<div class="layout_left"></div>
 	<div class="layout_right"></div>
 	<div class="row page" class="container">
@@ -24,7 +26,9 @@
 			<jsp:include page="includer/menu.jsp" />
 		</div>
 		<div class="main">
-		<div class="main_shadow"><div></div></div>
+			<div class="main_shadow">
+				<div></div>
+			</div>
 			<div class="registration_cont">
 				<h2>Iscriviti ora al portale</h2>
 

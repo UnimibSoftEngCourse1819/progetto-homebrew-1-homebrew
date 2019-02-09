@@ -62,7 +62,7 @@ public class RecipeEditServlet extends HttpServlet {
 					response.sendRedirect("/homebrew/recipes");
 				}
 			} else {
-				response.sendRedirect("/homebrew/recipes");
+				response.sendRedirect("./");
 			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);

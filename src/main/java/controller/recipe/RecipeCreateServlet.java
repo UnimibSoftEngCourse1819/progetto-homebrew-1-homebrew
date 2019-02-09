@@ -35,15 +35,17 @@ public class RecipeCreateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			IngredientDao ingredientDao = new IngredientDao();
-
-			List<Ingredient> ingredients = ingredientDao.findAllIngredient();
-
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeCreate.jsp");
-			request.setAttribute("ingredients", ingredients);
-
-			request.setAttribute("page", "createRecipe");
-			dispatcher.forward(request, response);
+			HttpSession session = request.getSession(false);
+			if (session != null && session.getAttribute("user") != null) {
+				IngredientDao ingredientDao = new IngredientDao();
+				List<Ingredient> ingredients = ingredientDao.findAllIngredient();
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeCreate.jsp");
+				request.setAttribute("ingredients", ingredients);
+				request.setAttribute("page", "createRecipe");
+				dispatcher.forward(request, response);
+			} else {
+				response.sendRedirect("./");
+			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}

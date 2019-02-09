@@ -63,7 +63,7 @@ public class RecipeRemoveServlet extends HttpServlet {
 				 * response); } else { response.sendRedirect("/homebrew/recipes"); }
 				 */
 			} else {
-				response.sendRedirect("/homebrew/recipes");
+				response.sendRedirect("./");
 			}
 		} catch (/* ServletException | */ IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
@@ -97,7 +97,7 @@ public class RecipeRemoveServlet extends HttpServlet {
 				}
 
 			} else {
-				response.sendRedirect("/homebrew/recipes");
+				response.sendRedirect("./");
 			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);

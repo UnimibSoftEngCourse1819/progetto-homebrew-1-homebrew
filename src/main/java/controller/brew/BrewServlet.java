@@ -29,52 +29,54 @@ public class BrewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			int id = (int) Integer.parseInt((String) request.getParameter("n"));
+
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
+				if (request.getParameter("n") != null && !request.getParameter("n").equals("")) {
+					int id = (int) Integer.parseInt((String) request.getParameter("n"));
 
-				User user = (User) session.getAttribute("user");
-				RecipeDao recipeDao = new RecipeDao();
+					User user = (User) session.getAttribute("user");
+					RecipeDao recipeDao = new RecipeDao();
 
-				Recipe recipe = recipeDao.findRecipeByID(id);
+					Recipe recipe = recipeDao.findRecipeByID(id);
 
-				if (recipe.getVisibility().equals("public")
-						|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
-					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+					if (recipe.getVisibility().equals("public")
+							|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
+						IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 
-					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
+						List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
+						RequestDispatcher dispatcher = getServletContext()
+								.getRequestDispatcher("/jsp/recipeSingle.jsp");
 
-					if (user.getUserID() == recipe.getUserID()) {
-						request.setAttribute("editable", true);
+						if (user.getUserID() == recipe.getUserID()) {
+							request.setAttribute("editable", true);
+						}
+						request.setAttribute("recipe", recipe);
+						request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+						request.setAttribute("page", "recipe");
+						dispatcher.forward(request, response);
+					} else {
+						if (recipe.getVisibility().equals("public")) {
+							IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+
+							List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
+
+							RequestDispatcher dispatcher = getServletContext()
+									.getRequestDispatcher("/jsp/recipeSingle.jsp");
+							request.setAttribute("recipe", recipe);
+							request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+							request.setAttribute("page", "recipe");
+							dispatcher.forward(request, response);
+						} else {
+							response.sendRedirect("./recipes");
+						}
 					}
-					request.setAttribute("recipe", recipe);
-					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
-					request.setAttribute("page", "recipe");
-					dispatcher.forward(request, response);
 				} else {
-					response.sendRedirect("/homebrew/recipes");
+					response.sendRedirect("./recipes");
 				}
-
 			} else {
-				RecipeDao recipeDao = new RecipeDao();
-				Recipe recipe = recipeDao.findRecipeByID(id);
-
-				if (recipe.getVisibility().equals("public")) {
-					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-
-					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
-
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
-					request.setAttribute("recipe", recipe);
-					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
-					request.setAttribute("page", "recipe");
-					dispatcher.forward(request, response);
-				} else {
-					response.sendRedirect("/homebrew");
-				}
-
+				response.sendRedirect("./");
 			}
 
 		} catch (ServletException | IOException e) {
@@ -94,7 +96,7 @@ public class BrewServlet extends HttpServlet {
 				session.setAttribute("recipeID", recipeID);
 				response.sendRedirect("./edit_recipe");
 			} else {
-				response.sendRedirect("/homebrew");
+				response.sendRedirect("./");
 			}
 
 		} catch (IOException e) {

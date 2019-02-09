@@ -69,7 +69,7 @@
 											<td class="rightIngr"><c:forEach
 													items="${ingredientsRecipe}" var="itemRecipe">
 													<c:if
-														test="${itemRecipe.ingredientId == item.ingredientID}">
+														test="${itemRecipe.ingredientID == item.ingredientID}">
 														<c:set var="valueIngredient"
 															value="${itemRecipe.quantity}"></c:set>
 														<c:set var="measureIngredient"

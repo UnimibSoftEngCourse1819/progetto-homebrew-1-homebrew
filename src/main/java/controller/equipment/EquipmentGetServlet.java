@@ -19,7 +19,7 @@ import model.tool.Tool;
 import model.user.User;
 
 @WebServlet("/equipment")
-public class GetEquipmentServlet extends HttpServlet {
+public class EquipmentGetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 	
@@ -35,9 +35,12 @@ public class GetEquipmentServlet extends HttpServlet {
 				equipment = equipmentDao.userToolEquipment(userID);
 
 				request.setAttribute("equipment", equipment);
+				request.setAttribute("page", "equipment");
+
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipmentList.jsp");
-				dispatcher.forward(request, response);
-					
+				dispatcher.forward(request, response);	
+			} else {
+				response.sendRedirect("./");
 			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);

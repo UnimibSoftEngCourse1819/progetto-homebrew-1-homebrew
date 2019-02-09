@@ -28,7 +28,7 @@ import model.user.User;
 import model.user.UserDao;
 
 @WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+public class UserCreateServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
@@ -69,10 +69,10 @@ public class RegisterServlet extends HttpServlet {
 				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				user = new User(0, name, surname, dateOfBirth, email, hash);
 				User registeredUser = userDao.selectUserByEmail(email);
-				
-				if(registeredUser == null) {
+
+				if (registeredUser == null) {
 					userDao.createUser(user);
-					
+
 					registeredUser = userDao.selectUserByEmail(email);
 
 					int registeredUserId = registeredUser.getUserID();
@@ -84,13 +84,13 @@ public class RegisterServlet extends HttpServlet {
 
 					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
 					toolEquipmentDao.createToolEquipment(equipmentID);
-					
+
 					PantryDao pantryDao = new PantryDao();
 					pantryDao.createPantry(registeredUserId);
-					
-				}else {
+
+				} else {
 					HttpSession session = request.getSession(true);
-					session.setAttribute("alertMessage", "Esiste gi� un utente con questa mail");
+					session.setAttribute("alertMessage", "Email già usata");
 					session.setAttribute("alertType", "error");
 					response.sendRedirect("./login");
 				}
@@ -103,7 +103,7 @@ public class RegisterServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
 				session.setAttribute("alertType", "success");
-				response.sendRedirect("./login");
+				response.sendRedirect("./register");
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Servlet error", e);
 			}

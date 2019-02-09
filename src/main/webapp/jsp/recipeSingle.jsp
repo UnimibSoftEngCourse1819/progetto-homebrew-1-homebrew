@@ -49,27 +49,32 @@
 							<c:set var="date_recipe" value="${fn:split(recipe.creation,'-')}" />
 							<p>${date_recipe[2]}/${date_recipe[1]}/${date_recipe[0]}</p>
 							<p>${userRecipe.name}&nbsp;${userRecipe.surname}</p>
-							<c:if test="${editable != null}">
-								<form class="recipe_action rec_edit" action="./recipe"
-									method="post">
-									<input type="hidden" name="recipeID" value="${recipe.recipeID}">
-									<button name="editRecipe" type="submit">
-										<img alt="editable" src="images/logos/edit.svg">
+							<c:if test="${logged != null}">
+								<c:if test="${editable != null}">
+									<form class="recipe_action rec_edit" action="./recipe"
+										method="post">
+										<input type="hidden" name="recipeID"
+											value="${recipe.recipeID}">
+										<button name="editRecipe" type="submit">
+											<img alt="editable" src="images/logos/edit.svg">
+										</button>
+									</form>
+								</c:if>
+								<a class="recipe_action rec_brew" href="./new_brew">
+									<button name="newBrew" type="submit">
+										<img alt="new_brew" src="images/logos/new_brew.svg">
 									</button>
-								</form>
+								</a>
 							</c:if>
-							<a class="recipe_action rec_brew" href="./new_brew">
-								<button name="newBrew" type="submit">
-									<img alt="new_brew" src="images/logos/new_brew.svg">
-								</button>
-							</a>
 						</div>
 					</div>
 				</div>
 				<div class="recipe_cont">
 					<div class="recipe_menu">
 						<button class="active" name="recipe_desc" type="button">RICETTA</button>
-						<button name="recipe_brews" type="button">MISCELE</button>
+						<c:if test="${logged != null}">
+							<button name="recipe_brews" type="button">MISCELE</button>
+						</c:if>
 					</div>
 					<div class="recipe_sect" id="recipe_desc">
 						<p class="recipe_description">${recipe.description}</p>
@@ -94,22 +99,20 @@
 							</ul>
 						</div>
 					</div>
-					<div class="row recipe_sect" id="recipe_brews"
-						style="display: none;">
-						<c:forEach items="${brews}" var="item">
-
-							<div class="col-4">
-								<p>${item.name}</p>
-
-								<p>${item.userName}&nbsp;${item.userSurname}</p>
-								<c:set var="date_brew" value="${fn:split(item.brewDate,'-')}" />
-								<p>${date_brew[2]}/${date_brew[1]}/${date_brew[0]}</p>
-								<p>${item.quantity}l</p>
-
-
-							</div>
-						</c:forEach>
-					</div>
+					<c:if test="${logged != null}">
+						<div class="row recipe_sect" id="recipe_brews"
+							style="display: none;">
+							<c:forEach items="${brews}" var="item">
+								<div class="col-4">
+									<p>${item.name}</p>
+									<p>${item.userName}&nbsp;${item.userSurname}</p>
+									<c:set var="date_brew" value="${fn:split(item.brewDate,'-')}" />
+									<p>${date_brew[2]}/${date_brew[1]}/${date_brew[0]}</p>
+									<p>${item.quantity}l</p>
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

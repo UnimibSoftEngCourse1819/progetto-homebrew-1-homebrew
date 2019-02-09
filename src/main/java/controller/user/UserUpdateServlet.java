@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,11 +21,31 @@ import org.bouncycastle.util.encoders.Hex;
 import model.user.User;
 import model.user.UserDao;
 
-@WebServlet("/updateUser")
-public class UpdateUserServlet extends HttpServlet {
+@WebServlet("/account")
+public class UserUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			HttpSession session = request.getSession(false);
+			if (session != null && session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				int userID = user.getUserID();
+				UserDao userDao = new UserDao();
+				User getUser = userDao.selectUserById(userID);
+				
+				request.setAttribute("user", getUser);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userUpdate.jsp");
+				dispatcher.forward(request, response);		
+			}
+		} catch (ServletException | IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
+		
+
+	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -71,7 +92,7 @@ public class UpdateUserServlet extends HttpServlet {
 						}
 					} else {
 						session.setAttribute("alertMessage",
-								"Nuova password non inserta correttamente o mail già in uso");
+								"Nuova password non inserta correttamente o mail giï¿½ in uso");
 						session.setAttribute("alertType", "error");
 						response.sendRedirect("./account");
 					}

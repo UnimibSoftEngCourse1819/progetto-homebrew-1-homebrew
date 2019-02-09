@@ -51,7 +51,7 @@ public class RecipeServlet extends HttpServlet {
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
-					
+
 					BrewDao brewDao = new BrewDao();
 					List<Brew> brews = brewDao.findBrewByRecipeID(id);
 
@@ -78,18 +78,19 @@ public class RecipeServlet extends HttpServlet {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
+					UserDao userDao = new UserDao();
+					User userRecipe = userDao.selectUserById(recipe.getUserID());
 
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
 					request.setAttribute("recipe", recipe);
+					request.setAttribute("userRecipe", userRecipe);
 					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
 					request.setAttribute("page", "recipe");
 					dispatcher.forward(request, response);
 				} else {
-					response.sendRedirect("/homebrew");
+					response.sendRedirect("./recipe");
 				}
-
 			}
-
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
@@ -107,7 +108,7 @@ public class RecipeServlet extends HttpServlet {
 				session.setAttribute("recipeID", recipeID);
 				response.sendRedirect("./edit_recipe");
 			} else {
-				response.sendRedirect("/homebrew");
+				response.sendRedirect("./");
 			}
 
 		} catch (IOException e) {

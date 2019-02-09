@@ -36,33 +36,40 @@ public class BrewCreateServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
-			if (session != null && session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
-				User user = (User) session.getAttribute("user");
+			if (session != null && session.getAttribute("user") != null) {
+				if (session.getAttribute("recipe") != null) {
+					User user = (User) session.getAttribute("user");
 
-				EquipmentDao eqDao = new EquipmentDao();
-				int batchSize = eqDao.findBatchSize(user.getUserID());
+					EquipmentDao eqDao = new EquipmentDao();
+					int batchSize = eqDao.findBatchSize(user.getUserID());
 
-				Recipe recipe = (Recipe) session.getAttribute("recipe");
+					Recipe recipe = (Recipe) session.getAttribute("recipe");
 
-				IngredientRecipeDao irDao = new IngredientRecipeDao();
-				List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
+					IngredientRecipeDao irDao = new IngredientRecipeDao();
+					List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
 
-				PantryDao pnDao = new PantryDao();
-				List<Pantry> pantries = pnDao.findUserPantry(user.getUserID());
+					PantryDao pnDao = new PantryDao();
+					List<Pantry> pantries = pnDao.findUserPantry(user.getUserID());
 
-				boolean brewable = canBrew(user.getUserID(), recipe.getRecipeID());
+					boolean brewable = canBrew(user.getUserID(), recipe.getRecipeID());
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewCreate.jsp");
-				request.setAttribute("recipe", recipe);
-				request.setAttribute("batchSize", batchSize);
-				request.setAttribute("ingredientsRecipe", ingredientsRecipe);
-				request.setAttribute("pantries", pantries);
-				request.setAttribute("brewable", brewable);
-				request.setAttribute("page", "createBrew");
-				dispatcher.forward(request, response);
-
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewCreate.jsp");
+					request.setAttribute("recipe", recipe);
+					request.setAttribute("batchSize", batchSize);
+					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+					request.setAttribute("pantries", pantries);
+					request.setAttribute("brewable", brewable);
+					request.setAttribute("page", "createBrew");
+					dispatcher.forward(request, response);
+				} else {
+					if (((String) session.getAttribute("section")).equals("personal")) {
+						response.sendRedirect("./my_recipes");
+					} else {
+						response.sendRedirect("./recipes");
+					}
+				}
 			} else {
-				response.sendRedirect("/homebrew/recipes");
+				response.sendRedirect("./");
 			}
 
 		} catch (ServletException | IOException e) {

@@ -8,13 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
-import model.equipment.ToolEquipment;
 import model.recipe.Recipe;
 
 public class RecipeDao {
@@ -44,12 +44,24 @@ public class RecipeDao {
 
 	private static String findRecipesUser = "SELECT * FROM Recipe WHERE userID=?";
 
-	private static String searchByName = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
-			+ " WHERE R.name LIKE %?% AND R.visibility='public'";
+	private static String findRecipesByName = "SELECT * FROM Recipe WHERE name LIKE ? AND visibility='public'";
 
-	private static String wisbt = "SELECT R.* FROM Recipe AS R WHERE R.capacity = max( "
-			+ "SELECT R1.capacity FROM Recipe AS R1 JOIN Ingredient_Recipe AS IR ON R1.recipeID = IR.recipeID"
-			+ "HAVING IR.quantity * ? <= (SELECT availability FROM Pantry WHERE userID = ?))";
+	private static String wisbt = "SELECT r.recipeID AS recipe FROM (SELECT SUM(ir.quantity) AS qTot, ir.recipeID AS recipeIDS "
+			+ "FROM (SELECT cm.recipeIDM AS recipeIDMax FROM A_countMatch AS cm JOIN (SELECT COUNT(countM) AS countR, "
+			+ "c.recipeIDM AS recipeIDR FROM Ingredient_Recipe AS ir JOIN (SELECT COUNT(i.recipeID) AS countM, "
+			+ "i.recipeID AS recipeIDM FROM Ingredient_Recipe AS i JOIN Pantry AS p ON i.ingredientID = p.ingredientID "
+			+ "WHERE p.userID=10000001 AND p.availability >= (i.quantity* (SELECT e.batchSize FROM User AS u JOIN Equipment AS e"
+			+ " ON u.userID=e.userID WHERE u.userID=10000001))GROUP BY i.recipeID) AS c ON ir.recipeID=c.recipeIDM"
+			+ " GROUP BY c.recipeIDM) AS ci ON cm.recipeIDM=ci.recipeIDR WHERE cm.countM = ci.countR) AS v3 JOIN "
+			+ "Ingredient_Recipe AS ir ON v3.recipeIDMax=ir.recipeID GROUP BY ir.recipeID) AS v4 JOIN Recipe AS r "
+			+ "ON v4.recipeIDS=r.recipeID WHERE v4.qTot = (SELECT MAX(v5.qTot) FROM (SELECT SUM(ir.quantity) AS qTot, "
+			+ "ir.recipeID AS recipeIDS FROM (SELECT cm.recipeIDM AS recipeIDMax FROM A_countMatch AS cm JOIN "
+			+ "(SELECT COUNT(countM) AS countR, c.recipeIDM AS recipeIDR FROM Ingredient_Recipe AS ir JOIN "
+			+ "(SELECT COUNT(i.recipeID) AS countM, i.recipeID AS recipeIDM FROM Ingredient_Recipe AS i JOIN Pantry AS p "
+			+ "ON i.ingredientID = p.ingredientID WHERE p.userID=10000001 AND p.availability >= (i.quantity* (SELECT e.batchSize "
+			+ "FROM User AS u JOIN Equipment AS e ON u.userID=e.userID WHERE u.userID=10000001))GROUP BY i.recipeID) AS c "
+			+ "ON ir.recipeID=c.recipeIDM GROUP BY c.recipeIDM) AS ci ON cm.recipeIDM=ci.recipeIDR WHERE cm.countM = ci.countR) "
+			+ "AS v3 JOIN Ingredient_Recipe AS ir ON v3.recipeIDMax=ir.recipeID GROUP BY ir.recipeID) AS v5);";
 
 	public Recipe findRecipeByID(int recipeID) {
 		Recipe recipe = null;
@@ -320,14 +332,15 @@ public class RecipeDao {
 		return result;
 	}
 
-	public List<Recipe> searchByName(String searchName) {
+	public List<Recipe> findRecipesByName(String searchName) {
 		List<Recipe> recipes = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
-			statement = connect.prepareStatement(searchByName);
+			searchName = "%" + searchName + "%";
+			statement = connect.prepareStatement(findRecipesByName);
 			statement.setString(1, searchName);
 			resultSet = statement.executeQuery();
 
@@ -351,7 +364,7 @@ public class RecipeDao {
 		return recipes;
 	}
 
-	public List<Recipe> searchByIngredients(List<IngredientRecipe> ingRecipes) {
+	public List<Recipe> findRecipesByIngredients(List<IngredientRecipe> ingRecipes) {
 		List<Recipe> recipes = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
@@ -359,18 +372,18 @@ public class RecipeDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 
-			String searchByIngredients = "SELECT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
+			String searchByIngredients = "SELECT DISTINCT R.* FROM Recipe AS R JOIN Ingredient_Recipe AS IR ON R.recipeID = IR.recipeID"
 					+ " WHERE R.visibility='public' AND (";
-			for (int i = 1; i < ingRecipes.size(); i++) {
-				if (i > 1 && i < ingRecipes.size() - 1)
-					searchByIngredients = searchByIngredients + " OR ";
-				
-				IngredientRecipe ingRecipe = ingRecipes.get(i);
-				searchByIngredients = searchByIngredients + " (IR.ingredientID = " + ingRecipe.getIngredientID()
-						+ " AND IR.quantity = " + ingRecipe.getQuantity() + " ) ";
+			Iterator<IngredientRecipe> iterator = ingRecipes.iterator();
+			while (iterator.hasNext()) {
+				IngredientRecipe ingR = iterator.next();
+				searchByIngredients += "(IR.ingredientID=" + ingR.getIngredientID() + " AND IR.quantity="
+						+ ingR.getQuantity() + ")";
+				if (iterator.hasNext()) {
+					searchByIngredients += " OR ";
+				}
 			}
-			searchByIngredients = searchByIngredients + " )";
-			System.out.println(searchByIngredients);
+			searchByIngredients += ")";
 			statement = connect.prepareStatement(searchByIngredients);
 			resultSet = statement.executeQuery();
 
