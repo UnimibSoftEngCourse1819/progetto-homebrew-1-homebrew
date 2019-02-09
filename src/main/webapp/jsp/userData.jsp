@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-				<a href="./formUpdateUser">AGGIORNA DATI ANAGRAFICI</a>
+				<a href="./edit_account">AGGIORNA DATI ANAGRAFICI</a>
 			</div>
 		</div>
 	</div>

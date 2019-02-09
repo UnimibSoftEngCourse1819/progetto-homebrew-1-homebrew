@@ -41,7 +41,7 @@
 						</div>
 					</div>
 				</c:forEach>
-				<a href="./formUpdatePantry">AGGIORNA DISPENSA</a>
+				<a href="./edit_pantry">AGGIORNA DISPENSA</a>
 			</div>
 		</div>
 	</div>

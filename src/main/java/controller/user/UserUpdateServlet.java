@@ -21,7 +21,7 @@ import org.bouncycastle.util.encoders.Hex;
 import model.user.User;
 import model.user.UserDao;
 
-@WebServlet("/account")
+@WebServlet("/edit_account")
 public class UserUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");

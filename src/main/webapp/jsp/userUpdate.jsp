@@ -28,7 +28,7 @@
 		<div class="main_shadow"><div></div></div>
 			<div class="row main">
 				<c:set var = "item" value = "${user}"/>
-				<form action="./updateUser" method="post" name="user_form">
+				<form action="./edit_account" method="post" name="user_form">
 					<div>
 						<h3>Nome:</h3>
 						<input name="name" type="text" value = "${item.name}">
