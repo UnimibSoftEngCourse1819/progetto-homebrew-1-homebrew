@@ -23,7 +23,7 @@ Apache Tomcat v9.0
 ### Installing
 
 * Clone this repository in your eclipse workpsace
-* Import the project as 'Existing Maven project'
+* Import the project as "Existing Maven project"
 * Right click on project in "Project Explorer"
 * Open Properties
 * At "Targeted Runtimes" select your web server and apply the change
