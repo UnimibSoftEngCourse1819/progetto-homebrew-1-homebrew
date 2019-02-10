@@ -1,22 +1,3 @@
-
-
-REQUIREMENT:
-- Tomcat v8.5
-
-To install:
-- Clone this repository in your eclipse workpsace
-- Import the project as existing Maven project
-
-To test the functionalities on localhost:
-- Start your Tomcat server
-- Run the project on the server
-
-If you want to test on a browser:
-- Start your Tomcat server
-- Use the URL for your localhost (usually: http://localhost:8080/homebrew/)
-
-
-
 # BREW DAY!
 
 Brew Day! is an application that allows home brewers to maintain an organized database of their beer recipes. The application allows users to create, store and modify recipes, and later on delete them, if the user wishes to do so. The application is intended for "all-grain" brewers only, and thus all recipes are for this kind of brews.
@@ -39,21 +20,17 @@ Tomcat v9.0
 
 ### Installing
 
-* Clone this repository in your eclipse workpsace
-* Import the project as 'Existing Maven project'
+1. Clone this repository in your eclipse workpsace
+2. Import the project as 'Existing Maven project'
+3. 
+
 
 
 ```
 Give the example
 ```
 
-And repeat
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
