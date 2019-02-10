@@ -6,8 +6,9 @@
 
 <!---------------------- LOGIN ---------------------->
 <div class="title">
-<img src="images/logos/account.svg" alt="Logo">
-<a href="./home">brewday</a>
+	<a href="./home"> <img src="images/logos/account.svg" alt="Logo">
+		<span>brewday</span>
+	</a>
 </div>
 
 <div class="top_menu">
@@ -106,28 +107,32 @@
 					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
 				</c:when>
 				<c:when test="${page == 'my_brews'}">
-					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_recipes">LE MIE
+							RICETTE</a></li>
 					<li class="menu_item active">LE MIE MISCELE</li>
 					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
 					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
 					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
 				</c:when>
 				<c:when test="${page == 'account'}">
-					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_recipes">LE MIE
+							RICETTE</a></li>
 					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
 					<li class="menu_item active">ACCOUNT</li>
 					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
 					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
 				</c:when>
 				<c:when test="${page == 'pantry'}">
-					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_recipes">LE MIE
+							RICETTE</a></li>
 					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
 					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
 					<li class="menu_item active">DISPENSA</li>
 					<li class="menu_item"><a href="./equipment">EQUIPAGGIAMENTO</a></li>
 				</c:when>
 				<c:when test="${page == 'equipment'}">
-					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_recipes">LE MIE
+							RICETTE</a></li>
 					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
 					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
 					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
@@ -136,13 +141,15 @@
 
 				<c:when test="${section == 'general'}">
 					<li class="menu_item"><a href="./home">HOME</a></li>
-					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW TODAY?</a></li>
+					<li class="menu_item"><a href="./wsibt">WHAT SHOULD I BREW
+							TODAY?</a></li>
 					<li class="menu_item"><a href="./recipes">RICETTE</a></li>
 					<li class="menu_item"><a href="./brews">MISCELE</a></li>
 				</c:when>
 
 				<c:when test="${section == 'personal'}">
-					<li class="menu_item"><a href="./my_recipes">LE MIE RICETTE</a></li>
+					<li class="menu_item"><a href="./my_recipes">LE MIE
+							RICETTE</a></li>
 					<li class="menu_item"><a href="./my_brews">LE MIE MISCELE</a></li>
 					<li class="menu_item"><a href="./account">ACCOUNT</a></li>
 					<li class="menu_item"><a href="./pantry">DISPENSA</a></li>
@@ -151,7 +158,7 @@
 			</c:choose>
 			<li class="menu_item"><a href="./logout">ESCI</a></li>
 		</ul>
-	</c:if>	
+	</c:if>
 </div>
 
 

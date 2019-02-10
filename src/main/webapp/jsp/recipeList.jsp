@@ -16,6 +16,7 @@
 <script src="js/jquery.validate.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/main.js"></script>
+<script src="js/recipes.js"></script>
 </head>
 
 <body>
@@ -35,29 +36,34 @@
 					<c:if test="${logged != null}">
 						<a href="./new_recipe">CREA NUOVA</a>
 					</c:if>
-					<button type="submit" name="action" value="CERCA" id="">
-						<img alt="" src=""> cer
+					<button type="button" name="open_search" id="open_search">
+						<img alt="search" src="images/logos/search.svg">
 					</button>
-					<div id="open_search">
-						<a href="./recipes">MOSTRA TUTTE</a>
+					<div id="search_cont">
+						<a class="show_all" href="./recipes">&larr; MOSTRA TUTTE</a>
 
 						<form action="./recipes" method="post" name="recipes_search_form">
 							<input type="hidden" name="typeSearch" value="searchName">
-							<p>NOME RICETTA:</p>
-							<input type="text" name="nameRecipe" placeholder="Nome">
+							<p>Ricerca per nome</p>
+							<input type="text" name="nameRecipe">
 							<button type="submit" name="action">CERCA</button>
 						</form>
 
 						<form action="./recipes" method="post" name="recipes_search_form">
 							<input type="hidden" name="typeSearch" value="searchIngredients">
-
+							<p>Ricerca per ingredienti</p>
 							<table>
 								<c:forEach items="${ingredient}" var="item">
 									<tr>
 										<td>${item.name}:</td>
-										<td><input type="number"
-											name="ingrName-${item.ingredientID}" placeholder="0" min="0">${item.measure}
-										</td>
+										<td><c:if test="${item.measure == '%'}">
+												<input type="number" name="ingrName-${item.ingredientID}"
+													placeholder="" min="0" max="100">${item.measure}
+										</c:if> <c:if test="${item.measure != '%'}">
+												<input type="number" name="ingrName-${item.ingredientID}"
+													placeholder="" min="0">${item.measure}
+										</c:if></td>
+
 									</tr>
 								</c:forEach>
 							</table>

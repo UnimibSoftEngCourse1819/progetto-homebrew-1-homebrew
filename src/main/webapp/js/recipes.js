@@ -4,14 +4,30 @@ $(document).ready(function() {
 });
 
 function listener() {
-	menu();
+	searchButton();
+	menuBrew();
+	
+}
+function searchButton() {
+	$('#open_search').click(function() {
+		console.log("prova");
+		if ($("#search_cont.active").length == 0) {
+			$("#search_cont").css({right: "0px"});
+			$("#search_cont").addClass('active');
+			
+		} else {
+			$("#search_cont").css({right: "-400px"});
+			$("#search_cont").removeClass('active');
+
+		}
+	});
+
 }
 
-function menu() {
+function menuBrew() {
 	$('.recipe_menu button[name="recipe_desc"]').click(
 			function() {
 				if ($(".active", this).length == 0) {
-					console.log("desc");
 					$(this).addClass('active');
 					$('.recipe_menu button[name="recipe_brews"]').removeClass(
 							'active');
@@ -21,7 +37,6 @@ function menu() {
 			});
 	$('.recipe_menu button[name="recipe_brews"]').click(function() {
 		if ($(".active", this).length == 0) {
-			console.log("brews");
 			$(this).addClass('active');
 			$('.recipe_menu button[name="recipe_desc"]').removeClass('active');
 			$('#recipe_desc').hide();

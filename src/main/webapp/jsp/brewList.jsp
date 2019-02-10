@@ -35,21 +35,31 @@
 			<c:forEach items="${brews}" var="item">
 				<div class="recipes_element">
 					<div class="row recipes_inner">
-						<div class="col-9">
-							<c:if test="${(fn:length(item.description)) > 300}">
-								<c:set var="text"
-									value="${fn:substring(item.description, 0, 300)}" />
-								<c:set var="splittext" value="${fn:split(text,' ')}" />
-								<c:set var="index"
-									value="${fn:indexOf(text, splittext[fn:length(splittext)-2])}" />
-								<p>${fn:substring(text, 0, index-1)}...</p>
-							</c:if>
-							<c:if test="${(fn:length(item.description)) <= 300}">
-								<p>${item.description}</p>
-							</c:if>
+						<div class="row">
+							<div class="col-4">
+								<h5>Nome</h5>
+								<p>${item.name}</p>
+							</div>
+							<div class="col-4">
+								<h5>Data</h5>
+
+								<c:set var="date_brew" value="${fn:split(item.brewDate,'-')}" />
+								<p>${date_brew[2]}/${date_brew[1]}/${date_brew[0]}</p>
+							</div>
+							<div class="col-4">
+								<h5>Quantita'</h5>
+								<p>${item.quantity}</p>
+							</div>
+						</div>
+						<div>
+							<h5>Descrizione</h5>
+							<p>${item.description}</p>
+							<h5>Note di degustazione</h5>
+							<p>${item.tasteNote}</p>
 						</div>
 					</div>
 				</div>
+
 			</c:forEach>
 		</div>
 	</div>
