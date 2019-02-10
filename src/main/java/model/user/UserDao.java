@@ -29,7 +29,7 @@ public class UserDao {
 	private static String checkUserEmail = "SELECT * FROM User WHERE email=?";
 	private static String findMaxID = "SELECT MAX(userID) AS max FROM User";
 
-	private static String createUser = "INSERT INTO User (userID, name, surname, dateOfBirth, email, password) VALUES(?,?,?,?,?,?)";
+	private static String createUser = "INSERT INTO User (userID, name, surname, dateOfBirth, email, hash) VALUES(?,?,?,?,?,?)";
 	private static String deleteUser = "DELETE FROM User WHERE userID=?";
 
 	private static String updateUser = "UPDATE User SET name=?, surname=?, dateOfBirth=?, email=?, hash=? WHERE userID=?";
@@ -50,8 +50,8 @@ public class UserDao {
 				String surname = resultSet.getString("surname");
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String email = resultSet.getString("email");
-				String password = resultSet.getString("password");
-				User user = new User(id, name, surname, dateOfBirth, email, password);
+				String hash = resultSet.getString("hash");
+				User user = new User(id, name, surname, dateOfBirth, email, hash);
 				users.add(user);
 			}
 
@@ -81,8 +81,8 @@ public class UserDao {
 				String surname = resultSet.getString("surname");
 				Date dateOfBirth = resultSet.getDate("dateOfBirth");
 				String email = resultSet.getString("email");
-				String password = resultSet.getString("password");
-				user = new User(id, name, surname, dateOfBirth, email, password);
+				String hash = resultSet.getString("hash");
+				user = new User(id, name, surname, dateOfBirth, email, hash);
 				return user;
 			}
 
@@ -144,8 +144,9 @@ public class UserDao {
 				String reportDate = dateformat.format(castDate);
 				statement.setString(4, reportDate);
 				statement.setString(5, user.getEmail());
-				statement.setString(6, user.getPassword());
-				result = statement.executeUpdate();
+				statement.setString(6, user.getHash());
+				statement.executeUpdate();
+				result = userID;
 			}
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
@@ -171,7 +172,7 @@ public class UserDao {
 			String reportDate = dateformat.format(castDate);
 			statement.setString(3, reportDate);
 			statement.setString(4, user.getEmail());
-			statement.setString(5, user.getPassword());
+			statement.setString(5, user.getHash());
 			statement.setInt(6, id);
 			result = statement.executeUpdate();
 		} catch (SQLException e) {

@@ -42,7 +42,6 @@ public class ToolDao {
 				String name = resultSet.getString("name");
 				String measure = resultSet.getString("measure");
 				Tool tool = new Tool(toolID, name, -1, measure);
-				System.out.println(tool.getToolName());
 				tools.add(tool);
 			}
 

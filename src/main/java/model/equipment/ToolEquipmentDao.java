@@ -6,12 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
 import model.tool.Tool;
+import model.tool.ToolDao;
 
 public class ToolEquipmentDao {
 	final Logger logger = Logger.getLogger("MyLog");
@@ -27,7 +29,8 @@ public class ToolEquipmentDao {
 
 	private static String createToolEquipment = "INSERT INTO Tool_Equipment (equipmentID, toolID, capacity) VALUES(?,?,?)";
 	private static String updateToolEquipment = "UPDATE Tool_Equipment SET  capacity =? WHERE equipmentID =? AND toolID =?";
-	private static String getBatchSize = "SELECT MIN(capacity) AS batchSize FROM Tool_Equipment WHERE toolID < 4 AND equipmentID = ?";
+	private static String getBatchSize = "SELECT MIN(capacity) AS batchSize FROM Tool_Equipment WHERE (toolID = 10000001 OR"
+			+ "toolID = 10000002 OR toolID = 10000003) AND equipmentID = ?";
 	private static String userToolEquipment = "SELECT T.*, TE.capacity From Tool_Equipment as TE "
 			+ "INNER JOIN Tool AS T ON T.toolID = TE.toolID "
 			+ "INNER JOIN Equipment AS E ON TE.equipmentID = E.equipmentID "
@@ -42,14 +45,16 @@ public class ToolEquipmentDao {
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
 					mysql.getPassword());
 			statement = connect.prepareStatement(createToolEquipment);
-
-			for (int i = 10000001; i <= 10000011; i++) {
+			ToolDao toolDao = new ToolDao();
+			List<Tool> tools = toolDao.findAllTool();
+			Iterator<Tool> iterator = tools.iterator();
+			while (iterator.hasNext()) {
+				Tool tool = iterator.next();
 				statement.setInt(1, equipmentID);
-				statement.setInt(2, i);
+				statement.setInt(2, tool.getToolID());
 				statement.setInt(3, 0);
 				result = statement.executeUpdate();
 			}
-
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
 		} finally {

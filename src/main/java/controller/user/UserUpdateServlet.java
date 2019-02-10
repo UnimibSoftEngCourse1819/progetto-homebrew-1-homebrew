@@ -68,7 +68,7 @@ public class UserUpdateServlet extends HttpServlet {
 				byte[] passwordToHash = digestSHA3.digest(oldPassword.getBytes());
 				String hash = Hex.toHexString(passwordToHash);
 
-				if (oldPassword != null && user.getPassword().equals(hash)) {
+				if (oldPassword != null && user.getHash().equals(hash)) {
 					if (password.equals(checkPassword)
 							&& (userDao.usableEmail(email) || email.equals(user.getEmail()))) {
 

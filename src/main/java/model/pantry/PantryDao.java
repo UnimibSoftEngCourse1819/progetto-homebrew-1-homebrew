@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
+import model.ingredient.Ingredient;
+import model.ingredient.IngredientDao;
 
 public class PantryDao {
 	final Logger logger = Logger.getLogger("MyLog");
@@ -38,15 +40,23 @@ public class PantryDao {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(createPantry);
-
-			for (int i = 10000001; i <= 10000018; i++) {
+			IngredientDao ingredientDao = new IngredientDao();
+			List<Ingredient> ingredients = ingredientDao.findAllIngredient();
+			Iterator<Ingredient> iterator = ingredients.iterator();
+			while (iterator.hasNext()) {
+				Ingredient ingredient = iterator.next();
 				statement.setInt(1, userID);
-				statement.setInt(2, i);
+				statement.setInt(2, ingredient.getIngredientID());
 				statement.setInt(3, 0);
-				if (i == 10000001) {
-					statement.setString(4, "%");
-				} else {
+				switch (ingredient.getMeasure()) {
+				case "%":
 					statement.setString(4, "l");
+					break;
+				case "g/l":
+					statement.setString(4, "g");
+					break;
+				default:
+					statement.setString(4, "g");
 				}
 				result = statement.executeUpdate();
 			}

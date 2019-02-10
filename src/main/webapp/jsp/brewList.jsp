@@ -35,8 +35,6 @@
 			<c:forEach items="${brews}" var="item">
 				<div class="recipes_element">
 					<div class="row recipes_inner">
-						<a href="./brew?n=${item.recipeID}"></a>
-
 						<div class="col-9">
 							<c:if test="${(fn:length(item.description)) > 300}">
 								<c:set var="text"

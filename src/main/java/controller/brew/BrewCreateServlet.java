@@ -99,6 +99,7 @@ public class BrewCreateServlet extends HttpServlet {
 					Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
 							quantity, tasteNote);
 					int brewID = brewDao.createBrew(brew);
+
 					EquipmentDao equipmentDao = new EquipmentDao();
 					int batchSize = equipmentDao.findBatchSize(user.getUserID());
 
@@ -120,10 +121,17 @@ public class BrewCreateServlet extends HttpServlet {
 					}
 					IngredientBrewDao ibDao = new IngredientBrewDao();
 					ibDao.createIngredientBrew(ingredientsBrew);
+					session.setAttribute("alertMessage", "Miscela creata con successo");
+					session.setAttribute("alertType", "success");
+					if (((String) session.getAttribute("section")).equals("personal")) {
+						response.sendRedirect("./my_recipes");
+					} else {
+						response.sendRedirect("./recipes");
+					}
 
 				} else {
 					if (session != null) {
-						session.setAttribute("alertMessage", "Ricetta non creata");
+						session.setAttribute("alertMessage", "Miscela non creata");
 						session.setAttribute("alertType", "error");
 						if (((String) session.getAttribute("section")).equals("personal")) {
 							response.sendRedirect("./my_recipes");

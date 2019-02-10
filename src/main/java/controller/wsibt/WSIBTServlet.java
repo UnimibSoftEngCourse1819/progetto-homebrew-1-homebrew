@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import model.brew.Brew;
 import model.brew.BrewDao;
+import model.equipment.EquipmentDao;
 import model.recipe.IngredientRecipe;
 import model.recipe.IngredientRecipeDao;
 import model.recipe.Recipe;
@@ -38,20 +39,19 @@ public class WSIBTServlet extends HttpServlet {
 
 				User user = (User) session.getAttribute("user");
 				RecipeDao recipeDao = new RecipeDao();
+				EquipmentDao eqDao = new EquipmentDao();
+				int batchSize = eqDao.findBatchSize(user.getUserID());
+				if (batchSize > 0) {
+					Recipe recipe = recipeDao.wsibt(user.getUserID());
 
-				Recipe recipe = recipeDao.wsibt(user.getUserID());
+					UserDao userDao = new UserDao();
+					User userRecipe = userDao.selectUserById(recipe.getUserID());
 
-				UserDao userDao = new UserDao();
-				User userRecipe = userDao.selectUserById(recipe.getUserID());
-
-				if (recipe.getVisibility().equals("public")
-						|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao
 							.findIngredientsRecipe(recipe.getRecipeID());
 
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/wsibt.jsp");
 
 					BrewDao brewDao = new BrewDao();
 					List<Brew> brews = brewDao.findBrewByRecipeID(recipe.getRecipeID());
@@ -59,6 +59,8 @@ public class WSIBTServlet extends HttpServlet {
 					if (user.getUserID() == recipe.getUserID()) {
 						request.setAttribute("editable", true);
 					}
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/wsibt.jsp");
+
 					session.setAttribute("recipe", recipe);
 					request.setAttribute("recipe", recipe);
 					request.setAttribute("userRecipe", userRecipe);
@@ -67,9 +69,16 @@ public class WSIBTServlet extends HttpServlet {
 					request.setAttribute("page", "wsibt");
 					request.setAttribute("section", section);
 					dispatcher.forward(request, response);
+
 				} else {
-					response.sendRedirect("./recipes");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/wsibt.jsp");
+					session.removeAttribute("recipe");
+					request.setAttribute("recipe", null);
+					request.setAttribute("page", "wsibt");
+					request.setAttribute("section", section);
+					dispatcher.forward(request, response);
 				}
+
 			} else {
 				response.sendRedirect("./recipe");
 			}

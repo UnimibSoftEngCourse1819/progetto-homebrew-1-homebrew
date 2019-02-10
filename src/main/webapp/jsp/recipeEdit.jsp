@@ -16,6 +16,8 @@
 <script src="js/jquery.validate.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/main.js"></script>
+<script src="js/recipes.js"></script>
+
 </head>
 
 <body>
@@ -84,17 +86,16 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="col-8">
+						<div class="col-8 edit_recipe_steps">
 							<h6>Passaggi</h6>
+							<button name="removeStep" type="button">&times;</button>
+							<button name="addStep" type="button">+</button>
 							<table>
 								<tbody>
 									<c:forEach items="${recipe.steps}" var="item">
 										<tr>
 											<td class="leftStep">${item.key}</td>
 											<td class="rightStep"><textarea name="step-${item.key}">${item.value}</textarea>
-											</td>
-											<td>
-												<button name="deleteStep" type="button">&times;</button>
 											</td>
 										</tr>
 									</c:forEach>

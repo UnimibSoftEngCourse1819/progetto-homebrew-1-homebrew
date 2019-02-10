@@ -50,7 +50,7 @@ public class Login {
 		boolean match = false;
 		try {
 			if (resultSet.next()) {
-				String password = resultSet.getString("password");
+				String password = resultSet.getString("hash");
 				SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
 				passIN = digestSHA3.digest(pass.getBytes());
 				passDB = Hex.decode(password);

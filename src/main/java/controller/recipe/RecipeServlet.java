@@ -66,6 +66,8 @@ public class RecipeServlet extends HttpServlet {
 					request.setAttribute("page", "recipe");
 					request.setAttribute("section", section);
 					dispatcher.forward(request, response);
+					session.removeAttribute("alertMessage");
+					session.removeAttribute("alertType");
 				} else {
 					response.sendRedirect("/homebrew/recipes");
 				}

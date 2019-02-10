@@ -69,6 +69,8 @@ public class RecipeListServlet extends HttpServlet {
 				request.setAttribute("page", "recipes");
 
 				dispatcher.forward(request, response);
+				session.removeAttribute("alertMessage");
+				session.removeAttribute("alertType");
 			}
 
 

@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
 
-
 public class EquipmentDao {
 	final Logger logger = Logger.getLogger("MyLog");
 	private static String sqlError = "SQL error";
@@ -24,25 +23,24 @@ public class EquipmentDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String createEquipment = "INSERT INTO Equipment (userID, batchSize) VALUES(?,?)";
-	private static String updateEquipment = "UPDATE Equipment SET  batchSize =? WHERE userID =? AND equipmentID =?";
-	private static String userEquipment = "SELECT * From Equipment WHERE userID = ?";
-	private static String userBatchSize = "SELECT batchSize From Equipment WHERE userID = ?";
+	private static String createEquipment = "INSERT INTO Equipment (equipmentID,  userID, batchSize) VALUES(?,?,?)";
+	private static String updateEquipment = "UPDATE Equipment SET batchSize=? WHERE userID=? AND equipmentID=?";
+	private static String userEquipment = "SELECT * FROM Equipment WHERE userID=?";
+	private static String userBatchSize = "SELECT batchSize FROM Equipment WHERE userID=?";
 
-	
 	public int createEquipment(int userID) {
 		int result = -1;
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(createEquipment);
-
-				statement.setInt(1, userID);
-				statement.setInt(2, 0);
-				result = statement.executeUpdate();
+			statement.setInt(1, userID);
+			statement.setInt(2, userID);
+			statement.setInt(3, 0);
+			statement.executeUpdate();
+			result = userID;
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
@@ -59,16 +57,14 @@ public class EquipmentDao {
 		try {
 			mysql = new MySQLConnection();
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(),
-					mysql.getPassword());
+			connect = DriverManager.getConnection(mysql.getUrl(), mysql.getUser(), mysql.getPassword());
 			statement = connect.prepareStatement(updateEquipment);
 
-				statement.setInt(1, equipment.getBatchSize());
-				statement.setInt(2, equipment.getUserID());
-				statement.setInt(3, equipment.getEquipmentID());
-				
-				result = statement.executeUpdate();
-			
+			statement.setInt(1, equipment.getBatchSize());
+			statement.setInt(2, equipment.getUserID());
+			statement.setInt(3, equipment.getEquipmentID());
+
+			result = statement.executeUpdate();
 
 		} catch (SQLException e) {
 			logger.log(Level.SEVERE, sqlError, e);
@@ -78,9 +74,9 @@ public class EquipmentDao {
 
 		return result;
 	}
-	
+
 	public Equipment findEquipmentByUser(int userID) {
-		Equipment equipment= null;
+		Equipment equipment = null;
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
@@ -105,6 +101,7 @@ public class EquipmentDao {
 		}
 		return equipment;
 	}
+
 	public int findBatchSize(int userID) {
 		int batchSize = 0;
 		MySQLConnection mysql;

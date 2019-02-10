@@ -25,17 +25,21 @@ public class BrewDao {
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
 
-	private static String createBrew = "INSERT INTO Brew (userID, recipeID, brewDate, description, quantity, tasteNote) VALUES(?,?,?,?,?,?)";
+	private static String createBrew = "INSERT INTO Brew (brewID, userID, recipeID, name, brewDate, description, quantity, tasteNote) VALUES(?,?,?,?,?,?,?,?)";
 	private static String findAllBrew = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID";
 	private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
 	private static String findMaxID = "SELECT MAX(brewID) AS max FROM Brew";
 
 	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
 
-	//private static String findAllBrewRecipe = "SELECT * FROM Brew WHERE recipeID=?";
-	//private static String findRecipeByID = "SELECT * FROM Recipe WHERE recipeID=?";
-	//private static String createRecipe = "INSERT INTO Recipe (recipeID, userID, name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
-	//private static String updateRecipe = "UPDATE Recipe SET name=?, description=?, visibility=?, imagePath=? WHERE recipeID=?";
+	// private static String findAllBrewRecipe = "SELECT * FROM Brew WHERE
+	// recipeID=?";
+	// private static String findRecipeByID = "SELECT * FROM Recipe WHERE
+	// recipeID=?";
+	// private static String createRecipe = "INSERT INTO Recipe (recipeID, userID,
+	// name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
+	// private static String updateRecipe = "UPDATE Recipe SET name=?,
+	// description=?, visibility=?, imagePath=? WHERE recipeID=?";
 
 	public List<Brew> findAllBrews() {
 		List<Brew> brews = new ArrayList<>();
@@ -57,7 +61,8 @@ public class BrewDao {
 				String tasteNote = resultSet.getString("b.tasteNote");
 				String userName = resultSet.getString("u.name");
 				String userSurname = resultSet.getString("u.surname");
-				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description, quantity, tasteNote);
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description,
+						quantity, tasteNote);
 				brews.add(brew);
 			}
 		} catch (SQLException e) {
@@ -67,6 +72,7 @@ public class BrewDao {
 		}
 		return brews;
 	}
+
 	public List<Brew> findAllBrewsUser(int userID) {
 		List<Brew> brews = new ArrayList<>();
 		MySQLConnection mysql;
@@ -87,7 +93,8 @@ public class BrewDao {
 				String tasteNote = resultSet.getString("b.tasteNote");
 				String userName = resultSet.getString("u.name");
 				String userSurname = resultSet.getString("u.surname");
-				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description, quantity, tasteNote);
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description,
+						quantity, tasteNote);
 				brews.add(brew);
 			}
 		} catch (SQLException e) {
@@ -97,7 +104,7 @@ public class BrewDao {
 		}
 		return brews;
 	}
-	
+
 	public List<Brew> findBrewByRecipeID(int recipeID) {
 		List<Brew> brews = new ArrayList<>();
 		MySQLConnection mysql;
@@ -118,7 +125,8 @@ public class BrewDao {
 				String tasteNote = resultSet.getString("b.tasteNote");
 				String userName = resultSet.getString("u.name");
 				String userSurname = resultSet.getString("u.surname");
-				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description, quantity, tasteNote);
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description,
+						quantity, tasteNote);
 				brews.add(brew);
 			}
 		} catch (SQLException e) {
@@ -129,8 +137,7 @@ public class BrewDao {
 
 		return brews;
 	}
-	
-	
+
 	public int createBrew(Brew brew) {
 		int result = -1;
 		MySQLConnection mysql;
@@ -146,11 +153,14 @@ public class BrewDao {
 				java.sql.Date date = new java.sql.Date(utilDate.getTime());
 				statement = connect.prepareStatement(createBrew);
 				statement.setInt(1, brewID);
-				statement.setInt(2, brew.getRecipeID());
-				statement.setDate(3, date);
-				statement.setString(4, brew.getDescription());
-				statement.setInt(5, brew.getQuantity());
-				statement.setString(6, brew.getTasteNote());
+				statement.setInt(2, brew.getUserID());
+				statement.setInt(3, brew.getRecipeID());
+				statement.setString(4, brew.getName());
+				statement.setDate(5, date);
+				statement.setString(6, brew.getDescription());
+				statement.setInt(7, brew.getQuantity());
+				statement.setString(8, brew.getTasteNote());
+				statement.executeUpdate();
 				result = brewID;
 			}
 		} catch (SQLException e) {
@@ -158,11 +168,8 @@ public class BrewDao {
 		} finally {
 			close();
 		}
-
 		return result;
 	}
-
-
 
 	private void close() {
 		try {

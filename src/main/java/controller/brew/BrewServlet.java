@@ -19,7 +19,7 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-@WebServlet("/brew")
+@WebServlet("/brewXXX")
 public class BrewServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

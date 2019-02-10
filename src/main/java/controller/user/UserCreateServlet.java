@@ -18,12 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-import model.equipment.Equipment;
 import model.equipment.EquipmentDao;
 import model.equipment.ToolEquipmentDao;
 import model.pantry.PantryDao;
-//import model.equipment.EquipmentDao;
-//import model.pantry.PantryDao;
 import model.user.User;
 import model.user.UserDao;
 
@@ -62,63 +59,43 @@ public class UserCreateServlet extends HttpServlet {
 			byte[] passwordToHash = digestSHA3.digest(password.getBytes());
 			String hash = Hex.toHexString(passwordToHash);
 			Date dateOfBirth;
-			User user;
+			User userNew;
 
 			try {
 
 				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-				user = new User(0, name, surname, dateOfBirth, email, hash);
-				User registeredUser = userDao.selectUserByEmail(email);
+				userNew = new User(0, name, surname, dateOfBirth, email, hash);
 
-				if (registeredUser == null) {
-					userDao.createUser(user);
+				int userID = userDao.createUser(userNew);
 
-					registeredUser = userDao.selectUserByEmail(email);
+				EquipmentDao equipDao = new EquipmentDao();
+				int equipmentID = equipDao.createEquipment(userID);
 
-					int registeredUserId = registeredUser.getUserID();
+				ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
+				toolEquipmentDao.createToolEquipment(equipmentID);
 
-					EquipmentDao equipDao = new EquipmentDao();
-					equipDao.createEquipment(registeredUserId);
-					Equipment equipment = equipDao.findEquipmentByUser(registeredUserId);
-					int equipmentID = equipment.getEquipmentID();
+				PantryDao pantryDao = new PantryDao();
+				pantryDao.createPantry(userID);
 
-					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
-					toolEquipmentDao.createToolEquipment(equipmentID);
-
-					PantryDao pantryDao = new PantryDao();
-					pantryDao.createPantry(registeredUserId);
-
-				} else {
-					HttpSession session = request.getSession(true);
-
-					try {
-						session.setAttribute("alertMessage", "Email già usata");
-						session.setAttribute("alertType", "error");
-						response.sendRedirect("./login");
-					} catch (IOException e) {
-						logger.log(Level.SEVERE, "Servlet error", e);
-					}
-				}
+				HttpSession session = request.getSession(true);
+				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
+				session.setAttribute("alertType", "success");
+				response.sendRedirect("./");
 
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
 			}
 
-			try {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
-				session.setAttribute("alertType", "success");
-				response.sendRedirect("./register");
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Servlet error", e);
-			}
-
 		} else {
+			HttpSession session = request.getSession(true);
 			try {
+				session.setAttribute("alertMessage", "Email già usata");
+				session.setAttribute("alertType", "error");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/register.jsp");
 				request.setAttribute("page", "register");
 				request.setAttribute("errorEmail", true);
 				dispatcher.forward(request, response);
+
 			} catch (ServletException | IOException e) {
 				logger.log(Level.SEVERE, "Servlet error", e);
 			}
