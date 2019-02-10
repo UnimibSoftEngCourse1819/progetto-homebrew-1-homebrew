@@ -36,7 +36,7 @@ public class RecipeServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		int id = -1;
 		try {
-			id = (int) Integer.parseInt((String) request.getParameter("n"));
+			id = Integer.parseInt((String) request.getParameter("n"));
 		} catch (NumberFormatException e) {
 			logger.log(Level.SEVERE, "Parser error", e);
 		}
@@ -125,7 +125,7 @@ public class RecipeServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				int recipeID = 0;
 				try {
-					recipeID = (int) Integer.parseInt((String) request.getParameter("recipeID"));
+					recipeID = Integer.parseInt((String) request.getParameter("recipeID"));
 				} catch (NumberFormatException e) {
 					logger.log(Level.SEVERE, "Parser error", e);
 				}

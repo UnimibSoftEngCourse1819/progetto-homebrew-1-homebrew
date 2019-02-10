@@ -30,6 +30,7 @@ public class UserCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -43,6 +44,7 @@ public class UserCreateServlet extends HttpServlet {
 
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String name = request.getParameter("name");
@@ -81,12 +83,9 @@ public class UserCreateServlet extends HttpServlet {
 				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
 				session.setAttribute("alertType", "success");
 
-				try {
-					response.sendRedirect("./");
-				} catch (IOException e) {
-					logger.log(Level.SEVERE, "Servlet error", e);
-				}
-
+				response.sendRedirect("./");
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "Servlet error", e);
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
 			}

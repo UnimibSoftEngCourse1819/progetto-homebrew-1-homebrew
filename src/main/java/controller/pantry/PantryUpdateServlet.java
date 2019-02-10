@@ -31,9 +31,8 @@ public class PantryUpdateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				List<Ingredient> ingredient = new ArrayList<>();
 				IngredientDao ingredientDao = new IngredientDao();
-				ingredient = ingredientDao.findAllIngredient();
+				List<Ingredient> ingredient = ingredientDao.findAllIngredient();
 
 				request.setAttribute("ingredient", ingredient);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");

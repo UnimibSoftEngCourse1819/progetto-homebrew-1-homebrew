@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.database.MySQLConnection;
-import model.recipe.Recipe;
 
 public class RecipeDao {
 	final Logger logger = Logger.getLogger("MyLog");

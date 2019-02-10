@@ -41,9 +41,8 @@ public class RecipeListServlet extends HttpServlet {
 				RecipeDao recipeDao = new RecipeDao();
 				List<Recipe> recipes = recipeDao.findAllRecipesUser(user.getUserID());
 
-				List<Ingredient> ingredient = new ArrayList<>();
 				IngredientDao ingredientDao = new IngredientDao();
-				ingredient = ingredientDao.findAllIngredient();
+				List<Ingredient> ingredient = ingredientDao.findAllIngredient();
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
 				request.setAttribute("recipes", recipes);
@@ -58,9 +57,8 @@ public class RecipeListServlet extends HttpServlet {
 				RecipeDao recipeDao = new RecipeDao();
 				List<Recipe> recipes = recipeDao.findAllRecipes();
 
-				List<Ingredient> ingredient = new ArrayList<>();
 				IngredientDao ingredientDao = new IngredientDao();
-				ingredient = ingredientDao.findAllIngredient();
+				List<Ingredient> ingredient = ingredientDao.findAllIngredient();
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
 				request.setAttribute("recipes", recipes);
@@ -88,13 +86,13 @@ public class RecipeListServlet extends HttpServlet {
 			List<Recipe> recipes = null;
 
 			if (request.getParameter("typeSearch") != null
-					&& ((String) request.getParameter("typeSearch")).equals("searchName")) {
+					&& (request.getParameter("typeSearch")).equals("searchName")) {
 				String name = request.getParameter("nameRecipe");
 				recipes = recipeDao.findRecipesByName(name);
 			}
 
 			if (request.getParameter("typeSearch") != null
-					&& ((String) request.getParameter("typeSearch")).equals("searchIngredients")) {
+					&& (request.getParameter("typeSearch")).equals("searchIngredients")) {
 				List<IngredientRecipe> ingRecipes = new ArrayList<>();
 				IngredientRecipe ingRecipe = null;
 				for (int i = 10000001; i <= 10000018; i++) {
@@ -110,9 +108,8 @@ public class RecipeListServlet extends HttpServlet {
 				recipes = recipeDao.findRecipesByIngredients(ingRecipes);
 			}
 			if (recipes != null) {
-				List<Ingredient> ingredient = new ArrayList<>();
 				IngredientDao ingredientDao = new IngredientDao();
-				ingredient = ingredientDao.findAllIngredient();
+				List<Ingredient> ingredient = ingredientDao.findAllIngredient();
 
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeList.jsp");
 				request.setAttribute("recipes", recipes);

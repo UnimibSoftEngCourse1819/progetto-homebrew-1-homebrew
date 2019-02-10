@@ -32,14 +32,6 @@ public class BrewDao {
 
 	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
 
-	// private static String findAllBrewRecipe = "SELECT * FROM Brew WHERE
-	// recipeID=?";
-	// private static String findRecipeByID = "SELECT * FROM Recipe WHERE
-	// recipeID=?";
-	// private static String createRecipe = "INSERT INTO Recipe (recipeID, userID,
-	// name, creation, description, visibility, imagePath) VALUES(?,?,?,?,?,?,?)";
-	// private static String updateRecipe = "UPDATE Recipe SET name=?,
-	// description=?, visibility=?, imagePath=? WHERE recipeID=?";
 
 	public List<Brew> findAllBrews() {
 		List<Brew> brews = new ArrayList<>();
@@ -173,6 +165,8 @@ public class BrewDao {
 
 	private void close() {
 		try {
+			if (resultSet != null)
+				resultSet.close();
 			if (statement != null)
 				statement.close();
 			if (connect != null)

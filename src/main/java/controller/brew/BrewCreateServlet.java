@@ -188,7 +188,7 @@ public class BrewCreateServlet extends HttpServlet {
 		PantryDao pnDao = new PantryDao();
 		List<Pantry> pantries = pnDao.findUserPantry(user);
 
-		List<Pantry> pantriesNew = new ArrayList<Pantry>();
+		List<Pantry> pantriesNew = new ArrayList<>();
 		Iterator<IngredientRecipe> recipeIT = ingredientsRecipe.iterator();
 		Iterator<Pantry> pantryIT = null;
 		while (resp && recipeIT.hasNext()) {

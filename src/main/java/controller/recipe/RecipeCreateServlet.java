@@ -84,7 +84,7 @@ public class RecipeCreateServlet extends HttpServlet {
 				IngredientDao ingredientDao = new IngredientDao();
 				List<Ingredient> ingredients = ingredientDao.findAllIngredient();
 
-				List<IngredientRecipe> ingredientsRecipe = new ArrayList<IngredientRecipe>();
+				List<IngredientRecipe> ingredientsRecipe = new ArrayList<>();
 
 				Iterator<Ingredient> iterator = ingredients.iterator();
 				while (iterator.hasNext()) {

@@ -30,7 +30,7 @@ public class IngredientRecipeDao {
 	private static String deleteIngredientRecipe = "DELETE FROM Ingredient_Recipe WHERE recipeID=?";
 
 	public List<IngredientRecipe> findIngredientsRecipe(int recipeID) {
-		List<IngredientRecipe> ingredientsRecipe = new ArrayList<IngredientRecipe>();
+		List<IngredientRecipe> ingredientsRecipe = new ArrayList<>();
 		MySQLConnection mysql;
 		try {
 			mysql = new MySQLConnection();
