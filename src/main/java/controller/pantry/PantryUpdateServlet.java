@@ -51,50 +51,49 @@ public class PantryUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-			HttpSession session = request.getSession(false);
-			if (session != null && session.getAttribute("user") != null) {
-				User user = (User) session.getAttribute("user");
-				int userID = user.getUserID();
-				ArrayList<Pantry> pantrys = new ArrayList<>();
-				Pantry pantry = null;
-				for (int i = 10000001; i <= 10000018; i++) {
-					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
-						int avaliability = 0;
-						try {
-							avaliability = Integer.parseInt((String) request.getParameter(i + ""));
-						} catch (NumberFormatException e) {
-							logger.log(Level.SEVERE, "Parser error", e);
-						}
-						if (avaliability > 0) {
-							pantry = new Pantry(userID, i, null, avaliability, null);
-						}
-						pantrys.add(pantry);
+		HttpSession session = request.getSession(false);
+		if (session != null && session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			int userID = user.getUserID();
+			ArrayList<Pantry> pantrys = new ArrayList<>();
+			Pantry pantry = null;
+			for (int i = 10000001; i <= 10000018; i++) {
+				if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
+					int avaliability = 0;
+					try {
+						avaliability = Integer.parseInt((String) request.getParameter(i + ""));
+					} catch (NumberFormatException e) {
+						logger.log(Level.SEVERE, "Parser error", e);
 					}
+					if (avaliability > 0) {
+						pantry = new Pantry(userID, i, null, avaliability, null);
+					}
+					pantrys.add(pantry);
 				}
+			}
 
-				if (pantrys.size() > 0) {
-					PantryDao pantryDao = new PantryDao();
-					int update = pantryDao.updatePantry(pantrys);
+			if (!pantrys.isEmpty()) {
+				PantryDao pantryDao = new PantryDao();
+				int update = pantryDao.updatePantry(pantrys);
 
-					if (update > 0) {
-						session.setAttribute("alertMessage", "Dispensa modificata con successo");
-						session.setAttribute("alertType", "success");
-					} else {
-						session.setAttribute("alertMessage", "Dispensa non modificata");
-						session.setAttribute("alertType", "error");
-					}
+				if (update > 0) {
+					session.setAttribute("alertMessage", "Dispensa modificata con successo");
+					session.setAttribute("alertType", "success");
 				} else {
 					session.setAttribute("alertMessage", "Dispensa non modificata");
 					session.setAttribute("alertType", "error");
 				}
-				try {
-					response.sendRedirect("./pantry");
-				} catch (IOException e) {
-					logger.log(Level.SEVERE, "Servlet error", e);
-				}
-
+			} else {
+				session.setAttribute("alertMessage", "Dispensa non modificata");
+				session.setAttribute("alertType", "error");
+			}
+			try {
+				response.sendRedirect("./pantry");
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "Servlet error", e);
 			}
 
+		}
 
 	}
 }
