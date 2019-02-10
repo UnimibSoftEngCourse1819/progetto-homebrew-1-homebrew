@@ -34,9 +34,8 @@ public class EquipmentUpdateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-				List<Tool> tool = new ArrayList<>();
 				ToolDao toolDao = new ToolDao();
-				tool = toolDao.findAllTool();
+				List<Tool> tool = toolDao.findAllTool();
 
 				request.setAttribute("tool", tool);
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");

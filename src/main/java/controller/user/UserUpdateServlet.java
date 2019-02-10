@@ -68,7 +68,7 @@ public class UserUpdateServlet extends HttpServlet {
 				byte[] passwordToHash = digestSHA3.digest(oldPassword.getBytes());
 				String hash = Hex.toHexString(passwordToHash);
 
-				if (oldPassword != null && user.getHash().equals(hash)) {
+				if (user.getHash().equals(hash)) {
 					if (password.equals(checkPassword)
 							&& (userDao.usableEmail(email) || email.equals(user.getEmail()))) {
 
@@ -78,42 +78,31 @@ public class UserUpdateServlet extends HttpServlet {
 						Date dateOfBirth;
 						User updateUser;
 
-						try {
+						dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+						updateUser = new User(-1, name, surname, dateOfBirth, email, hash);
 
-							dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-							updateUser = new User(-1, name, surname, dateOfBirth, email, hash);
+						userDao.updateUser(userID, updateUser);
+						session.setAttribute("alertMessage", "Dati anagrafici modificati con successo");
+						session.setAttribute("alertType", "success");
+						response.sendRedirect("./account");
 
-							userDao.updateUser(userID, updateUser);
-							session.setAttribute("alertMessage", "Dati anagrafici modificati con successo");
-							session.setAttribute("alertType", "success");
-							response.sendRedirect("./account");
-
-						} catch (ParseException e) {
-							logger.log(Level.SEVERE, "Parser error", e);
-						}
 					} else {
 
-						try {
-							session.setAttribute("alertMessage", "Email o password non corretti");
-							session.setAttribute("alertType", "error");
-							response.sendRedirect("./account");
-						} catch (IOException e) {
-							logger.log(Level.SEVERE, "Servlet error", e);
-						}
+						session.setAttribute("alertMessage", "Email o password non corretti");
+						session.setAttribute("alertType", "error");
+						response.sendRedirect("./account");
 					}
 				} else {
 
-					try {
-						session.setAttribute("alertMessage", "Password attuale errata");
-						session.setAttribute("alertType", "error");
-						response.sendRedirect("./account");
-					} catch (IOException e) {
-						logger.log(Level.SEVERE, "Servlet error", e);
-					}
+					session.setAttribute("alertMessage", "Password attuale errata");
+					session.setAttribute("alertType", "error");
+					response.sendRedirect("./account");
 				}
 			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
+		} catch (ParseException e) {
+			logger.log(Level.SEVERE, "Parser error", e);
 		}
 
 	}

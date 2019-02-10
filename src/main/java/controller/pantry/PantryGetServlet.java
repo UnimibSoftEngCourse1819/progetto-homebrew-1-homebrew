@@ -1,7 +1,6 @@
 package controller.pantry;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,9 +30,8 @@ public class PantryGetServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getUserID();
-				List<Pantry> pantry = new ArrayList<>();
 				PantryDao pantryDao = new PantryDao();
-				pantry = pantryDao.findUserPantry(userID);
+				List<Pantry> pantry = pantryDao.findUserPantry(userID);
 
 				request.setAttribute("pantry", pantry);
 				request.setAttribute("page", "pantry");

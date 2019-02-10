@@ -27,9 +27,6 @@ public class IngredientBrewDao {
 
 	private static String createIngredientBrew = "INSERT INTO Ingredient_Brew (ingredientID, brewID, quantity, measure) VALUES(?,?,?,?)";
 	private static String findAllIngredientBrew = "SELECT i.* FROM Brew AS b JOIN Ingredient_Brew AS i ON b.brewID=i.brewID WHERE b.brewID=?";
-	//private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
-
-	//private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
 
 	public List<IngredientBrew> findAllIngredientBrew(int brewID) {
 		List<IngredientBrew> ingredientBrews = new ArrayList<>();
@@ -83,6 +80,8 @@ public class IngredientBrewDao {
 
 	private void close() {
 		try {
+			if (resultSet != null)
+				resultSet.close();
 			if (statement != null)
 				statement.close();
 			if (connect != null)

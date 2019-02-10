@@ -1,7 +1,6 @@
 package controller.equipment;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,9 +29,8 @@ public class EquipmentGetServlet extends HttpServlet {
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				int userID = user.getUserID();
-				List<Tool> equipment = new ArrayList<>();
 				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
-				equipment = equipmentDao.userToolEquipment(userID);
+				List<Tool> equipment = equipmentDao.userToolEquipment(userID);
 
 				request.setAttribute("equipment", equipment);
 				request.setAttribute("page", "equipment");
