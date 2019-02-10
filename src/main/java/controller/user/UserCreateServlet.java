@@ -80,7 +80,12 @@ public class UserCreateServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
 				session.setAttribute("alertType", "success");
-				response.sendRedirect("./");
+
+				try {
+					response.sendRedirect("./");
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, "Servlet error", e);
+				}
 
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);

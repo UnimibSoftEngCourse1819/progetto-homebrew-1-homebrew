@@ -51,7 +51,7 @@ public class PantryUpdateServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
+
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
@@ -80,23 +80,22 @@ public class PantryUpdateServlet extends HttpServlet {
 					if (update > 0) {
 						session.setAttribute("alertMessage", "Dispensa modificata con successo");
 						session.setAttribute("alertType", "success");
-						response.sendRedirect("./pantry");
 					} else {
 						session.setAttribute("alertMessage", "Dispensa non modificata");
 						session.setAttribute("alertType", "error");
-						response.sendRedirect("./pantry");
 					}
 				} else {
 					session.setAttribute("alertMessage", "Dispensa non modificata");
 					session.setAttribute("alertType", "error");
+				}
+				try {
 					response.sendRedirect("./pantry");
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, "Servlet error", e);
 				}
 
 			}
 
-		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Servlet error", e);
-		}
 
 	}
 }

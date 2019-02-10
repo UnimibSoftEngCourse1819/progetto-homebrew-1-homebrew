@@ -39,6 +39,7 @@ public class BrewCreateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
+
 				if (session.getAttribute("recipe") != null) {
 					User user = (User) session.getAttribute("user");
 
@@ -83,68 +84,62 @@ public class BrewCreateServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		HttpSession session = request.getSession(false);
+		String redirect = "./recipes";
+		String name = request.getParameter("name");
+		String description = request.getParameter("description");
+		String tasteNote = request.getParameter("tasteNote");
+		int quantity = 0;
 		try {
-			HttpSession session = request.getSession(false);
-			String name = request.getParameter("name");
-			String description = request.getParameter("description");
-			String tasteNote = request.getParameter("tasteNote");
-			try {
-				int quantity = Integer.parseInt((String) request.getParameter("quantity"));
-				if (session != null && session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
-
-					User user = (User) session.getAttribute("user");
-					Recipe recipe = (Recipe) session.getAttribute("recipe");
-
-					BrewDao brewDao = new BrewDao();
-					Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
-							quantity, tasteNote);
-					int brewID = brewDao.createBrew(brew);
-
-					EquipmentDao equipmentDao = new EquipmentDao();
-					int batchSize = equipmentDao.findBatchSize(user.getUserID());
-
-					List<Pantry> pantryNew = newPantry(user.getUserID(), recipe.getRecipeID());
-					PantryDao pantryDao = new PantryDao();
-					pantryDao.updatePantry(pantryNew);
-
-					IngredientRecipeDao irDao = new IngredientRecipeDao();
-
-					List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
-					List<IngredientBrew> ingredientsBrew = new ArrayList<>();
-					Iterator<IngredientRecipe> iterator = ingredientsRecipe.iterator();
-					while (iterator.hasNext()) {
-						IngredientRecipe ingredientRecipe = iterator.next();
-						IngredientBrew ingredientBrew = new IngredientBrew(ingredientRecipe.getIngredientID(), brewID,
-								ingredientRecipe.getQuantity() * batchSize, ingredientRecipe.getMeasure());
-						ingredientsBrew.add(ingredientBrew);
-
-					}
-					IngredientBrewDao ibDao = new IngredientBrewDao();
-					ibDao.createIngredientBrew(ingredientsBrew);
-					session.setAttribute("alertMessage", "Miscela creata con successo");
-					session.setAttribute("alertType", "success");
-					if (((String) session.getAttribute("section")).equals("personal")) {
-						response.sendRedirect("./my_recipes");
-					} else {
-						response.sendRedirect("./recipes");
-					}
-
-				} else {
-					if (session != null) {
-						session.setAttribute("alertMessage", "Miscela non creata");
-						session.setAttribute("alertType", "error");
-						if (((String) session.getAttribute("section")).equals("personal")) {
-							response.sendRedirect("./my_recipes");
-						} else {
-							response.sendRedirect("./recipes");
-						}
-					} else {
-						response.sendRedirect("./recipes");
-					}
-				}
-			} catch (NumberFormatException e) {
-				logger.log(Level.SEVERE, "Parser error", e);
+			quantity = Integer.parseInt((String) request.getParameter("quantity"));
+		} catch (NumberFormatException e) {
+			logger.log(Level.SEVERE, "Parser error", e);
+		}
+		if (session != null) {
+			if (((String) session.getAttribute("section")).equals("personal")) {
+				redirect = "./my_recipes";
 			}
+			if (session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
+
+				User user = (User) session.getAttribute("user");
+				Recipe recipe = (Recipe) session.getAttribute("recipe");
+
+				BrewDao brewDao = new BrewDao();
+				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
+						quantity, tasteNote);
+				int brewID = brewDao.createBrew(brew);
+
+				EquipmentDao equipmentDao = new EquipmentDao();
+				int batchSize = equipmentDao.findBatchSize(user.getUserID());
+
+				List<Pantry> pantryNew = newPantry(user.getUserID(), recipe.getRecipeID());
+				PantryDao pantryDao = new PantryDao();
+				pantryDao.updatePantry(pantryNew);
+
+				IngredientRecipeDao irDao = new IngredientRecipeDao();
+
+				List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
+				List<IngredientBrew> ingredientsBrew = new ArrayList<>();
+				Iterator<IngredientRecipe> iterator = ingredientsRecipe.iterator();
+				while (iterator.hasNext()) {
+					IngredientRecipe ingredientRecipe = iterator.next();
+					IngredientBrew ingredientBrew = new IngredientBrew(ingredientRecipe.getIngredientID(), brewID,
+							ingredientRecipe.getQuantity() * batchSize, ingredientRecipe.getMeasure());
+					ingredientsBrew.add(ingredientBrew);
+				}
+				IngredientBrewDao ibDao = new IngredientBrewDao();
+				ibDao.createIngredientBrew(ingredientsBrew);
+				session.setAttribute("alertMessage", "Miscela creata con successo");
+				session.setAttribute("alertType", "success");
+
+			} else {
+				session.setAttribute("alertMessage", "Miscela non creata");
+				session.setAttribute("alertType", "error");
+			}
+		}
+		try {
+			response.sendRedirect(redirect);
 
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);

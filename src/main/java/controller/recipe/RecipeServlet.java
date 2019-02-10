@@ -32,68 +32,85 @@ public class RecipeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			int id = (int) Integer.parseInt((String) request.getParameter("n"));
-			HttpSession session = request.getSession(false);
-			if (session != null && session.getAttribute("user") != null) {
-				String section = (String) session.getAttribute("section");
-				User user = (User) session.getAttribute("user");
-				RecipeDao recipeDao = new RecipeDao();
 
-				Recipe recipe = recipeDao.findRecipeByID(id);
+		HttpSession session = request.getSession(false);
+		int id = -1;
+		try {
+			id = (int) Integer.parseInt((String) request.getParameter("n"));
+		} catch (NumberFormatException e) {
+			logger.log(Level.SEVERE, "Parser error", e);
+		}
+		String redirect = "./";
+
+		if (session != null && session.getAttribute("user") != null) {
+			String section = (String) session.getAttribute("section");
+			User user = (User) session.getAttribute("user");
+			RecipeDao recipeDao = new RecipeDao();
+
+			Recipe recipe = recipeDao.findRecipeByID(id);
+			UserDao userDao = new UserDao();
+			User userRecipe = userDao.selectUserById(recipe.getUserID());
+
+			if (recipe.getVisibility().equals("public")
+					|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
+				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+
+				List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
+
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
+
+				BrewDao brewDao = new BrewDao();
+				List<Brew> brews = brewDao.findBrewByRecipeID(id);
+
+				if (user.getUserID() == recipe.getUserID()) {
+					request.setAttribute("editable", true);
+				}
+				session.setAttribute("recipe", recipe);
+				request.setAttribute("recipe", recipe);
+				request.setAttribute("userRecipe", userRecipe);
+				request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+				request.setAttribute("brews", brews);
+				request.setAttribute("page", "recipe");
+				request.setAttribute("section", section);
+				try {
+					dispatcher.forward(request, response);
+				} catch (ServletException | IOException e) {
+					logger.log(Level.SEVERE, "Servlet error", e);
+				}
+				session.removeAttribute("alertMessage");
+				session.removeAttribute("alertType");
+			} else {
+				redirect = "./recipes";
+			}
+
+		} else {
+			RecipeDao recipeDao = new RecipeDao();
+			Recipe recipe = recipeDao.findRecipeByID(id);
+
+			if (recipe.getVisibility().equals("public")) {
+				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+
+				List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 				UserDao userDao = new UserDao();
 				User userRecipe = userDao.selectUserById(recipe.getUserID());
 
-				if (recipe.getVisibility().equals("public")
-						|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
-					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-
-					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
-
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
-
-					BrewDao brewDao = new BrewDao();
-					List<Brew> brews = brewDao.findBrewByRecipeID(id);
-
-					if (user.getUserID() == recipe.getUserID()) {
-						request.setAttribute("editable", true);
-					}
-					session.setAttribute("recipe", recipe);
-					request.setAttribute("recipe", recipe);
-					request.setAttribute("userRecipe", userRecipe);
-					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
-					request.setAttribute("brews", brews);
-					request.setAttribute("page", "recipe");
-					request.setAttribute("section", section);
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
+				request.setAttribute("recipe", recipe);
+				request.setAttribute("userRecipe", userRecipe);
+				request.setAttribute("ingredientsRecipe", ingredientsRecipe);
+				request.setAttribute("page", "recipe");
+				try {
 					dispatcher.forward(request, response);
-					session.removeAttribute("alertMessage");
-					session.removeAttribute("alertType");
-				} else {
-					response.sendRedirect("/homebrew/recipes");
+				} catch (ServletException | IOException e) {
+					logger.log(Level.SEVERE, "Servlet error", e);
 				}
-
 			} else {
-				RecipeDao recipeDao = new RecipeDao();
-				Recipe recipe = recipeDao.findRecipeByID(id);
-
-				if (recipe.getVisibility().equals("public")) {
-					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-
-					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
-					UserDao userDao = new UserDao();
-					User userRecipe = userDao.selectUserById(recipe.getUserID());
-
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
-					request.setAttribute("recipe", recipe);
-					request.setAttribute("userRecipe", userRecipe);
-					request.setAttribute("ingredientsRecipe", ingredientsRecipe);
-					request.setAttribute("page", "recipe");
-					dispatcher.forward(request, response);
-				} else {
-					response.sendRedirect("./recipe");
-				}
+				redirect = "./recipe";
 			}
-		} catch (ServletException | IOException e) {
+		}
+		try {
+			response.sendRedirect(redirect);
+		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 
@@ -102,8 +119,9 @@ public class RecipeServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
+		
 			HttpSession session = request.getSession(false);
+			String redirect = "./";
 			if (session != null && session.getAttribute("user") != null) {
 				int recipeID = 0;
 				try {
@@ -113,14 +131,14 @@ public class RecipeServlet extends HttpServlet {
 				}
 
 				session.setAttribute("recipeID", recipeID);
-				response.sendRedirect("./edit_recipe");
-			} else {
-				response.sendRedirect("./");
+				redirect = "./edit_recipe";
+			}
+			try {
+				response.sendRedirect(redirect);
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "Servlet error", e);
 			}
 
-		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Servlet error", e);
-		}
 
 	}
 

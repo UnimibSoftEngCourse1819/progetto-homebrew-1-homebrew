@@ -32,43 +32,42 @@ public class RecipeRemoveServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			HttpSession session = request.getSession(false);
 
-			if (session != null && session.getAttribute("user") != null) {
-				String redirect = "";
+		HttpSession session = request.getSession(false);
+		String redirect = "./";
 
-				if (((String) session.getAttribute("section")).equals("general")) {
-					redirect = "./recipes";
-				} else {
-					redirect = "./my_recipes";
-				}
-				int recipeID = (int) session.getAttribute("recipeID");
-				int recipePOST = 0;
-				try {
-					recipePOST = Integer.parseInt(request.getParameter("recipeID"));
-				} catch (NumberFormatException e) {
-					logger.log(Level.SEVERE, "Parser error", e);
-				}
-				int sqlResp = -1;
-				if (recipeID == recipePOST) {
-					RecipeDao recipeDao = new RecipeDao();
-					sqlResp = recipeDao.removeRecipe(recipeID);
-				}
+		if (session != null && session.getAttribute("user") != null) {
 
-				if (sqlResp != -1) {
-					session.setAttribute("alertMessage", "Ricetta cancellata con successo");
-					session.setAttribute("alertType", "success");
-					response.sendRedirect(redirect);
-				} else {
-					session.setAttribute("alertMessage", "Cancellazione non avvenuta");
-					session.setAttribute("alertType", "error");
-					response.sendRedirect(redirect);
-				}
-
+			if (((String) session.getAttribute("section")).equals("general")) {
+				redirect = "./recipes";
 			} else {
-				response.sendRedirect("./");
+				redirect = "./my_recipes";
 			}
+			int recipeID = (int) session.getAttribute("recipeID");
+			int recipePOST = 0;
+			try {
+				recipePOST = Integer.parseInt(request.getParameter("recipeID"));
+			} catch (NumberFormatException e) {
+				logger.log(Level.SEVERE, "Parser error", e);
+			}
+			int sqlResp = -1;
+			if (recipeID == recipePOST) {
+				RecipeDao recipeDao = new RecipeDao();
+				sqlResp = recipeDao.removeRecipe(recipeID);
+			}
+
+			if (sqlResp != -1) {
+				session.setAttribute("alertMessage", "Ricetta cancellata con successo");
+				session.setAttribute("alertType", "success");
+			} else {
+				session.setAttribute("alertMessage", "Cancellazione non avvenuta");
+				session.setAttribute("alertType", "error");
+			}
+
+		}
+		try {
+			response.sendRedirect(redirect);
+
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}

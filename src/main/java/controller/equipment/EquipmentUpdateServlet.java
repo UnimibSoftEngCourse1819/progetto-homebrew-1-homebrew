@@ -2,6 +2,7 @@ package controller.equipment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,57 +52,56 @@ public class EquipmentUpdateServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			HttpSession session = request.getSession(false);
-			if (session != null && session.getAttribute("user") != null) {
-				User user = (User) session.getAttribute("user");
-				int userID = user.getUserID();
-				EquipmentDao equipmentDao = new EquipmentDao();
-				Equipment equipment = equipmentDao.findEquipmentByUser(userID);
-				int equipmentID = equipment.getEquipmentID();
-				ArrayList<ToolEquipment> toolEquipments = new ArrayList<>();
-				ToolEquipment toolEquipment = null;
-				for (int i = 10000001; i <= 10000011; i++) {
-					if (request.getParameter(i + "") != null && !request.getParameter(i + "").equals("")) {
-						int capacity = 0;
-						try {
-							capacity = Integer.parseInt((String) request.getParameter(i + ""));
-						} catch (NumberFormatException e) {
-							logger.log(Level.SEVERE, "Parser error", e);
-						}
-						if (capacity > 0) {
-							toolEquipment = new ToolEquipment(equipmentID, i, capacity);
-						}
-						toolEquipments.add(toolEquipment);
+
+		HttpSession session = request.getSession(false);
+		if (session != null && session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			int userID = user.getUserID();
+			EquipmentDao equipmentDao = new EquipmentDao();
+			Equipment equipment = equipmentDao.findEquipmentByUser(userID);
+			int equipmentID = equipment.getEquipmentID();
+			ArrayList<ToolEquipment> toolEquipments = new ArrayList<>();
+
+			ToolDao toolDao = new ToolDao();
+			List<Tool> tools = toolDao.findAllTool();
+			Iterator<Tool> iterator = tools.iterator();
+			int capacity = 0;
+			while (iterator.hasNext()) {
+				Tool tool = iterator.next();
+				String id = tool.getToolID() + "";
+				capacity = 0;
+				if (request.getParameter(id) != null && !request.getParameter(id).equals("")) {
+					try {
+						capacity = Integer.parseInt((String) request.getParameter(id));
+					} catch (NumberFormatException e) {
+						logger.log(Level.SEVERE, "Parser error", e);
 					}
 				}
-
-				if (toolEquipments.size() > 0) {
-					ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
-					int update = toolEquipmentDao.updateToolEquipment(toolEquipments);
-					int batchSize = toolEquipmentDao.getBatchSize(equipmentID);
-					equipment = new Equipment(equipmentID, userID, batchSize);
-					equipmentDao.updateEquipment(equipment);
-					if (update > 0) {
-						session.setAttribute("alertMessage", "Equipaggiamento modificato con successo");
-						session.setAttribute("alertType", "success");
-						response.sendRedirect("./equipment");
-					} else {
-						session.setAttribute("alertMessage", "Equipaggiamento non modificato");
-						session.setAttribute("alertType", "error");
-						response.sendRedirect("./equipment");
-					}
-				} else {
-					session.setAttribute("alertMessage", "Equipaggiamento non modificato");
-					session.setAttribute("alertType", "error");
-					response.sendRedirect("./equipment");
+				if (capacity > 0) {
+					ToolEquipment toolEquipment = new ToolEquipment(equipmentID, tool.getToolID(), capacity);
+					toolEquipments.add(toolEquipment);
 				}
-
 			}
 
+			ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
+			int update = toolEquipmentDao.updateToolEquipment(toolEquipments);
+			int batchSize = toolEquipmentDao.getBatchSize(equipmentID);
+			equipment = new Equipment(equipmentID, userID, batchSize);
+			equipmentDao.updateEquipment(equipment);
+			if (update > 0) {
+				session.setAttribute("alertMessage", "Equipaggiamento modificato con successo");
+				session.setAttribute("alertType", "success");
+			} else {
+				session.setAttribute("alertMessage", "Equipaggiamento non modificato");
+				session.setAttribute("alertType", "error");
+			}
+		}
+		try {
+			response.sendRedirect("./equipment");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 
 	}
+
 }
