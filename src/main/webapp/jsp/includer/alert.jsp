@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!---------------------- ALERT ---------------------->
-
 
 <c:if test="${alertMessage != null && alertType != null}">
 	<div class="modal fade" id="alert_modal" tabindex="-1" role="dialog"

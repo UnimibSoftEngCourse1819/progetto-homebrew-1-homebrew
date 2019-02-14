@@ -1,25 +1,34 @@
 $(document).ready(function() {
-	addRemoveEl();
 	listener();
 });
 
 function listener() {
 	searchButton();
 	menuBrew();
+	openModal();
+	addRemoveEl();
 	
 }
+function openModal() {
+	$('.button_brew').click(function() {
+		$('#brew_modal .modal_Bname p').empty().append($('#brew_name', this).text());
+		$('#brew_modal .modal_Buser p').empty().append($('#brew_user', this).text());
+		$('#brew_modal .modal_Bdate p').empty().append($('#brew_date', this).text());
+		$('#brew_modal .modal_Bquantity p').empty().append($('#brew_quantity', this).text());
+		$('#brew_modal .modal_Bdesc p').empty().append($('#brew_desc', this).text());
+		$('#brew_modal .modal_Bnote p').empty().append($('#brew_note', this).text());
+	})
+}
+
+
 function searchButton() {
 	$('#open_search').click(function() {
-		console.log("prova");
-		if ($("#search_cont.active").length == 0) {
-			$("#search_cont").css({right: "0px"});
-			$("#search_cont").addClass('active');
-			
-		} else {
-			$("#search_cont").css({right: "-400px"});
-			$("#search_cont").removeClass('active');
-
-		}
+		$("#search_cont").css({right: "0px"});
+		$("#search_cont").addClass('active');
+	});
+	$('#close_search').click(function() {
+		$("#search_cont").css({right: "-400px"});
+		$("#search_cont").removeClass('active');
 	});
 
 }
@@ -72,12 +81,12 @@ function addSteps() {
 
 				})
 	}
-	if ($('.edit_recipe_steps').length != 0) {
-		$('.edit_recipe_steps button[name="addStep"]')
+	if ($('.edit-recipe-steps').length != 0) {
+		$('.edit-recipe-steps button[name="addStep"]')
 		.unbind()
 		.click(
 				function() {
-					var count = $(".edit_recipe_steps tr").length + 1;
+					var count = $(".edit-recipe-steps tr").length + 1;
 					if (count <= 40) {
 						var newRow = "<tr><td class=\"leftStep\">"
 								+ count
@@ -86,7 +95,7 @@ function addSteps() {
 								+ count
 								+ "\" placeholder=\"Inserisci il procedimento\"></textarea></td></td></tr>";
 
-						$('.edit_recipe_steps tbody:last-child').append(
+						$('.edit-recipe-steps tbody:last-child').append(
 								newRow);
 					}
 
@@ -111,17 +120,17 @@ function removeSteps() {
 
 				})
 	}
-	if ($('.edit_recipe_steps').length != 0) {
-		$('.edit_recipe_steps button[name="removeStep"]')
+	if ($('.edit-recipe-steps').length != 0) {
+		$('.edit-recipe-steps button[name="removeStep"]')
 		.unbind()
 		.click(
 				function() {
-					var count = $(".edit_recipe_steps tr").length;
+					var count = $(".edit-recipe-steps tr").length;
 					if (count > 1) {
 						var buttons = "<button name=\"removeStep\" type=\"button\">&times;</button>"
 								+ "<button name=\"addStep\" type=\"button\">+</button>";
 
-						$(".edit_recipe_steps tr:last-child").remove();
+						$(".edit-recipe-steps tr:last-child").remove();
 					}
 
 				})

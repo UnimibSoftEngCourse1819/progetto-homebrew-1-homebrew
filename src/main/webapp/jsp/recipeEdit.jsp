@@ -22,94 +22,90 @@
 
 <body>
 	<jsp:include page="includer/alert.jsp" />
-
-	<div class="layout_left"></div>
-	<div class="layout_right"></div>
-	<div class="row page" class="container">
-		<div class="header">
-			<jsp:include page="includer/menu.jsp" />
-		</div>
-		<div class="row main">
-			<div class="main_shadow">
-				<div></div>
-			</div>
-
-			<div class="content_main recipe_cont">
-				<h4>Modifica la ricetta</h4>
-				<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">INDIETRO</a>
-				<form action="./remove_recipe" method="post">
-					<input type="hidden" name="recipeID" value="${recipe.recipeID}">
-					<button name="deleteRecipe" type="submit">ELIMINA</button>
-				</form>
-				<form action="./edit_recipe" method="post" class="recipe_edit_form">
-					<input type="hidden" name="recipeID" value="${recipe.recipeID}">
-					<div class="row">
-						<div class="col-9">
-							<h6>Titolo</h6>
-							<input type="text" name="name" value="${recipe.name}">
-						</div>
-						<div class="col-3">
-							<h6>Visibilita'</h6>
-							<select name="visibility">
-								<option value="public">Pubblica</option>
-								<option value="private">Privata</option>
-							</select>
-						</div>
-					</div>
-					<div>
-						<h6>Descrizione</h6>
-						<textarea name="description">${recipe.description}</textarea>
-					</div>
-					<div class="row">
-						<div class="col-4">
-							<h6>Ingredienti</h6>
-							<table>
-								<tbody>
-									<c:forEach items="${ingredients}" var="item">
-										<tr>
-											<td class="leftIngr">${item.name}</td>
-											<td class="rightIngr"><c:forEach
-													items="${ingredientsRecipe}" var="itemRecipe">
-													<c:if
-														test="${itemRecipe.ingredientID == item.ingredientID}">
-														<c:set var="valueIngredient"
-															value="${itemRecipe.quantity}"></c:set>
-														<c:set var="measureIngredient"
-															value="${itemRecipe.measure}"></c:set>
-													</c:if>
-												</c:forEach> <input type="number" name="valueIngr-${item.ingredientID}"
-												value="${valueIngredient}" min="0"> <input
-												type="text" name="measureIngr-${item.ingredientID}"
-												value="${measureIngredient}"></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<div class="col-8 edit_recipe_steps">
-							<h6>Passaggi</h6>
-							<button name="removeStep" type="button">&times;</button>
-							<button name="addStep" type="button">+</button>
-							<table>
-								<tbody>
-									<c:forEach items="${recipe.steps}" var="item">
-										<tr>
-											<td class="leftStep">${item.key}</td>
-											<td class="rightStep"><textarea name="step-${item.key}">${item.value}</textarea>
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<button name="editRecipe" type="submit">MODIFICA</button>
-				</form>
-
-			</div>
-		</div>
+	<div class="header">
+		<jsp:include page="includer/menu.jsp" />
 	</div>
+	<div class="row page recipe ">
+		<div class="row edit-recipe-top">
+			<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">&larr;&nbsp;Ricetta</a>
+			<h4>Modifica la ricetta</h4>
+			<form action="./remove_recipe" method="post">
+				<input type="hidden" name="recipeID" value="${recipe.recipeID}">
+				<button name="deleteRecipe" type="submit">Elimina</button>
+			</form>
+		</div>
+		<div class="row recipe-edit-form">
+			<form action="./edit_recipe" method="post">
+				<input type="hidden" name="recipeID" value="${recipe.recipeID}">
+				<div class="row">
+					<div class="col-10">
+						<h6>Titolo</h6>
+						<input type="text" name="name" value="${recipe.name}">
+					</div>
+					<div class="col-2 recipe-edit-visibility">
+						<h6>Visibilit&agrave;</h6>
+						<select name="visibility">
+							<option value="public">Pubblica</option>
+							<option value="private">Privata</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<h6>Descrizione</h6>
+					<textarea name="description">${recipe.description}</textarea>
+				</div>
+				<div class="row">
+					<div class="col-5">
+						<h6>Ingredienti</h6>
+						<table>
+							<tbody>
+								<c:forEach items="${ingredients}" var="item">
+									<tr>
+										<td class="leftIngr">${item.name}</td>
+										<td class="rightIngr"><c:set var="valueIngredient"
+												value="0"></c:set> <c:forEach items="${ingredientsRecipe}"
+												var="itemRecipe">
+												<c:if test="${itemRecipe.ingredientID == item.ingredientID}">
+													<c:set var="valueIngredient" value="${itemRecipe.quantity}"></c:set>
+													<c:set var="measureIngredient"
+														value="${itemRecipe.measure}"></c:set>
+												</c:if>
+											</c:forEach> <input type="number" name="valueIngr-${item.ingredientID}"
+											value="${valueIngredient}" min="0"> <input
+											type="text" name="measureIngr-${item.ingredientID}"
+											value="${measureIngredient}"></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-7 edit-recipe-steps">
+						<h6>Passaggi</h6>
+						<div class="buttons-adder-steps">
+							<button name="removeStep" type="button">-</button>
+							<button name="addStep" type="button">+</button>
+						</div>
+
+						<table>
+							<tbody>
+								<c:forEach items="${recipe.steps}" var="item">
+									<tr>
+										<td class="leftStep">${item.key}</td>
+										<td class="rightStep"><textarea name="step-${item.key}">${item.value}</textarea>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<button name="editRecipe" type="submit">MODIFICA</button>
+			</form>
+		</div>
+
+	</div>
+
 
 </body>
 </html>

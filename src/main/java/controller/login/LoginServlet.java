@@ -65,7 +65,6 @@ public class LoginServlet extends HttpServlet {
 					oldSession.invalidate();
 				}
 				HttpSession session = request.getSession(true);
-				session.setMaxInactiveInterval(20 * 60);
 				UserDao userDao = new UserDao();
 				User user = userDao.selectUserByEmail(username);
 				session.setAttribute("user", user);

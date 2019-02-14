@@ -4,7 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<!---------------------- LOGIN ---------------------->
 <div class="title">
 	<a href="./home"> <img src="images/logos/account.svg" alt="Logo">
 		<span>brewday</span>
@@ -48,7 +47,6 @@
 
 
 
-<!---------------------- MENU ---------------------->
 
 <div class="menu_list">
 	<c:if test="${logged == null}">

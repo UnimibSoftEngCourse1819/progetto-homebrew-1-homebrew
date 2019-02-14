@@ -95,10 +95,12 @@ public class RecipeCreateServlet extends HttpServlet {
 					} catch (NumberFormatException e) {
 						logger.log(Level.SEVERE, "Parser error", e);
 					}
-					String measure = request.getParameter("measureIngr-" + ingredient.getIngredientID());
-					IngredientRecipe ingredientRecipe = new IngredientRecipe(recipeID, ingredient.getIngredientID(),
-							ingredient.getName(), quantity, measure);
-					ingredientsRecipe.add(ingredientRecipe);
+					if (quantity != 0) {
+						String measure = request.getParameter("measureIngr-" + ingredient.getIngredientID());
+						IngredientRecipe ingredientRecipe = new IngredientRecipe(recipeID, ingredient.getIngredientID(),
+								ingredient.getName(), quantity, measure);
+						ingredientsRecipe.add(ingredientRecipe);
+					}
 
 				}
 				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();

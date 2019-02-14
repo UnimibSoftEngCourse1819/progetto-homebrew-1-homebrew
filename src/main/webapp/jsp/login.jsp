@@ -19,29 +19,21 @@
 
 <body>
 	<jsp:include page="includer/alert.jsp" />
-	<div class="layout_left"></div>
-	<div class="layout_right"></div>
-	<div class="row page" class="container">
-		<div class="header">
-			<jsp:include page="includer/menu.jsp" />
+	<div class="header">
+		<jsp:include page="includer/menu.jsp" />
+	</div>
+	<div class="row page">
+		<div class="image_home">
+			<img src="images/top_home.jpg" alt="Image Home" />
 		</div>
-		<div class="main">
-			<div class="main_shadow">
-				<div></div>
-			</div>
-
-			<div class="image_home">
-				<img src="images/top_home.jpg" alt="Image Home" />
-			</div>
-			<div class="home_desc">
-				<h6>BrewDay ti permette di tenere traccia delle tue birre
-					artigianali</h6>
-				<p>
-					Sarai in grado di creare le tue ricette e visualizzare quelle della
-					community<br> Potrai gestire le tue miscele e provare quelle
-					degli altri membri
-				</p>
-			</div>
+		<div class="home_desc">
+			<h6>BrewDay ti permette di tenere traccia delle tue birre
+				artigianali</h6>
+			<p>
+				Sarai in grado di creare le tue ricette e visualizzare quelle della
+				community<br> Potrai gestire le tue miscele e provare quelle
+				degli altri membri
+			</p>
 		</div>
 	</div>
 </body>

@@ -40,7 +40,6 @@ public class RecipeServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			logger.log(Level.SEVERE, "Parser error", e);
 		}
-		String redirect = "./";
 
 		if (session != null && session.getAttribute("user") != null) {
 			String section = (String) session.getAttribute("section");
@@ -80,7 +79,11 @@ public class RecipeServlet extends HttpServlet {
 				session.removeAttribute("alertMessage");
 				session.removeAttribute("alertType");
 			} else {
-				redirect = "./recipes";
+				try {
+					response.sendRedirect("./recipe");
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, "Servlet error", e);
+				}
 			}
 
 		} else {
@@ -105,13 +108,12 @@ public class RecipeServlet extends HttpServlet {
 					logger.log(Level.SEVERE, "Servlet error", e);
 				}
 			} else {
-				redirect = "./recipe";
+				try {
+					response.sendRedirect("./recipe");
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, "Servlet error", e);
+				}
 			}
-		}
-		try {
-			response.sendRedirect(redirect);
-		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 
 	}
@@ -119,26 +121,25 @@ public class RecipeServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-			HttpSession session = request.getSession(false);
-			String redirect = "./";
-			if (session != null && session.getAttribute("user") != null) {
-				int recipeID = 0;
-				try {
-					recipeID = Integer.parseInt((String) request.getParameter("recipeID"));
-				} catch (NumberFormatException e) {
-					logger.log(Level.SEVERE, "Parser error", e);
-				}
 
-				session.setAttribute("recipeID", recipeID);
-				redirect = "./edit_recipe";
-			}
+		HttpSession session = request.getSession(false);
+		String redirect = "./";
+		if (session != null && session.getAttribute("user") != null) {
+			int recipeID = 0;
 			try {
-				response.sendRedirect(redirect);
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Servlet error", e);
+				recipeID = Integer.parseInt((String) request.getParameter("recipeID"));
+			} catch (NumberFormatException e) {
+				logger.log(Level.SEVERE, "Parser error", e);
 			}
 
+			session.setAttribute("recipeID", recipeID);
+			redirect = "./edit_recipe";
+		}
+		try {
+			response.sendRedirect(redirect);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
 
 	}
 
