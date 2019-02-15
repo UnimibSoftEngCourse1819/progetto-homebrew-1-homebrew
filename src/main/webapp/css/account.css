@@ -1,0 +1,69 @@
+/* ------------------- ACCOUNT ------------------- */
+.page.account {
+	padding: 10px 15px;
+}
+
+.account-cont {
+	min-height: 500px;
+	padding: 0 10px;
+}
+
+.account-menu {
+	padding-left: 20px;
+	border-right: solid 1px #000000;
+}
+
+.account-menu li {
+	margin: 10px 0;
+	padding: 3px 10px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.account-menu li.active {
+	background-color: #ececec;
+	cursor: default;
+}
+
+.account-form-cont {
+	padding-left: 20px;
+}
+
+.account-form-cont h5 {
+	margin-bottom: 10px;
+	font-size: 30px;
+}
+
+.account-form-cont p {
+	font-size: 14px;
+	font-style: italic;
+}
+
+.account-form {
+	display: none;
+}
+
+.account-form.active {
+	display: block;
+}
+
+.account-form form {
+	padding: 50px 40px;
+}
+
+.account-form form div {
+	margin: 0 0 30px;
+	padding: 0 0 30px;
+	border-bottom: solid 1px #333333;
+}
+
+.account-form h6 {
+	display: inline-block;
+	width: 200px;
+	font-size: 16px;
+}
+
+.account-form input {
+	font-size: 18px;
+	width: 300px;
+}

@@ -1,0 +1,71 @@
+/* ------------------- CREATE BREW ------------------- */
+.page.new-brew {
+	padding: 15px;
+}
+
+
+
+/* ------------------- LIST BREW ------------------- */
+.page.brew-list {
+	padding: 80px 50px 20px;
+}
+
+.brew-element {
+	width: 100%;
+	padding: 40px 10px 20px;
+	border-bottom: solid 1px #5a5a5a;
+}
+
+.brew-inner {
+	width: 100%;
+}
+
+.brew-inner table {
+	width: 100%;
+	margin-bottom: 30px;
+	border-bottom: solid 1px #cccccc;
+}
+
+.brew-inner table td {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.brew-inner table td * {
+	display: inline-block;
+	color: #000000;
+	font-size: 20px;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.brew-inner table td h5 {
+	font-size: 16px;
+	font-weight: 300;
+	letter-spacing: 1px;
+}
+
+.brew-inner table td a:hover {
+	color: #6d6d6d;
+}
+
+.brew-desc {
+	padding: 0 10px;
+}
+
+.brew-desc h5 {
+	margin-bottom: 5px;
+	color: #000000;
+	font-size: 16px;
+	font-weight: 500;
+	letter-spacing: 1px;
+	text-decoration: none;
+}
+
+.brew-desc p {
+	margin-bottom: 20px;
+	color: #000000;
+	font-size: 18px;
+	font-weight: 200;
+	text-decoration: none;
+}

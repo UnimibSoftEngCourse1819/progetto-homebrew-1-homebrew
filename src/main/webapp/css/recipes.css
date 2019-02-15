@@ -4,10 +4,12 @@
 }
 
 .new_recipe, .new_recipe:hover, .new_recipe:active, .new_recipe:focus {
+	position: absolute;
+	top: 20px;
+	left: 0;
 	font-size: 18px;
 	color: #333333;
 	text-decoration: none;
-	color: #333333;
 }
 
 .show_all, .show_all:hover, .show_all:active, .show_all:focus {
@@ -15,38 +17,6 @@
 	text-decoration: none;
 }
 
-.recipes_menu_top {
-	position: fixed;
-	top: 0;
-	left: 25%;
-	width: 75%;
-	height: 80px;
-	background-color: transparent;
-	z-index: 10;
-	overflow: hidden;
-}
-
-.recipes_menu_top_shad {
-	height: 67px;
-	background-color: transparent;
-	z-index: 10;
-	box-shadow: 0px 0px 20px 0px #00000066;
-}
-
-.recipes_menu_ins {
-	position: fixed;
-	top: 0;
-	left: 25%;
-	width: calc(75% - 60px);
-	height: 67px;
-	margin: 0 30px;
-	padding: 20px 30px;
-	background-color: #ffffff;
-}
-
-.recipes_menu_shad {
-	box-shadow: 0px 0px 10px 0px #00000066;
-}
 
 #open_search {
 	position: fixed;
@@ -200,7 +170,6 @@
 	left: 0;
 	bottom: 0;
 	padding: 0 0 10px 20px;
-	color: #ffffff;
 	background-color: #000000b3;
 	box-shadow: 0px 0px 60px 40px #000000b3;
 	bottom: 0;
@@ -209,12 +178,14 @@
 
 .recipe_title h3 {
 	margin-bottom: 0;
+	color: #ffffff;
 	font-size: 40px;
 }
 
 .recipe_title p {
 	float: left;
 	margin-right: 20px;
+	color: #ffffff;
 	font-size: 14px;
 }
 
@@ -244,13 +215,20 @@
 }
 
 .recipe_menu button {
-	border: solid 1px #ececec;
-	background-color: #ececec;
+	padding: 3px 10px 2px;
+	border: solid 1px #ffdc90;
+	border-radius: 4px;
+	background-color: #ffdc90;
+	color: #636363;
+	cursor: pointer;
+	background-color: #ffdc90;
 }
 
 .recipe_menu button.active {
 	border: solid 1px #333333;
 	background-color: #ffffff;
+	color: #333333;
+	cursor: default;
 }
 
 .recipe_cont table {
@@ -310,46 +288,15 @@
 }
 
 /* ------------------- EDIT RECIPE ------------------- */
-.edit-recipe-top {
-	position: relative;
-	margin: 20px 0 40px;
+.page.recipe-edit {
+	padding: 10px 15px;
 }
 
-.edit-recipe-top h4 {
-	width: 100%;
-	text-align: center;
-	font-size: 32px;
-}
-
-.edit-recipe-top a, .edit-recipe-top button {
-	position: absolute;
-	top: 5px;
-	padding: 0 5px;
-	margin: 0 4px;
-	color: #000000;
-	font-size: 18px;
-	font-weight: 300;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.edit-recipe-top a {
-	left: 0;
-}
-
-.edit-recipe-top button {
-	right: 0;
-	background-color: transparent;
-	border: solid 1px #333333;
-}
-
-.edit-recipe-top button:hover {
-	background-color: #ececec;
-}
 
 .recipe-edit-form form {
 	position: relative;
 	width: 100%;
+	padding: 30px 50px;
 }
 
 .recipe-edit-form .row {
@@ -381,25 +328,37 @@
 	border: solid 1px #333333;
 }
 
-.recipe-edit-form .leftIngr {
-	width: 150px;
+.edit-recipe-ingred tr {
+	border-bottom: solid 1px #888888;
 }
 
-.recipe-edit-form .rightIngr {
+.edit-recipe-ingred .leftIngr {
+	width: 200px;
+	padding-left: 10px;
+}
+
+.edit-recipe-ingred .rightIngr {
 	width: calc(100% - 100px);
+	padding: 4px 0;
 }
 
-.recipe-edit-form .rightIngr input {
-	width: 100px;
+.edit-recipe-ingred .rightIngr input {
 	float: left;
-	border: none;
+	border: solid 1px #ececec;
 	margin: 0px 5px;
 }
 
-.recipe-edit-form .rightIngr input[name^="valueIngr-"] {
+.edit-recipe-ingred .rightIngr input:focus {
+	border: solid 1px #a7a7a7;
+}
+
+.edit-recipe-ingred .rightIngr input[name^="valueIngr-"] {
 	width: 80px;
-	background-color: #ececec;
 	text-align: right;
+}
+
+.edit-recipe-ingred .rightIngr input[name^="measureIngr-"] {
+	width: 50px;
 }
 
 .edit-recipe-steps h6 {
@@ -419,6 +378,7 @@
 	background-color: transparent;
 	line-height: 20px;
 	cursor: pointer;
+	border-radius: 4px;
 }
 
 .buttons-adder-steps button:hover {
@@ -450,18 +410,21 @@
 
 .recipe-edit-form button[name="editRecipe"] {
 	position: absolute;
-	bottom: 0;
-	right: 0;
+	bottom: 20px;
+	right: 50px;
 	padding: 0 5px;
 	margin: 0 4px;
 	border: solid 1px #333333;
+	border-radius: 4px;
 	background-color: transparent;
 	color: #000000;
 	font-size: 18px;
 	font-weight: 300;
 	text-decoration: none;
 	cursor: pointer;
+	border-radius: 4px;
 }
+
 .recipe-edit-form button[name="editRecipe"]:hover {
 	background-color: #ececec;
 }

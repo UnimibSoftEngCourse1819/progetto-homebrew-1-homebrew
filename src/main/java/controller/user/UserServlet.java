@@ -21,8 +21,8 @@ import org.bouncycastle.util.encoders.Hex;
 import model.user.User;
 import model.user.UserDao;
 
-@WebServlet("/edit_account")
-public class UserUpdateServlet extends HttpServlet {
+@WebServlet("/account")
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
@@ -38,13 +38,14 @@ public class UserUpdateServlet extends HttpServlet {
 				User getUser = userDao.selectUserById(userID);
 
 				request.setAttribute("user", getUser);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/userUpdate.jsp");
+				request.setAttribute("page", "account");
+
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/account.jsp");
 				dispatcher.forward(request, response);
 			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	@Override
@@ -106,5 +107,4 @@ public class UserUpdateServlet extends HttpServlet {
 		}
 
 	}
-
 }

@@ -24,14 +24,14 @@
 		<jsp:include page="includer/menu.jsp" />
 	</div>
 	<div class="row page recipe_list">
-		<div class="recipes_menu_top">
-			<div class="recipes_menu_top_shad"></div>
-			<div class="recipes_menu_ins">
+		<div class="menu-top-fix">
+			<div class="menu-top-shad"></div>
+			<div class="menu-top-ins">
 				<c:if test="${logged != null}">
 					<a class="new_recipe" href="./new_recipe">CREA NUOVA</a>
 				</c:if>
+				<h4>Ricette Personali</h4>
 			</div>
-
 		</div>
 		<c:forEach items="${recipes}" var="item">
 			<div class="recipes_element">

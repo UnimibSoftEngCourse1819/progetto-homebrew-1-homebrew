@@ -67,6 +67,7 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				UserDao userDao = new UserDao();
 				User user = userDao.selectUserByEmail(username);
+				session.setMaxInactiveInterval(2*60*60);
 				session.setAttribute("user", user);
 				session.setAttribute("logged", true);
 				response.sendRedirect("/homebrew/home");

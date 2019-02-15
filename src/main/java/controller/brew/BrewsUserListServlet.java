@@ -37,7 +37,7 @@ public class BrewsUserListServlet extends HttpServlet {
 				BrewDao brewDao = new BrewDao();
 				List<Brew> brews = brewDao.findAllBrewsUser(user.getUserID());
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewList.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewUserList.jsp");
 				request.setAttribute("brews", brews);
 				request.setAttribute("page", "my_brews");
 				request.setAttribute("section", "personal");

@@ -1,12 +1,12 @@
 * {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Source Sans Pro', sans-serif !important;
 	outline: none !important;
+	color: #000000;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 	padding: 0;
-	color: #000000;
 }
 
 .row, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8,
@@ -54,6 +54,7 @@ body {
 	width: 100%;
 }
 
+
 /* ------------------- ALERT MODAL ------------------- */
 .modal-body p {
 	text-align: center;
@@ -67,4 +68,101 @@ body {
 .modal-content.error {
 	background-color: #ff9797;
 	border: solid 1px #ff0202;
+}
+
+
+/* ------------------- TOP PAGE FIXED ------------------- */
+
+.menu-top-fix {
+	position: fixed;
+	top: 0;
+	left: 25%;
+	width: 75%;
+	height: 80px;
+	background-color: transparent;
+	z-index: 10;
+	overflow: hidden;
+}
+
+.menu-top-shad {
+	height: 67px;
+	background-color: transparent;
+	z-index: 10;
+	box-shadow: 0px 0px 20px 0px #00000066;
+}
+
+.menu-top-ins {
+	position: fixed;
+	top: 0;
+	left: 25%;
+	width: calc(75% - 60px);
+	height: 67px;
+	margin: 0 30px;
+	padding: 15px 30px;
+	background-color: #ffffff;
+}
+
+.menu-top-shad {
+	box-shadow: 0px 0px 10px 0px #00000066;
+}
+
+.menu-top-fix h4 {
+	width: 100%;
+	text-align: center;
+	font-size: 32px;
+	font-weight: 500;
+}
+
+/* ------------------- TOP PAGE COLOR ------------------- */
+
+.menu-top-color {
+	position: relative;
+	padding: 20px;
+	border-radius: 4px;
+	background-color: #ffaf00f2;
+	margin-bottom: 40px;
+}
+
+.menu-top-color h4 {
+	width: 100%;
+	text-align: center;
+	font-size: 32px;
+}
+
+.menu-top-color a {
+	position: absolute;
+	top: 18px;
+	left: 10px;
+	padding: 0 5px;
+	margin: 0 4px;
+	color: #000000;
+	font-size: 30px;
+	font-weight: 300;
+	text-decoration: none;
+	cursor: pointer;
+	left: 10px;
+}
+
+.menu-top-color a:hover {
+	color: #4e4e4e;
+}
+
+.menu-top-color button {
+	position: absolute;
+	top: 25px;
+	right: 10px;
+	padding: 0 5px;
+	margin: 0 4px;
+	border: none;
+	background-color: transparent;
+	color: #4e4e4e;
+	font-size: 18px;
+	font-weight: 300;
+	text-decoration: none;
+	cursor: pointer;
+	right: 10px;
+}
+
+.menu-top-color button:hover {
+	color: #000000;
 }

@@ -106,7 +106,7 @@ public class BrewCreateServlet extends HttpServlet {
 				Recipe recipe = (Recipe) session.getAttribute("recipe");
 
 				BrewDao brewDao = new BrewDao();
-				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, description,
+				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, null, description,
 						quantity, tasteNote);
 				int brewID = brewDao.createBrew(brew);
 

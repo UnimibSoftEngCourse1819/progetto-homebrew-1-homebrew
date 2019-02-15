@@ -27,7 +27,7 @@
 		<div class="menu-top-fix">
 			<div class="menu-top-shad"></div>
 			<div class="menu-top-ins">
-				<h4>Miscele</h4>
+				<h4>Miscele Personali</h4>
 			</div>
 		</div>
 		<c:forEach items="${brews}" var="item">

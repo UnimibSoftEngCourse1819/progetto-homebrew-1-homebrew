@@ -1,18 +1,14 @@
 /* ------------------- MAIN ------------------- */
 .registration_cont {
-	position: absolute;
-	top: 0;
-	right: calc(50% - 300px);
 	width: 600px;
 	padding: 30px 0 50px;
 	margin: 50px auto;
 	border-radius: 5px;
-	background: #ffaf00f2;
-	box-shadow: 0px 0px 10px 0px #00000066;
-	z-index: 10;
+	background-color: #ffaf00f2;
+	box-shadow: 0px 0px 20px 3px #00000066;
 }
 
-.main h2 {
+.registration_cont h2 {
 	margin: 0 0 30px;
 	font-size: 40px;
 	font-weight: 300;
@@ -43,7 +39,7 @@
 	padding: 7px 12px 6px;
 	background-color: #ffffff;
 	border: solid 1px #ffffff;
-	border-radius: 5px;
+	border-radius: 4px;
 	box-shadow: 0px 0px 5px 0px #00000080;
 }
 
@@ -58,6 +54,7 @@
 	margin: 20px 0 0;
 	padding: 4px 15px 3px;
 	border: 0;
+	border-radius: 4px;
 	background-color: #333333;
 	color: #ffffff;
 	font-size: 16px;
@@ -66,5 +63,5 @@
 
 #registration_form #addNewUser:disabled {
 	background-color: #ffffff80;
-	color: #cecece;
+	color: #000000;
 }

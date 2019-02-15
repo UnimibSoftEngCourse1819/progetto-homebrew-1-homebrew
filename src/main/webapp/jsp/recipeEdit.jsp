@@ -25,9 +25,9 @@
 	<div class="header">
 		<jsp:include page="includer/menu.jsp" />
 	</div>
-	<div class="row page recipe ">
+	<div class="row page recipe-edit">
 		<div class="row edit-recipe-top">
-			<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">&larr;&nbsp;Ricetta</a>
+			<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">&larr;</a>
 			<h4>Modifica la ricetta</h4>
 			<form action="./remove_recipe" method="post">
 				<input type="hidden" name="recipeID" value="${recipe.recipeID}">
@@ -55,7 +55,7 @@
 					<textarea name="description">${recipe.description}</textarea>
 				</div>
 				<div class="row">
-					<div class="col-5">
+					<div class="col-5 edit-recipe-ingred">
 						<h6>Ingredienti</h6>
 						<table>
 							<tbody>

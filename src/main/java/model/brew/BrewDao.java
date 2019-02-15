@@ -26,12 +26,10 @@ public class BrewDao {
 	private ResultSet resultSet = null;
 
 	private static String createBrew = "INSERT INTO Brew (brewID, userID, recipeID, name, brewDate, description, quantity, tasteNote) VALUES(?,?,?,?,?,?,?,?)";
-	private static String findAllBrew = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID";
-	private static String findAllBrewsUser = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.userID=?";
+	private static String findAllBrew = "SELECT b.*, r.name, u.name, u.surname FROM Brew AS b JOIN Recipe AS r ON b.recipeID=r.recipeID JOIN User AS u ON b.userID=u.userID ORDER BY b.recipeID";
+	private static String findAllBrewsUser = "SELECT b.*, r.name, u.name, u.surname FROM Brew AS b JOIN Recipe AS r ON b.recipeID=r.recipeID JOIN User AS u ON b.userID=u.userID WHERE b.userID=? ORDER BY b.recipeID";
+	private static String findBrewByRecipeID = "SELECT b.*, r.name, u.name, u.surname FROM Brew AS b JOIN Recipe AS r ON b.recipeID=r.recipeID JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=? ORDER BY b.recipeID";
 	private static String findMaxID = "SELECT MAX(brewID) AS max FROM Brew";
-
-	private static String findBrewByRecipeID = "SELECT b.*, u.name, u.surname FROM Brew AS b JOIN User AS u ON b.userID=u.userID WHERE b.recipeID=?";
-
 
 	public List<Brew> findAllBrews() {
 		List<Brew> brews = new ArrayList<>();
@@ -51,10 +49,11 @@ public class BrewDao {
 				String description = resultSet.getString("b.description");
 				int quantity = resultSet.getInt("b.quantity");
 				String tasteNote = resultSet.getString("b.tasteNote");
+				String recipeName = resultSet.getString("r.name");
 				String userName = resultSet.getString("u.name");
 				String userSurname = resultSet.getString("u.surname");
-				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description,
-						quantity, tasteNote);
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, recipeName, brewDate,
+						description, quantity, tasteNote);
 				brews.add(brew);
 			}
 		} catch (SQLException e) {
@@ -83,10 +82,11 @@ public class BrewDao {
 				String description = resultSet.getString("b.description");
 				int quantity = resultSet.getInt("b.quantity");
 				String tasteNote = resultSet.getString("b.tasteNote");
+				String recipeName = resultSet.getString("r.name");
 				String userName = resultSet.getString("u.name");
 				String userSurname = resultSet.getString("u.surname");
-				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description,
-						quantity, tasteNote);
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, recipeName, brewDate,
+						description, quantity, tasteNote);
 				brews.add(brew);
 			}
 		} catch (SQLException e) {
@@ -115,10 +115,11 @@ public class BrewDao {
 				String description = resultSet.getString("b.description");
 				int quantity = resultSet.getInt("b.quantity");
 				String tasteNote = resultSet.getString("b.tasteNote");
+				String recipeName = resultSet.getString("r.name");
 				String userName = resultSet.getString("u.name");
 				String userSurname = resultSet.getString("u.surname");
-				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, brewDate, description,
-						quantity, tasteNote);
+				Brew brew = new Brew(brewID, name, userID, userName, userSurname, recipeID, recipeName, brewDate,
+						description, quantity, tasteNote);
 				brews.add(brew);
 			}
 		} catch (SQLException e) {
