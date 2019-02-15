@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>${recipe.name}&nbsp;-&nbsp;HomeBrew</title>
+<title>Dispensa&nbsp;-&nbsp;HomeBrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
@@ -20,35 +20,41 @@
 
 <body>
 	<jsp:include page="includer/alert.jsp" />
-
-	<div class="layout_left"></div>
-	<div class="layout_right"></div>
-	<div class="row page" class="container">
-		<div class="header">
-			<jsp:include page="includer/menu.jsp" />
+	<div class="header">
+		<jsp:include page="includer/menu.jsp" />
+	</div>
+	<div class="row page account">
+		<div class="row menu-top-color">
+			<h4>DISPENSA</h4>
 		</div>
-		<div class="row main">
-			
+			<div class="content_main">
+				<c:forEach items="${pantry}" var="item">
+					<div class="recipes_element">
+						<div class="row recipes_inner">
+							<div class="col-9">
+								<h3>${item.ingredientName}${item.availability}</h3>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				<a href="./edit_pantry">AGGIORNA DISPENSA</a>
+			</div>
+
 			<form action="./edit_pantry" method="post" name="pantry_form">
-					<table>
-					<c:forEach items="${ingredient}" var="item">
+				<table>
+					<c:forEach items="${ingredients}" var="item">
 						<tr>
 							<td><h3>${item.name}:</h3></td>
 							<td><h3>
 									<input type="number" name="${item.ingredientID}"
-										id="testoformdue" placeholder="${item.measure}" min = "0">
+										id="testoformdue" placeholder="${item.measure}" min="0">
 								</h3></td>
 						</tr>
 					</c:forEach>
 				</table>
-					<input type="submit" name="action" value="AGGIORNA" id="submitdue"
-						onClick="return(controlForm ());">
-				</form>
-			
-			
+				<button name="updatePantry" type="submit" id="updatePantry" disabled>AGGIORNA</button>
+			</form>
 		</div>
 	</div>
-
 </body>
 </html>
-

@@ -23,8 +23,8 @@ import model.tool.Tool;
 import model.tool.ToolDao;
 import model.user.User;
 
-@WebServlet("/edit_equipment")
-public class EquipmentUpdateServlet extends HttpServlet {
+@WebServlet("/equipment")
+public class EquipmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
@@ -34,10 +34,19 @@ public class EquipmentUpdateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				int userID = user.getUserID();
+				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
+				List<Tool> equipment = equipmentDao.userToolEquipment(userID);
+				
 				ToolDao toolDao = new ToolDao();
-				List<Tool> tool = toolDao.findAllTool();
+				List<Tool> tools = toolDao.findAllTool();
 
-				request.setAttribute("tool", tool);
+				request.setAttribute("tools", tools);
+
+				request.setAttribute("equipment", equipment);
+				request.setAttribute("page", "equipment");
+
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 				dispatcher.forward(request, response);
 			} else {
@@ -46,6 +55,7 @@ public class EquipmentUpdateServlet extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
+
 	}
 
 	@Override
@@ -102,5 +112,4 @@ public class EquipmentUpdateServlet extends HttpServlet {
 		}
 
 	}
-
 }

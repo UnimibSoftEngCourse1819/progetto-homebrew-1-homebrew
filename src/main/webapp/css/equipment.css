@@ -1,0 +1,31 @@
+/* ------------------- EQUIPMENT ------------------- */
+.page.equipment {
+	padding: 10px 15px;
+}
+
+.equipment h5 {
+	margin-bottom: 20px;
+	font-size: 28px;
+	font-weight: 300;
+}
+
+.my-equipment {
+	padding-left: 20px;
+	border-right: solid 1px #000000;
+}
+.equipment-tool {
+	padding: 10px;
+}
+.equipment-tool h6 {
+	display: inline-block;
+		font-size: 18px;
+	font-weight: 300;
+}
+.equipment-tool p {
+	display: inline-block;
+		font-size: 18px;
+	font-weight: 300;
+}
+.edit-equipment {
+	padding-left: 20px;
+}

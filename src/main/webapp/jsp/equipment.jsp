@@ -7,11 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>${recipe.name}&nbsp;-&nbsp;HomeBrew</title>
+<title>Equipaggiamento&nbsp;-&nbsp;HomeBrew</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/menu.css" rel="stylesheet" type="text/css" />
-<link href="css/recipes.css" rel="stylesheet" type="text/css" />
+<link href="css/equipment.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/jquery.validate.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -20,36 +20,40 @@
 
 <body>
 	<jsp:include page="includer/alert.jsp" />
-
-	<div class="layout_left"></div>
-	<div class="layout_right"></div>
-	<div class="row page" class="container">
-		<div class="header">
-			<jsp:include page="includer/menu.jsp" />
+	<div class="header">
+		<jsp:include page="includer/menu.jsp" />
+	</div>
+	<div class="row page equipment">
+		<div class="row menu-top-color">
+			<h4>EQUIPAGGIAMENTO</h4>
 		</div>
-		<div class="row main">
-			
-			<form action="./edit_equipment" method="post" name="equipment_form">
-					<table>
-					<c:forEach items="${tool}" var="item">
-						<tr>
-							<td><h3>${item.toolName}:</h3></td>
-							<td><h3>
-									<input type="number" name="${item.toolID}"
-										id="testoformdue" placeholder="${item.measure}" min = "0">
-								</h3></td>
-						</tr>
+		<div class="row equipment-cont">
+			<div class="col-5 my-equipment">
+				<h5>Il mio equipaggiamento</h5>
+				<c:forEach items="${equipment}" var="item">
+					<div class="equipment-tool">
+						<h6>• ${item.toolName}: </h6>
+						<p>${item.capacity}${item.measure}</p>
+					</div>
+				</c:forEach>
+			</div>
+			<div class="col-7 edit-equipment">
+				<h5>Modifica equipaggiamento</h5>
+				<form action="./edit_equipment" method="post" name="equipment_form">
+					<c:forEach items="${tools}" var="item">
+						<div class="tool">
+							<h6>${item.toolName}</h6>
+							<input type="number" name="${item.toolID}" id="testoformdue"
+								placeholder="" min="0">
+							<p>${item.measure}</p>
+						</div>
 					</c:forEach>
-				</table>
-					<input type="submit" value="AGGIORNA" name="action" id="submitdue"
-						onClick="return(controlForm());">
-
+					<button name="updateEquipment" type="submit" id="updateEquipment"
+						disabled>AGGIORNA</button>
 				</form>
-			
-			
+			</div>
 		</div>
 	</div>
-
 </body>
 </html>
 

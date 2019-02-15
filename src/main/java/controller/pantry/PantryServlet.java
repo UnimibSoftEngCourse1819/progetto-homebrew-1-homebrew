@@ -20,8 +20,8 @@ import model.pantry.Pantry;
 import model.pantry.PantryDao;
 import model.user.User;
 
-@WebServlet("/edit_pantry")
-public class PantryUpdateServlet extends HttpServlet {
+@WebServlet("/pantry")
+public class PantryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	final Logger logger = Logger.getLogger("MyLog");
 
@@ -31,13 +31,20 @@ public class PantryUpdateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				int userID = user.getUserID();
+				PantryDao pantryDao = new PantryDao();
+				List<Pantry> pantry = pantryDao.findUserPantry(userID);
 				IngredientDao ingredientDao = new IngredientDao();
-				List<Ingredient> ingredient = ingredientDao.findAllIngredient();
+				List<Ingredient> ingredients = ingredientDao.findAllIngredient();
 
-				request.setAttribute("ingredient", ingredient);
+				request.setAttribute("pantry", pantry);
+
+				request.setAttribute("ingredients", ingredients);
+				request.setAttribute("page", "pantry");
+
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/pantry.jsp");
 				dispatcher.forward(request, response);
-
 			} else {
 				response.sendRedirect("./");
 			}

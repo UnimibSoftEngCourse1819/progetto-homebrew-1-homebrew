@@ -59,11 +59,10 @@
 						</div>
 						<div>
 							<h6>Password</h6>
-							<input id="password" name="password" type="password"
-								autocomplete="off">
+							<input name="password" type="password" autocomplete="off">
 						</div>
 
-						<button name="userUpdateButton" type="submit" id="updateUser">AGGIORNA</button>
+						<button name="updateGeneral" type="submit" id="updateGeneral" disabled>AGGIORNA</button>
 					</form>
 				</div>
 				<div class="row account-form account-email">
@@ -77,8 +76,7 @@
 						</div>
 						<div>
 							<h6>Password</h6>
-							<input id="password" name="password" type="password"
-								autocomplete="off">
+							<input name="password" type="password" autocomplete="off">
 						</div>
 						<c:if test="${errorEmail != null}">
 							<div class="error_email">
@@ -86,7 +84,7 @@
 							</div>
 						</c:if>
 
-						<button name="userUpdateButton" type="submit" id="updateUser">AGGIORNA</button>
+						<button name="updateEmail" type="submit" id="updateEmail" disabled>AGGIORNA</button>
 					</form>
 				</div>
 				<div class="row account-form account-password">
@@ -112,7 +110,7 @@
 						</div>
 
 
-						<button name="userUpdateButton" type="submit" id="updateUser">AGGIORNA</button>
+						<button name="updatePassword" type="submit" id="updatePassword" disabled>AGGIORNA</button>
 					</form>
 				</div>
 			</div>
