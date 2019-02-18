@@ -38,15 +38,11 @@ public class EquipmentServlet extends HttpServlet {
 				int userID = user.getUserID();
 				ToolEquipmentDao equipmentDao = new ToolEquipmentDao();
 				List<Tool> equipment = equipmentDao.userToolEquipment(userID);
-				
 				ToolDao toolDao = new ToolDao();
 				List<Tool> tools = toolDao.findAllTool();
-
 				request.setAttribute("tools", tools);
-
 				request.setAttribute("equipment", equipment);
 				request.setAttribute("page", "equipment");
-
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/equipment.jsp");
 				dispatcher.forward(request, response);
 			} else {
@@ -55,22 +51,21 @@ public class EquipmentServlet extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		String redirect = "./";
 		HttpSession session = request.getSession(false);
 		if (session != null && session.getAttribute("user") != null) {
+			redirect = "./equipment";
 			User user = (User) session.getAttribute("user");
 			int userID = user.getUserID();
 			EquipmentDao equipmentDao = new EquipmentDao();
 			Equipment equipment = equipmentDao.findEquipmentByUser(userID);
 			int equipmentID = equipment.getEquipmentID();
 			ArrayList<ToolEquipment> toolEquipments = new ArrayList<>();
-
 			ToolDao toolDao = new ToolDao();
 			List<Tool> tools = toolDao.findAllTool();
 			Iterator<Tool> iterator = tools.iterator();
@@ -91,7 +86,6 @@ public class EquipmentServlet extends HttpServlet {
 					toolEquipments.add(toolEquipment);
 				}
 			}
-
 			ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
 			int update = toolEquipmentDao.updateToolEquipment(toolEquipments);
 			int batchSize = toolEquipmentDao.getBatchSize(equipmentID);
@@ -106,7 +100,7 @@ public class EquipmentServlet extends HttpServlet {
 			}
 		}
 		try {
-			response.sendRedirect("./equipment");
+			response.sendRedirect(redirect);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}

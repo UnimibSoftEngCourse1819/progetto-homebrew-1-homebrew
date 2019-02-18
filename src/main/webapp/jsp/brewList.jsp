@@ -30,42 +30,48 @@
 				<h4>Miscele</h4>
 			</div>
 		</div>
-		<c:forEach items="${brews}" var="item">
-			<div class="brew-element">
-				<div class="row brew-inner">
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<h5>NOME:</h5>
-									<p>${item.name}</p>
-								</td>
-								<td>
-									<h5>DATA:</h5> <c:set var="date_brew"
-										value="${fn:split(item.brewDate,'-')}" />
-									<p>${date_brew[2]}/${date_brew[1]}/${date_brew[0]}</p>
-								</td>
-								<td>
-									<h5>QUANTIT&Agrave;:</h5>
-									<p>${item.quantity}</p>
-								</td>
-								<td>
-									<h5>RICETTA:</h5> <a href="./recipe?n=${item.recipeID}">${item.recipeName}</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="brew-desc">
-						<h5>DESCRIZIONE</h5>
-						<p>${item.description}</p>
-						<h5>NOTA DI DEGUSTAZIONE</h5>
-						<p>${item.tasteNote}</p>
+		<c:if test="${not empty brews}">
+			<c:forEach items="${brews}" var="item">
+				<div class="brew-element">
+					<div class="row brew-inner">
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										<h5>NOME:</h5>
+										<p>${item.name}</p>
+									</td>
+									<td>
+										<h5>DATA:</h5> <c:set var="date_brew"
+											value="${fn:split(item.brewDate,'-')}" />
+										<p>${date_brew[2]}/${date_brew[1]}/${date_brew[0]}</p>
+									</td>
+									<td>
+										<h5>QUANTIT&Agrave;:</h5>
+										<p>${item.quantity}</p>
+									</td>
+									<td>
+										<h5>RICETTA:</h5> <a href="./recipe?n=${item.recipeID}">${item.recipeName}</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="brew-desc">
+							<h5>DESCRIZIONE</h5>
+							<p>${item.description}</p>
+							<h5>NOTA DI DEGUSTAZIONE</h5>
+							<p>${item.tasteNote}</p>
 
+						</div>
 					</div>
 				</div>
+			</c:forEach>
+		</c:if>
+		<c:if test="${empty brews}">
+			<div class="empty-list">
+				<p>Nessuna miscela trovata</p>
 			</div>
-
-		</c:forEach>
+		</c:if>
 	</div>
 </body>
 </html>

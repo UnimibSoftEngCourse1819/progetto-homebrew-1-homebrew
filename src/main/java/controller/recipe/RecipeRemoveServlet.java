@@ -32,12 +32,9 @@ public class RecipeRemoveServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession(false);
 		String redirect = "./";
-
 		if (session != null && session.getAttribute("user") != null) {
-
 			if (((String) session.getAttribute("section")).equals("general")) {
 				redirect = "./recipes";
 			} else {
@@ -55,7 +52,6 @@ public class RecipeRemoveServlet extends HttpServlet {
 				RecipeDao recipeDao = new RecipeDao();
 				sqlResp = recipeDao.removeRecipe(recipeID);
 			}
-
 			if (sqlResp != -1) {
 				session.setAttribute("alertMessage", "Ricetta cancellata con successo");
 				session.setAttribute("alertType", "success");
@@ -63,15 +59,11 @@ public class RecipeRemoveServlet extends HttpServlet {
 				session.setAttribute("alertMessage", "Cancellazione non avvenuta");
 				session.setAttribute("alertType", "error");
 			}
-
 		}
 		try {
 			response.sendRedirect(redirect);
-
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
-
 }

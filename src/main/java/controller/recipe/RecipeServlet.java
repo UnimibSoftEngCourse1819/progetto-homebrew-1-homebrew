@@ -22,7 +22,6 @@ import model.recipe.RecipeDao;
 import model.user.User;
 import model.user.UserDao;
 
-// NOT IN MENU GENERAL + PERSONAL -> GET SECTION IN SESSION
 @WebServlet("/recipe")
 public class RecipeServlet extends HttpServlet {
 
@@ -32,7 +31,6 @@ public class RecipeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession(false);
 		int id = -1;
 		try {
@@ -40,27 +38,20 @@ public class RecipeServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			logger.log(Level.SEVERE, "Parser error", e);
 		}
-
 		if (session != null && session.getAttribute("user") != null) {
 			String section = (String) session.getAttribute("section");
 			User user = (User) session.getAttribute("user");
 			RecipeDao recipeDao = new RecipeDao();
-
 			Recipe recipe = recipeDao.findRecipeByID(id);
 			UserDao userDao = new UserDao();
 			User userRecipe = userDao.selectUserById(recipe.getUserID());
-
 			if (recipe.getVisibility().equals("public")
 					|| (recipe.getVisibility().equals("private") && user.getUserID() == recipe.getUserID())) {
 				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-
 				List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
-
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
-
 				BrewDao brewDao = new BrewDao();
 				List<Brew> brews = brewDao.findBrewByRecipeID(id);
-
 				if (user.getUserID() == recipe.getUserID()) {
 					request.setAttribute("editable", true);
 				}
@@ -85,18 +76,15 @@ public class RecipeServlet extends HttpServlet {
 					logger.log(Level.SEVERE, "Servlet error", e);
 				}
 			}
-
 		} else {
 			RecipeDao recipeDao = new RecipeDao();
 			Recipe recipe = recipeDao.findRecipeByID(id);
 
 			if (recipe.getVisibility().equals("public")) {
 				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-
 				List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao.findIngredientsRecipe(id);
 				UserDao userDao = new UserDao();
 				User userRecipe = userDao.selectUserById(recipe.getUserID());
-
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeSingle.jsp");
 				request.setAttribute("recipe", recipe);
 				request.setAttribute("userRecipe", userRecipe);
@@ -115,13 +103,11 @@ public class RecipeServlet extends HttpServlet {
 				}
 			}
 		}
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession(false);
 		String redirect = "./";
 		if (session != null && session.getAttribute("user") != null) {
@@ -131,7 +117,6 @@ public class RecipeServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
 			}
-
 			session.setAttribute("recipeID", recipeID);
 			redirect = "./edit_recipe";
 		}
@@ -140,7 +125,5 @@ public class RecipeServlet extends HttpServlet {
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
-
 }

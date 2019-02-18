@@ -38,15 +38,17 @@
 	<c:if test="${logged != null}">
 		<div class="account">
 			<div class="log_user">
-				<a href="./my_recipes"><span class="name_user">${user.name}&nbsp;${user.surname}</span>
-				</a>
+				<c:if test="${section == 'general'}">
+					<a href="./my_recipes"><span>${user.name}&nbsp;${user.surname}</span>
+					</a>
+				</c:if>
+				<c:if test="${section == 'personal'}">
+					<a href="./home"><span>Home</span> </a>
+				</c:if>
 			</div>
 		</div>
 	</c:if>
 </div>
-
-
-
 
 <div class="menu_list">
 	<c:if test="${logged == null}">

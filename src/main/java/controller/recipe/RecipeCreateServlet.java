@@ -61,11 +61,8 @@ public class RecipeCreateServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String visibility = request.getParameter("visibility");
 		String description = request.getParameter("description");
-
 		if (session != null && session.getAttribute("user") != null) {
-
 			User user = (User) session.getAttribute("user");
-
 			RecipeDao recipeDao = new RecipeDao();
 			int step = 1;
 			String paramStep = "step-";
@@ -76,16 +73,12 @@ public class RecipeCreateServlet extends HttpServlet {
 				step++;
 			}
 			String image = "images/recipes/beer_" + ((int) (Math.random() * 4) + 1) + ".jpg";
-
 			Recipe recipe = new Recipe(0, user.getUserID(), name, null, description, visibility, image, steps);
-
 			int recipeID = recipeDao.createRecipe(recipe);
 			if (recipeID > 0) {
 				IngredientDao ingredientDao = new IngredientDao();
 				List<Ingredient> ingredients = ingredientDao.findAllIngredient();
-
 				List<IngredientRecipe> ingredientsRecipe = new ArrayList<>();
-
 				Iterator<Ingredient> iterator = ingredients.iterator();
 				while (iterator.hasNext()) {
 					Ingredient ingredient = iterator.next();
@@ -101,7 +94,6 @@ public class RecipeCreateServlet extends HttpServlet {
 								ingredient.getName(), quantity, measure);
 						ingredientsRecipe.add(ingredientRecipe);
 					}
-
 				}
 				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
 				ingredientRecipeDao.createIngredientsRecipe(ingredientsRecipe);
@@ -113,7 +105,6 @@ public class RecipeCreateServlet extends HttpServlet {
 					redirect = "./recipes";
 				}
 			}
-
 		} else {
 			if (session != null) {
 				session.setAttribute("alertMessage", "Ricetta non creata");

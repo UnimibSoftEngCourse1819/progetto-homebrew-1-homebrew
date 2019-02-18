@@ -33,7 +33,6 @@ public class UserCreateServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/register.jsp");
 			request.setAttribute("page", "register");
@@ -41,7 +40,6 @@ public class UserCreateServlet extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	@Override
@@ -54,42 +52,31 @@ public class UserCreateServlet extends HttpServlet {
 		String checkPassword = request.getParameter("confirm_password");
 		String email = request.getParameter("email");
 		UserDao userDao = new UserDao();
-
 		if (password.equals(checkPassword) && userDao.usableEmail(email)) {
-
 			SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
 			byte[] passwordToHash = digestSHA3.digest(password.getBytes());
 			String hash = Hex.toHexString(passwordToHash);
 			Date dateOfBirth;
 			User userNew;
-
 			try {
-
 				dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				userNew = new User(0, name, surname, dateOfBirth, email, hash);
-
 				int userID = userDao.createUser(userNew);
-
 				EquipmentDao equipDao = new EquipmentDao();
 				int equipmentID = equipDao.createEquipment(userID);
-
 				ToolEquipmentDao toolEquipmentDao = new ToolEquipmentDao();
 				toolEquipmentDao.createToolEquipment(equipmentID);
-
 				PantryDao pantryDao = new PantryDao();
 				pantryDao.createPantry(userID);
-
 				HttpSession session = request.getSession(true);
 				session.setAttribute("alertMessage", "Iscrizione avvenuta con successo");
 				session.setAttribute("alertType", "success");
-
 				response.sendRedirect("./");
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Servlet error", e);
 			} catch (ParseException e) {
 				logger.log(Level.SEVERE, "Parser error", e);
 			}
-
 		} else {
 			HttpSession session = request.getSession(true);
 			try {
@@ -99,12 +86,9 @@ public class UserCreateServlet extends HttpServlet {
 				request.setAttribute("page", "register");
 				request.setAttribute("errorEmail", true);
 				dispatcher.forward(request, response);
-
 			} catch (ServletException | IOException e) {
 				logger.log(Level.SEVERE, "Servlet error", e);
 			}
 		}
-
 	}
-
 }

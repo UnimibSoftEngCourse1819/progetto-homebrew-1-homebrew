@@ -1,56 +1,51 @@
 /* ------------------- EQUIPMENT ------------------- */
-.page.equipment {
+.page.pantry {
 	padding: 10px 15px;
 }
 
-.equipment h5 {
+.pantry h5 {
 	margin-bottom: 10px;
 	font-size: 28px;
 	font-weight: 300;
 }
 
-.my-equipment {
+.my-pantry {
 	padding-left: 20px;
 	border-right: solid 1px #000000;
 }
 
-.my-equipment span {
-	font-size: 14px;
-	font-style: italic;
-}
-
-.my-tools {
+.my-ingredients {
 	padding: 30px 50px 30px 20px;
 }
 
-.equipment-tool {
+.ingredient-pantry {
 	margin: 5px 0px 10px;
 	padding: 5px 5px 10px;
 	border-bottom: solid 1px #d0d0d0;
 }
 
-.equipment-tool h6 {
+.ingredient-pantry h6 {
 	display: inline-block;
-	margin-right: 5px;
-	font-size: 18px;
+	margin-right: 5px; font-size : 18px;
 	font-weight: 500;
+	font-size: 18px;
 }
 
-.equipment-tool p {
+.ingredient-pantry p {
 	display: inline-block;
 	font-size: 18px;
 	font-weight: 300;
 }
 
-.edit-equipment {
+.edit-pantry {
 	padding-left: 20px;
 }
 
-.edit-equipment form {
+.edit-pantry form {
 	padding: 40px 30px 60px;
 }
 
-.tool {
+.ingredient {
 	position: relative;
 	margin: 5px 0px 10px;
 	padding: 5px 5px 10px;
@@ -58,35 +53,34 @@
 	margin: 5px 0px 10px;
 }
 
-.tool h6 {
+.ingredient h6 {
 	display: inline-block;
 	font-size: 18px;
 	font-weight: 500;
 }
 
-.input-equipment {
+.input-ingredient {
 	position: absolute;
 	top: 0;
 	right: 20px;
 	width: 140px;
-	text-align: right;
 }
 
-.input-equipment input {
+.input-ingredient input {
 	margin: 0 10px;
 }
 
-.input-equipment input[type="number"] {
+.input-ingredient input[type="number"] {
 	width: 100px;
 }
 
-.input-equipment p {
+.input-ingredient p {
 	display: inline-block;
 	font-size: 14px;
 	font-weight: 300;
 }
 
-.edit-equipment button {
+.edit-pantry button {
 	position: absolute;
 	bottom: 20px;
 	right: 40px;

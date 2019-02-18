@@ -30,22 +30,33 @@
 		<div class="row equipment-cont">
 			<div class="col-5 my-equipment">
 				<h5>Il mio equipaggiamento</h5>
-				<c:forEach items="${equipment}" var="item">
-					<div class="equipment-tool">
-						<h6>• ${item.toolName}: </h6>
-						<p>${item.capacity}${item.measure}</p>
-					</div>
-				</c:forEach>
+				<span>La capacit&agrave; massima dell'equipaggiamento &eacute; la
+					minore tra quelle inserite.</span>
+				<div class="my-tools">
+					<c:forEach items="${equipment}" var="item">
+						<div class="equipment-tool">
+							<h6>${item.toolName}:</h6>
+							<p>${item.capacity}${item.measure}</p>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
 			<div class="col-7 edit-equipment">
 				<h5>Modifica equipaggiamento</h5>
-				<form action="./edit_equipment" method="post" name="equipment_form">
+				<form action="./equipment" method="post" name="equipment_form">
 					<c:forEach items="${tools}" var="item">
 						<div class="tool">
 							<h6>${item.toolName}</h6>
-							<input type="number" name="${item.toolID}" id="testoformdue"
-								placeholder="" min="0">
-							<p>${item.measure}</p>
+							<div class="input-equipment">
+								<c:if test="${item.measure != 'available'}">
+									<input type="number" name="${item.toolID}" min="0">
+									<p>${item.measure}</p>
+								</c:if>
+								<c:if test="${item.measure == 'available'}">
+									<input type="checkbox" name="${item.toolID}">
+									<p>[aggiungi]</p>
+								</c:if>
+							</div>
 						</div>
 					</c:forEach>
 					<button name="updateEquipment" type="submit" id="updateEquipment"

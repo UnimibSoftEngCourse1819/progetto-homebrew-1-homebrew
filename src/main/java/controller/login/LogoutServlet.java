@@ -21,14 +21,13 @@ public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null) {
 				session.setMaxInactiveInterval(0);
 				session.invalidate();
 			}
-			response.sendRedirect("/homebrew");
+			response.sendRedirect("./");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error" , e);
 		}

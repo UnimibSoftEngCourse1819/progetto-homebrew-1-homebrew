@@ -28,10 +28,9 @@ public class LoginServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
-
 			if (session != null) {
 				if (session.getAttribute("user") != null) {
-					response.sendRedirect("/homebrew/home");
+					response.sendRedirect("./home");
 				} else {
 					request.setAttribute("page", "login");
 					dispatcher.forward(request, response);
@@ -39,12 +38,10 @@ public class LoginServlet extends HttpServlet {
 					session.removeAttribute("alertType");
 					session.invalidate();
 				}
-
 			} else {
 				request.setAttribute("page", "login");
 				dispatcher.forward(request, response);
 			}
-
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
@@ -58,7 +55,6 @@ public class LoginServlet extends HttpServlet {
 			Login login = new Login();
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-
 			if (login.match(username, password)) {
 				HttpSession oldSession = request.getSession(false);
 				if (oldSession != null) {
@@ -67,10 +63,10 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				UserDao userDao = new UserDao();
 				User user = userDao.selectUserByEmail(username);
-				session.setMaxInactiveInterval(2*60*60);
+				session.setMaxInactiveInterval(2 * 60 * 60);
 				session.setAttribute("user", user);
 				session.setAttribute("logged", true);
-				response.sendRedirect("/homebrew/home");
+				response.sendRedirect("./home");
 			} else {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
 				String error = "Login errata";

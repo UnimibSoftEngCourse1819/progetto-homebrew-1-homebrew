@@ -17,7 +17,6 @@
 	text-decoration: none;
 }
 
-
 #open_search {
 	position: fixed;
 	top: 16px;
@@ -288,40 +287,39 @@
 }
 
 /* ------------------- EDIT RECIPE ------------------- */
-.page.recipe-edit {
+.page.edit-recipe {
 	padding: 10px 15px;
 }
 
-
-.recipe-edit-form form {
+.edit-recipe-form form {
 	position: relative;
 	width: 100%;
 	padding: 30px 50px;
 }
 
-.recipe-edit-form .row {
+.edit-recipe-form .row {
 	margin-bottom: 30px;
 }
 
-.recipe-edit-form h6 {
+.edit-recipe-form h6 {
 	font-size: 20px;
 	margin-bottom: 10px;
 }
 
-.recipe-edit-visibility {
+.edit-recipe-visibility {
 	padding: 0 20px;
 }
 
-.recipe-edit-visibility select {
+.edit-recipe-visibility select {
 	width: 100%;
 }
 
-.recipe-edit-form input[name="name"] {
+.edit-recipe-form input[name="name"] {
 	width: 100%;
 	border: solid 1px #333333;
 }
 
-.recipe-edit-form textarea[name="description"] {
+.edit-recipe-form textarea[name="description"] {
 	width: 100%;
 	height: 150px;
 	resize: none;
@@ -366,25 +364,6 @@
 	margin-right: 10px;
 }
 
-.buttons-adder-steps {
-	float: left;
-}
-
-.buttons-adder-steps button {
-	width: 26px;
-	padding: 0;
-	border: solid 1px #333333;
-	border-radius: 4px;
-	background-color: transparent;
-	line-height: 20px;
-	cursor: pointer;
-	border-radius: 4px;
-}
-
-.buttons-adder-steps button:hover {
-	background-color: #ececec;
-}
-
 .edit-recipe-steps table {
 	width: 100%;
 }
@@ -408,7 +387,7 @@
 	resize: none;
 }
 
-.recipe-edit-form button[name="editRecipe"] {
+.edit-recipe-form button[name="editRecipe"] {
 	position: absolute;
 	bottom: 20px;
 	right: 50px;
@@ -425,11 +404,150 @@
 	border-radius: 4px;
 }
 
-.recipe-edit-form button[name="editRecipe"]:hover {
+.edit-recipe-form button[name="editRecipe"]:hover {
 	background-color: #ececec;
 }
 
 /* ------------------- CREATE RECIPE ------------------- */
-#create_recipe_form .valid {
-	border: solid 1px green;
+.page.create-recipe {
+	padding: 10px 15px;
+}
+
+.create-recipe-form form {
+	position: relative;
+	width: 100%;
+	padding: 30px 50px;
+}
+
+.create-recipe-form .row {
+	margin-bottom: 30px;
+}
+
+.create-recipe-form h6 {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.create-recipe-visibility {
+	padding: 0 20px;
+}
+
+.create-recipe-visibility select {
+	width: 100%;
+}
+
+.create-recipe-form input[name="name"] {
+	width: 100%;
+	border: solid 1px #333333;
+}
+
+.create-recipe-form textarea[name="description"] {
+	width: 100%;
+	height: 150px;
+	resize: none;
+	border: solid 1px #333333;
+}
+
+.create-recipe-ingred tr {
+	border-bottom: solid 1px #888888;
+}
+
+.create-recipe-ingred .leftIngr {
+	width: 200px;
+	padding-left: 10px;
+}
+
+.create-recipe-ingred .rightIngr {
+	width: calc(100% - 100px);
+	padding: 4px 0;
+}
+
+.create-recipe-ingred .rightIngr input {
+	float: left;
+	border: solid 1px #ececec;
+	margin: 0px 5px;
+}
+
+.create-recipe-ingred .rightIngr input:focus {
+	border: solid 1px #a7a7a7;
+}
+
+.create-recipe-ingred .rightIngr input {
+	width: 80px;
+	text-align: right;
+}
+
+.create-recipe-ingred .rightIngr p {
+		display: inline-block;
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.create-recipe-steps h6 {
+	float: left;
+	margin-right: 10px;
+}
+
+.create-recipe-steps table {
+	width: 100%;
+}
+
+.create-recipe-steps tr {
+	height: 70px;
+}
+
+.create-recipe-steps .leftStep {
+	width: 20px;
+	font-weight: 600;
+}
+
+.create-recipe-steps .rightStep {
+	width: calc(100% - 20px);
+}
+
+.create-recipe-steps .rightStep textarea {
+	width: 100%;
+	height: 51px;
+	resize: none;
+}
+
+.create-recipe-form button[name="createRecipe"] {
+	position: absolute;
+	bottom: 20px;
+	right: 50px;
+	padding: 0 5px;
+	margin: 0 4px;
+	border: solid 1px #333333;
+	border-radius: 4px;
+	background-color: transparent;
+	color: #000000;
+	font-size: 18px;
+	font-weight: 300;
+	text-decoration: none;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.create-recipe-form button[name="createRecipe"]:hover {
+	background-color: #ececec;
+}
+
+/* ------------------- CREATE RECIPE ------------------- */
+.buttons-adder-steps {
+	float: left;
+}
+
+.buttons-adder-steps button {
+	width: 26px;
+	padding: 0;
+	border: solid 1px #333333;
+	border-radius: 4px;
+	background-color: transparent;
+	line-height: 20px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.buttons-adder-steps button:hover {
+	background-color: #ececec;
 }

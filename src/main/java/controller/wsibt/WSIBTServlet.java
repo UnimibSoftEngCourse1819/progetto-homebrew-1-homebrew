@@ -36,31 +36,23 @@ public class WSIBTServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				String section = (String) session.getAttribute("section");
-
 				User user = (User) session.getAttribute("user");
 				RecipeDao recipeDao = new RecipeDao();
 				EquipmentDao eqDao = new EquipmentDao();
 				int batchSize = eqDao.findBatchSize(user.getUserID());
 				if (batchSize > 0) {
 					Recipe recipe = recipeDao.wsibt(user.getUserID());
-
 					UserDao userDao = new UserDao();
 					User userRecipe = userDao.selectUserById(recipe.getUserID());
-
 					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-
 					List<IngredientRecipe> ingredientsRecipe = ingredientRecipeDao
 							.findIngredientsRecipe(recipe.getRecipeID());
-
-
 					BrewDao brewDao = new BrewDao();
 					List<Brew> brews = brewDao.findBrewByRecipeID(recipe.getRecipeID());
-
 					if (user.getUserID() == recipe.getUserID()) {
 						request.setAttribute("editable", true);
 					}
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/wsibt.jsp");
-
 					session.setAttribute("recipe", recipe);
 					request.setAttribute("recipe", recipe);
 					request.setAttribute("userRecipe", userRecipe);
@@ -69,7 +61,6 @@ public class WSIBTServlet extends HttpServlet {
 					request.setAttribute("page", "wsibt");
 					request.setAttribute("section", section);
 					dispatcher.forward(request, response);
-
 				} else {
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/wsibt.jsp");
 					session.removeAttribute("recipe");
@@ -78,24 +69,21 @@ public class WSIBTServlet extends HttpServlet {
 					request.setAttribute("section", section);
 					dispatcher.forward(request, response);
 				}
-
 			} else {
 				response.sendRedirect("./recipe");
 			}
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			response.sendRedirect("./home");
+			response.sendRedirect("./");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 	}
-
 }

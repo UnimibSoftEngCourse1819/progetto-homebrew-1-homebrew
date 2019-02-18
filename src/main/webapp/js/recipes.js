@@ -57,25 +57,26 @@ function menuBrew() {
 function addRemoveEl() {
 	addSteps();
 	removeSteps();
-
 }
 
 function addSteps() {
-	if ($('.create_recipe_steps').length != 0) {
-		$('.create_recipe_steps button[name="addStep"]')
+	if ($('.create-recipe-steps').length != 0) {
+		console.log("Prova");
+
+		$('.create-recipe-steps button[name="addStep"]')
 		.unbind()
 		.click(
 				function() {
-					var count = $(".create_recipe_steps tr").length + 1;
+					var count = $(".create-recipe-steps tr").length + 1;
 					if (count <= 40) {
 						var newRow = "<tr><td class=\"leftStep\">"
 								+ count
 								+ "</td><td class=\"rightStep\">"
 								+ "<textarea name=\"step-"
 								+ count
-								+ "\" placeholder=\"Inserisci il procedimento\"></textarea></td></td></tr>";
+								+ "\"></textarea></td></td></tr>";
 
-						$('.create_recipe_steps tbody:last-child').append(
+						$('.create-recipe-steps tbody:last-child').append(
 								newRow);
 					}
 
@@ -93,7 +94,7 @@ function addSteps() {
 								+ "</td><td class=\"rightStep\">"
 								+ "<textarea name=\"step-"
 								+ count
-								+ "\" placeholder=\"Inserisci il procedimento\"></textarea></td></td></tr>";
+								+ "\"></textarea></td></td></tr>";
 
 						$('.edit-recipe-steps tbody:last-child').append(
 								newRow);
@@ -105,17 +106,17 @@ function addSteps() {
 }
 
 function removeSteps() {
-	if ($('.create_recipe_steps').length != 0) {
-		$('.create_recipe_steps button[name="removeStep"]')
+	if ($('.create-recipe-steps').length != 0) {
+		$('.create-recipe-steps button[name="removeStep"]')
 		.unbind()
 		.click(
 				function() {
-					var count = $(".create_recipe_steps tr").length;
+					var count = $(".create-recipe-steps tr").length;
 					if (count > 1) {
 						var buttons = "<button name=\"removeStep\" type=\"button\">&times;</button>"
 								+ "<button name=\"addStep\" type=\"button\">+</button>";
 
-						$(".create_recipe_steps tr:last-child").remove();
+						$(".create-recipe-steps tr:last-child").remove();
 					}
 
 				})

@@ -39,23 +39,16 @@ public class BrewCreateServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
-
 				if (session.getAttribute("recipe") != null) {
 					User user = (User) session.getAttribute("user");
-
 					EquipmentDao eqDao = new EquipmentDao();
 					int batchSize = eqDao.findBatchSize(user.getUserID());
-
 					Recipe recipe = (Recipe) session.getAttribute("recipe");
-
 					IngredientRecipeDao irDao = new IngredientRecipeDao();
 					List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
-
 					PantryDao pnDao = new PantryDao();
 					List<Pantry> pantries = pnDao.findUserPantry(user.getUserID());
-
 					boolean brewable = canBrew(user.getUserID(), recipe.getRecipeID());
-
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/brewCreate.jsp");
 					request.setAttribute("recipe", recipe);
 					request.setAttribute("batchSize", batchSize);
@@ -74,17 +67,14 @@ public class BrewCreateServlet extends HttpServlet {
 			} else {
 				response.sendRedirect("./");
 			}
-
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession(false);
 		String redirect = "./recipes";
 		String name = request.getParameter("name");
@@ -101,24 +91,18 @@ public class BrewCreateServlet extends HttpServlet {
 				redirect = "./my_recipes";
 			}
 			if (session.getAttribute("user") != null && session.getAttribute("recipe") != null) {
-
 				User user = (User) session.getAttribute("user");
 				Recipe recipe = (Recipe) session.getAttribute("recipe");
-
 				BrewDao brewDao = new BrewDao();
-				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, null, description,
-						quantity, tasteNote);
+				Brew brew = new Brew(0, name, user.getUserID(), null, null, recipe.getRecipeID(), null, null,
+						description, quantity, tasteNote);
 				int brewID = brewDao.createBrew(brew);
-
 				EquipmentDao equipmentDao = new EquipmentDao();
 				int batchSize = equipmentDao.findBatchSize(user.getUserID());
-
 				List<Pantry> pantryNew = newPantry(user.getUserID(), recipe.getRecipeID());
 				PantryDao pantryDao = new PantryDao();
 				pantryDao.updatePantry(pantryNew);
-
 				IngredientRecipeDao irDao = new IngredientRecipeDao();
-
 				List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe.getRecipeID());
 				List<IngredientBrew> ingredientsBrew = new ArrayList<>();
 				Iterator<IngredientRecipe> iterator = ingredientsRecipe.iterator();
@@ -132,7 +116,6 @@ public class BrewCreateServlet extends HttpServlet {
 				ibDao.createIngredientBrew(ingredientsBrew);
 				session.setAttribute("alertMessage", "Miscela creata con successo");
 				session.setAttribute("alertType", "success");
-
 			} else {
 				session.setAttribute("alertMessage", "Miscela non creata");
 				session.setAttribute("alertType", "error");
@@ -140,11 +123,9 @@ public class BrewCreateServlet extends HttpServlet {
 		}
 		try {
 			response.sendRedirect(redirect);
-
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	private boolean canBrew(int user, int recipe) {
@@ -174,7 +155,6 @@ public class BrewCreateServlet extends HttpServlet {
 					}
 				}
 			}
-
 		}
 		return resp;
 	}
@@ -187,7 +167,6 @@ public class BrewCreateServlet extends HttpServlet {
 		List<IngredientRecipe> ingredientsRecipe = irDao.findIngredientsRecipe(recipe);
 		PantryDao pnDao = new PantryDao();
 		List<Pantry> pantries = pnDao.findUserPantry(user);
-
 		List<Pantry> pantriesNew = new ArrayList<>();
 		Iterator<IngredientRecipe> recipeIT = ingredientsRecipe.iterator();
 		Iterator<Pantry> pantryIT = null;
@@ -211,14 +190,11 @@ public class BrewCreateServlet extends HttpServlet {
 					}
 				}
 			}
-
 		}
 		if (resp) {
 			return pantriesNew;
 		} else {
 			return null;
-
 		}
 	}
-
 }

@@ -36,7 +36,6 @@ public class RecipeEditServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
-
 			if (session != null && session.getAttribute("user") != null) {
 				int recipeID = (int) session.getAttribute("recipeID");
 
@@ -67,73 +66,65 @@ public class RecipeEditServlet extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String redirect = "./recipes";
+
+		HttpSession session = request.getSession(false);
+		int recipeID = -1;
 		try {
-			HttpSession session = request.getSession(false);
-			int recipeID = Integer.parseInt(request.getParameter("recipeID"));
-			String name = request.getParameter("name");
-			String visibility = request.getParameter("visibility");
-			String description = request.getParameter("description");
-
-			if (session != null && session.getAttribute("user") != null) {
-
-				User user = (User) session.getAttribute("user");
-
-				RecipeDao recipeDao = new RecipeDao();
-				Recipe recipe = recipeDao.findRecipeByID(recipeID);
-				if (user.getUserID() == recipe.getUserID()) {
-					int step = 1;
-					String paramStep = "step-";
-					Map<Integer, String> steps = new HashMap<>();
-					while (request.getParameter(paramStep + step) != null) {
-						String text = request.getParameter(paramStep + step);
-						steps.put(step, text);
-						step++;
-					}
-
-					recipe.setName(name);
-					recipe.setDescription(description);
-					recipe.setVisibility(visibility);
-					recipe.setSteps(steps);
-					recipeDao.updateRecipe(recipe);
-
-					IngredientDao ingredientDao = new IngredientDao();
-					List<Ingredient> ingredients = ingredientDao.findAllIngredient();
-
-					List<IngredientRecipe> ingredientsRecipe = new ArrayList<>();
-
-					Iterator<Ingredient> iterator = ingredients.iterator();
-					while (iterator.hasNext()) {
-						Ingredient ingredient = iterator.next();
-						int quantity = Integer
-								.parseInt(request.getParameter("valueIngr-" + ingredient.getIngredientID()));
-						String measure = request.getParameter("measureIngr-" + ingredient.getIngredientID());
-						IngredientRecipe ingredientRecipe = new IngredientRecipe(recipe.getRecipeID(),
-								ingredient.getIngredientID(), ingredient.getName(), quantity, measure);
-						ingredientsRecipe.add(ingredientRecipe);
-
-					}
-					IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
-					ingredientRecipeDao.updateIngredientsRecipe(recipe.getRecipeID(), ingredientsRecipe);
-					session.setAttribute("alertMessage", "Ricetta modificata con successo");
-					session.setAttribute("alertType", "success");
-					response.sendRedirect("/homebrew/recipe?n=" + recipeID);
-				}
-
-			} else {
-				response.sendRedirect("/homebrew/recipes");
-			}
+			recipeID = Integer.parseInt(request.getParameter("recipeID"));
 		} catch (NumberFormatException e) {
 			logger.log(Level.SEVERE, "Parser error", e);
+		}
+		String name = request.getParameter("name");
+		String visibility = request.getParameter("visibility");
+		String description = request.getParameter("description");
+
+		if (session != null && session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			RecipeDao recipeDao = new RecipeDao();
+			Recipe recipe = recipeDao.findRecipeByID(recipeID);
+			if (user.getUserID() == recipe.getUserID()) {
+				int step = 1;
+				String paramStep = "step-";
+				Map<Integer, String> steps = new HashMap<>();
+				while (request.getParameter(paramStep + step) != null) {
+					String text = request.getParameter(paramStep + step);
+					steps.put(step, text);
+					step++;
+				}
+				recipe.setName(name);
+				recipe.setDescription(description);
+				recipe.setVisibility(visibility);
+				recipe.setSteps(steps);
+				recipeDao.updateRecipe(recipe);
+				IngredientDao ingredientDao = new IngredientDao();
+				List<Ingredient> ingredients = ingredientDao.findAllIngredient();
+				List<IngredientRecipe> ingredientsRecipe = new ArrayList<>();
+				Iterator<Ingredient> iterator = ingredients.iterator();
+				while (iterator.hasNext()) {
+					Ingredient ingredient = iterator.next();
+					int quantity = Integer.parseInt(request.getParameter("valueIngr-" + ingredient.getIngredientID()));
+					String measure = request.getParameter("measureIngr-" + ingredient.getIngredientID());
+					IngredientRecipe ingredientRecipe = new IngredientRecipe(recipe.getRecipeID(),
+							ingredient.getIngredientID(), ingredient.getName(), quantity, measure);
+					ingredientsRecipe.add(ingredientRecipe);
+				}
+				IngredientRecipeDao ingredientRecipeDao = new IngredientRecipeDao();
+				ingredientRecipeDao.updateIngredientsRecipe(recipe.getRecipeID(), ingredientsRecipe);
+				session.setAttribute("alertMessage", "Ricetta modificata con successo");
+				session.setAttribute("alertType", "success");
+				redirect = "./recipe?n=" + recipeID;
+			}
+		}
+		try {
+			response.sendRedirect(redirect);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
-
 }

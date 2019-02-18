@@ -57,9 +57,10 @@ public class PantryServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		String redirect = "./";
 		HttpSession session = request.getSession(false);
 		if (session != null && session.getAttribute("user") != null) {
+			redirect = "./pantry";
 			User user = (User) session.getAttribute("user");
 			int userID = user.getUserID();
 			ArrayList<Pantry> pantrys = new ArrayList<>();
@@ -78,7 +79,6 @@ public class PantryServlet extends HttpServlet {
 					pantrys.add(pantry);
 				}
 			}
-
 			if (!pantrys.isEmpty()) {
 				PantryDao pantryDao = new PantryDao();
 				int update = pantryDao.updatePantry(pantrys);
@@ -94,12 +94,11 @@ public class PantryServlet extends HttpServlet {
 				session.setAttribute("alertMessage", "Dispensa non modificata");
 				session.setAttribute("alertType", "error");
 			}
-			try {
-				response.sendRedirect("./pantry");
-			} catch (IOException e) {
-				logger.log(Level.SEVERE, "Servlet error", e);
-			}
-
+		}
+		try {
+			response.sendRedirect(redirect);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
 		}
 
 	}

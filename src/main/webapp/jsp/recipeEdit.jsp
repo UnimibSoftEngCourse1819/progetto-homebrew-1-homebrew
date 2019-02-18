@@ -25,16 +25,16 @@
 	<div class="header">
 		<jsp:include page="includer/menu.jsp" />
 	</div>
-	<div class="row page recipe-edit">
-		<div class="row edit-recipe-top">
+	<div class="row page edit-recipe">
+		<div class="row menu-top-color">
 			<a class="back_recipes" href="./recipe?n=${recipe.recipeID}">&larr;</a>
-			<h4>Modifica la ricetta</h4>
+			<h4>MODIFICA RICETTA</h4>
 			<form action="./remove_recipe" method="post">
 				<input type="hidden" name="recipeID" value="${recipe.recipeID}">
 				<button name="deleteRecipe" type="submit">Elimina</button>
 			</form>
 		</div>
-		<div class="row recipe-edit-form">
+		<div class="row edit-recipe-form">
 			<form action="./edit_recipe" method="post">
 				<input type="hidden" name="recipeID" value="${recipe.recipeID}">
 				<div class="row">
@@ -42,7 +42,7 @@
 						<h6>Titolo</h6>
 						<input type="text" name="name" value="${recipe.name}">
 					</div>
-					<div class="col-2 recipe-edit-visibility">
+					<div class="col-2 edit-recipe-visibility">
 						<h6>Visibilit&agrave;</h6>
 						<select name="visibility">
 							<option value="public">Pubblica</option>

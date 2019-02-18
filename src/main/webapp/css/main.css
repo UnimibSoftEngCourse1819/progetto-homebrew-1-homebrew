@@ -54,8 +54,7 @@ body {
 	width: 100%;
 }
 
-
-/* ------------------- ALERT MODAL ------------------- */
+/* ------------------- ALERT ------------------- */
 .modal-body p {
 	text-align: center;
 }
@@ -70,9 +69,21 @@ body {
 	border: solid 1px #ff0202;
 }
 
+.empty-list {
+	position: absolute;
+	left: calc(62.5% - 200px);
+	width: 400px;
+	padding: 10px 20px;
+	border: solid 1px #ffb000;
+	border-radius: 6px;
+	background-color: #ffb0004d;
+}
+
+.empty-list p {
+	text-align: center;
+}
 
 /* ------------------- TOP PAGE FIXED ------------------- */
-
 .menu-top-fix {
 	position: fixed;
 	top: 0;
@@ -114,7 +125,6 @@ body {
 }
 
 /* ------------------- TOP PAGE COLOR ------------------- */
-
 .menu-top-color {
 	position: relative;
 	padding: 20px;

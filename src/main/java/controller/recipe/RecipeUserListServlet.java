@@ -17,7 +17,6 @@ import model.recipe.Recipe;
 import model.recipe.RecipeDao;
 import model.user.User;
 
-// IN MENU -> SET SECTION IN SESSION
 @WebServlet("/my_recipes")
 public class RecipeUserListServlet extends HttpServlet {
 
@@ -31,27 +30,29 @@ public class RecipeUserListServlet extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			if (session != null && session.getAttribute("user") != null) {
 				session.setAttribute("section", "personal");
-
 				User user = (User) session.getAttribute("user");
 				RecipeDao recipeDao = new RecipeDao();
 				List<Recipe> recipes = recipeDao.findRecipesUser(user.getUserID());
-
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/recipeUserList.jsp");
 				request.setAttribute("recipes", recipes);
 				request.setAttribute("page", "my_recipes");
 				dispatcher.forward(request, response);
 				session.removeAttribute("alertMessage");
 				session.removeAttribute("alertType");
-
 			} else {
-				response.sendRedirect("./");
-
+				response.sendRedirect("./recipes");
 			}
-
 		} catch (ServletException | IOException e) {
 			logger.log(Level.SEVERE, "Servlet error", e);
 		}
-
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			response.sendRedirect("./recipes");
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Servlet error", e);
+		}
+	}
 }
